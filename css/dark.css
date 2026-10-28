@@ -1,0 +1,77 @@
+/* Ketvoice – liquid glass buttons, theme toggle and dark theme.
+   Loaded after style.css. Everything below is additive. */
+
+/* ---------- Liquid glass controls (both themes) ---------- */
+.btn,.nav-icon,.nav-download,.download-row .row-button{
+  --glass-tint:255,255,255;
+  backdrop-filter:blur(16px) saturate(170%);
+  -webkit-backdrop-filter:blur(16px) saturate(170%);
+  overflow:hidden;
+  background-image:
+    radial-gradient(120px 70px at var(--shine-x,50%) var(--shine-y,50%),rgba(var(--glass-tint),.42),rgba(var(--glass-tint),.08) 55%,transparent 75%),
+    linear-gradient(180deg,rgba(var(--glass-tint),.18),rgba(var(--glass-tint),.03));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -1px 0 rgba(255,255,255,.12),
+    inset 0 0 14px rgba(255,255,255,.07),
+    0 10px 28px rgba(8,12,18,.22);
+  transition:background-color .35s,box-shadow .45s,border-color .35s,color .35s,filter .35s;
+}
+.btn::after,.nav-icon::after,.nav-download::after,.download-row .row-button::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);
+  transform:translateX(-130%);transition:transform .9s var(--ease);
+}
+.btn:hover::after,.nav-icon:hover::after,.nav-download:hover::after,.download-row .row-button:hover::after{transform:translateX(130%)}
+.btn:hover,.nav-icon:hover,.nav-download:hover,.download-row .row-button:hover{
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 -1px 0 rgba(255,255,255,.2),inset 0 0 20px rgba(255,255,255,.12),0 18px 40px rgba(8,12,18,.3);
+  filter:saturate(1.15);
+}
+.btn:active,.nav-icon:active,.nav-download:active{--s:.965}
+
+/* Discord icon: brand-tinted glow */
+.discord-action .icon{width:19px;height:19px;transition:transform .5s var(--ease),filter .4s}
+.discord-action:hover .icon{transform:rotate(-8deg) scale(1.12);filter:drop-shadow(0 0 8px rgba(114,137,255,.75))}
+
+/* Theme toggle: sun and moon swap with a spin */
+.theme-toggle .icon{width:19px;height:19px;overflow:visible}
+.theme-toggle .sun,.theme-toggle .moon{transform-origin:12px 12px;transition:transform .6s var(--ease),opacity .35s}
+.theme-toggle .moon{opacity:0;transform:rotate(-70deg) scale(.4)}
+.theme-toggle .sun{opacity:1}
+html.dark .theme-toggle .sun{opacity:0;transform:rotate(80deg) scale(.4)}
+html.dark .theme-toggle .moon{opacity:1;transform:none}
+
+/* ---------- Smoother topbar glass ---------- */
+.topbar{transition:background .6s var(--ease),border-color .6s,box-shadow .6s,color .5s,transform .6s var(--ease),backdrop-filter .6s}
+.topbar .nav-links a{transition:color .35s,opacity .35s,transform .45s var(--ease)}
+.topbar .nav-links a:hover{transform:translateY(-1px)}
+
+/* ---------- Dark theme ---------- */
+html.dark{--paper:#0e1116;--ink:#f1f3f6;--quiet:#8b919c;color-scheme:dark}
+html.dark body{background:#0b0d11;color:#eef0f3}
+html.dark .light{background:var(--paper);color:#e9ecf0}
+html.dark .details{background:#0f1217;color:#e9ecf0}
+html.dark .download{background:#0c0f14;color:#eef0f3}
+html.dark .capability-rail{background:#141820;border-color:#222834}
+html.dark .feature-tile.discovery{background:linear-gradient(150deg,#232b34,#1a2128 70%,#2a3a46);color:#eef0f3}
+html.dark .dock-item{background:rgba(255,255,255,.05);border-color:#232932;color:#6f7782}
+html.dark .download-row .row-button{background:rgba(255,255,255,.07);border-color:#2a303a;color:#f1f3f6}
+html.dark .screen-tab[aria-selected="true"]{color:#f4f6f8}
+html.dark .btn.primary{background:#eef1f4;color:#12151a}
+html.dark .topbar.glass-on-light{
+  color:#eef1f5;border-color:rgba(255,255,255,.14);
+  background:linear-gradient(115deg,rgba(40,48,60,.62),rgba(18,23,31,.58) 55%,rgba(36,44,56,.62));
+  box-shadow:0 18px 45px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(255,255,255,.06);
+}
+html.dark .topbar.glass-on-light .brand img{filter:none}
+html.dark .topbar.glass-on-light .nav-icon,html.dark .topbar.glass-on-light .menu-toggle{color:#eef1f5}
+html.dark .details *,html.dark .download *{border-color:#232932}
+html.dark ::selection{background:#3b4a5c;color:#fff}
+
+/* Smooth cross-fade only while the user toggles (class added by JS) */
+html.theme-fade,html.theme-fade *{transition:background-color .5s,color .5s,border-color .5s,box-shadow .5s!important}
+
+@media (prefers-reduced-motion:reduce){
+  .btn::after,.nav-icon::after,.nav-download::after,.download-row .row-button::after{display:none}
+  .theme-toggle .sun,.theme-toggle .moon,.discord-action .icon{transition:none}
+}
