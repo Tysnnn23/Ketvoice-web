@@ -1,6 +1,6 @@
 (()=>{
  'use strict';
- const CONFIG={repo:'Tysnnn23/Ketvoice',discordInvite:'https://discord.gg/FyKjAXHvfY',activeListenersEndpoint:''};
+ const CONFIG={repo:'Tysnnn23/Ketvoice',discordInvite:'https://discord.gg/FyKjAXHvfY',activeListenersEndpoint:'https://xodklrunqlzyeiqtovgx.supabase.co/functions/v1/ketvoice-api/listeners'};
  const $=(s)=>document.querySelector(s), $$=(s)=>[...document.querySelectorAll(s)];
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const screens={
@@ -30,6 +30,46 @@
   async function updateLatest(){let r=store.get('kv-latest',60000);if(!r){const rel=await api('/releases/latest');r={tag:rel.tag_name,android:apkUrl(rel.assets,false),quest:apkUrl(rel.assets,true)};store.set('kv-latest',r)}showRelease(r)}
   async function updateStats(){let s=store.get('kv-stats',180000);if(!s){const releases=[];for(let p=1;p<=5;p++){const r=await api('/releases?per_page=100&page='+p);releases.push(...r);if(r.length<100)break}let count=0;for(const rel of releases)for(const a of rel.assets||[])if(/\.apk$/i.test(a.name||''))count+=Number(a.download_count||0);s={count,releases:releases.length};store.set('kv-stats',s)}$('#stat-downloads').textContent=format.format(s.count);$('#downloads-caption').textContent='APK downloads · '+s.releases+' releases'}
   async function updateGitHub(){const cached=store.get('kv-stats',180000);if(cached){$('#stat-downloads').textContent=format.format(cached.count);$('#downloads-caption').textContent='APK downloads · '+cached.releases+' releases'}try{await updateLatest()}catch(e){showRelease({});console.info('GitHub releases unavailable; download buttons use the latest-release page.')}try{await updateStats()}catch(e){console.info('GitHub download statistics unavailable.')}}
- async function updateListeners(){if(!CONFIG.activeListenersEndpoint)return;try{const r=await fetch(CONFIG.activeListenersEndpoint,{cache:'no-store'});if(!r.ok)throw Error('Listener API offline');const json=await r.json();const n=json.activeListeners??json.count;if(!Number.isInteger(n)||n<0)throw Error('Invalid count');$('#stat-listeners').textContent=format.format(n);$('#listeners-caption').textContent='Anonymous recent active listeners'}catch(e){$('#listeners-caption').textContent='Activity tracking temporarily unavailable'}}
- updateGitHub();updateListeners();if(CONFIG.activeListenersEndpoint)setInterval(()=>{if(!document.hidden)updateListeners()},60000);
+ async function updateListeners(){
+   if(!CONFIG.activeListenersEndpoint||listenersBusy)return;listenersBusy=true;
+   try{
+    const r=await fetch(CONFIG.activeListenersEndpoint,{cache:'no-store'});
+    if(!r.ok)throw Error('Listener API offline');
+    const json=await r.json();
+    const n=json.activeListeners??json.count;
+    if(!Number.isInteger(n)||n<0)throw Error('Invalid count');
+    $('#stat-listeners').textContent=format.format(n);
+    const np=json.nowPlaying||null,box=$('#now-playing');
+    if(np&&np.title){
+     $('#np-title').textContent=np.title;
+     $('#np-artist').textContent=np.artist||'';
+     const cov=$('#np-cover');
+     if(np.cover){if(cov.getAttribute('src')!==np.cover)cov.src=np.cover;cov.hidden=false}else{cov.removeAttribute('src');cov.hidden=true}
+     box.hidden=false;
+     $('#listeners-caption').textContent='Listening right now: '+np.title+(np.artist?' — '+np.artist:'');
+    }else{box.hidden=true;$('#listeners-caption').textContent='Anonymous recent active listeners'}
+    listenerFailures=0;
+   }catch(e){
+    listenerFailures++;
+    $('#listeners-caption').textContent='Activity tracking temporarily unavailable';
+   }finally{listenersBusy=false}
+  }
+  // "Listening Now" refreshes every 10 s without reloading the page. Requests
+  // never overlap (in-flight flag), pause while the tab is hidden, and back off
+  // to one call per minute after repeated failures instead of hammering a
+  // struggling API. One single interval for the whole page life: no leaks.
+  let listenersBusy=false,listenerFailures=0;
+  function scheduleListeners(){
+   if(!CONFIG.activeListenersEndpoint)return;
+   setInterval(()=>{
+    if(document.hidden)return;
+    // After 3 consecutive failures, poll at most once per minute.
+    if(listenerFailures>=3&&Date.now()-(updateListeners.lastFail||0)<60000)return;
+    const wasBusy=listenersBusy;
+    updateListeners();
+    if(!wasBusy&&listenerFailures>=3)updateListeners.lastFail=Date.now();
+   },10000);
+   document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateListeners()});
+  }
+  updateGitHub();updateListeners();scheduleListeners();
 })();
