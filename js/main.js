@@ -55,7 +55,35 @@
   const store={get(k,ttl){try{const v=JSON.parse(localStorage.getItem(k)||'null');return v&&Date.now()-v.t<ttl?v.d:null}catch(e){return null}},set(k,d){try{localStorage.setItem(k,JSON.stringify({t:Date.now(),d}))}catch(e){}}};
   const apkUrl=(assets,quest)=>((assets||[]).find(a=>/\.apk$/i.test(a.name||'')&&/quest/i.test(a.name)===quest)||{}).browser_download_url;
   function showRelease(r){const rv=$('#release-version');if(rv&&r.tag)rv.textContent='Latest release: '+r.tag;const a=$('#android-apk'),q=$('#quest-apk');if(a)a.href=r.android||LATEST_PAGE;if(q)q.href=r.quest||LATEST_PAGE}
-  async function updateLatest(){let r=store.get('kv-latest',60000);if(!r){const rel=await api('/releases/latest');r={tag:rel.tag_name,android:apkUrl(rel.assets,false),quest:apkUrl(rel.assets,true)};store.set('kv-latest',r)}showRelease(r)}
+  // WHAT'S NEW: the download section mirrors the body of the latest GitHub
+  // release, so the site stays in sync with every published version.
+  function renderWhatsNew(tag,body){
+    const box=$('#release-notes');if(!box||!body)return;
+    const esc=v=>v.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const items=[];let cur=null;
+    for(const raw of body.split(/\r?\n/)){
+      const line=raw.trim();
+      if(/^##\s+Install/i.test(line))break;
+      if(/^#\s/.test(line)||/^\*\*versionCode/.test(line))continue;
+      if(/^##\s+/.test(line)){cur={title:line.replace(/^##\s+/,''),text:''};items.push(cur)}
+      else if(cur&&line)cur.text+=(cur.text?' ':'')+line;
+    }
+    if(!items.length)return;
+    const t=$('#release-notes-title');if(t)t.textContent='What\'s new in '+tag;
+    const clean=v=>esc(v).split('*').join('').split('`').join('');
+    $('#release-notes-list').innerHTML=items.slice(0,6).map(i=>'<li><strong>'+clean(i.title)+'</strong><span>'+clean(i.text)+'</span></li>').join('');
+    box.hidden=false;
+  }
+  async function updateLatest(){
+   let r=store.get('kv-latest',60000);
+   // Old cached entries carry no body: refetch so the What's new card appears
+   // even for visitors who already had a cached release from a previous visit.
+   if(!r||!r.body){
+    const rel=await api('/releases/latest');
+    r={tag:rel.tag_name,body:rel.body||'',android:apkUrl(rel.assets,false),quest:apkUrl(rel.assets,true)};
+    store.set('kv-latest',r);
+   }
+   renderWhatsNew(r.tag,r.body);showRelease(r)}
   async function updateStats(){let s=store.get('kv-stats',180000);if(!s){const releases=[];for(let p=1;p<=5;p++){const r=await api('/releases?per_page=100&page='+p);releases.push(...r);if(r.length<100)break}let count=0;for(const rel of releases)for(const a of rel.assets||[])if(/\.apk$/i.test(a.name||''))count+=Number(a.download_count||0);s={count,releases:releases.length};store.set('kv-stats',s)}animateNumber($('#stat-downloads'),s.count);$('#downloads-caption').textContent='APK downloads · '+s.releases+' releases'}
   async function updateGitHub(){const cached=store.get('kv-stats',180000);if(cached){animateNumber($('#stat-downloads'),cached.count);$('#downloads-caption').textContent='APK downloads · '+cached.releases+' releases'}try{await updateLatest()}catch(e){showRelease({});console.info('GitHub releases unavailable; download buttons use the latest-release page.')}try{await updateStats()}catch(e){console.info('GitHub download statistics unavailable.')}}
  async function updateListeners(){

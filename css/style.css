@@ -247,3 +247,18 @@ footer{background:#0e1115;color:#d7dce2;padding:55px 0 30px;border-top:1px solid
  .device-tilt{transform:none!important;transition:none}
  .to-top{transition:none}
 }
+
+/* ================= V6 WHAT'S NEW =================
+   Release-notes card in the download section, fed live
+   from the latest GitHub release body (js/main.js). */
+.release-notes{max-width:910px;margin:34px auto 0;border:1px solid rgba(40,48,57,.10);border-radius:18px;background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(232,234,236,.5));padding:24px 28px 10px;box-shadow:0 14px 34px rgba(35,40,51,.06),inset 0 1px 2px #fff;backdrop-filter:blur(14px)}
+.release-notes .rn-head{display:flex;align-items:baseline;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.release-notes .kicker{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;letter-spacing:.16em;color:#83858b;font-weight:730}
+.release-notes .kicker .icon{width:13px;height:13px}
+.release-notes h3{margin:0;font-size:19px;letter-spacing:-.035em;font-weight:680;color:#111318}
+.release-notes ul{list-style:none;margin:0;padding:0}
+.release-notes li{padding:12px 0;border-top:1px solid #ececee;font-size:12.5px;line-height:1.7;color:#8b8d91}
+.release-notes li:first-child{border-top:0}
+.release-notes li strong{display:block;color:#111318;font-size:13.5px;letter-spacing:-.02em;font-weight:680;margin-bottom:3px}
+@media(max-width:600px){.release-notes{padding:18px 18px 4px;margin-top:24px}.release-notes h3{font-size:16px}.release-notes li{font-size:11.5px;padding:10px 0}}
+@media(prefers-reduced-motion:reduce){.release-notes{transition:none}}
