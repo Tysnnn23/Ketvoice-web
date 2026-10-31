@@ -10,6 +10,11 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.10.1 restores in-app foreground/periodic update checks, a manual
+Settings → About check, verified APK downloads and reusable installer actions.
+Android still requires installation confirmation. Users whose older updater
+cannot discover the fix can download that version once from the release feed.
+
 ## Structure
 
 - `index.html` — main page
