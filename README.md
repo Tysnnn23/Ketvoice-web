@@ -2,6 +2,14 @@
 
 Official website for Ketvoice — an Android music player with Spotify lyrics.
 
+## Release synchronization
+
+Current app features exclude AutoMix. Stable Mobile/Quest downloads and English
+release notes are read from `Tysnnn23/Ketvoice` on load, every minute while the
+page is visible, and when returning to the tab. The banner is the canonical
+`https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
+Existing animations, live-listener integration and upstream changes are retained.
+
 ## Structure
 
 - `index.html` — main page

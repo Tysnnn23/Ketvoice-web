@@ -63,7 +63,7 @@
     const items=[];let cur=null;
     for(const raw of body.split(/\r?\n/)){
       const line=raw.trim();
-      if(/^##\s+Install/i.test(line))break;
+      if(/^##\s+(?:Install|Validation)/i.test(line))break;
       if(/^#\s/.test(line)||/^\*\*versionCode/.test(line))continue;
       if(/^##\s+/.test(line)){cur={title:line.replace(/^##\s+/,''),text:''};items.push(cur)}
       else if(cur&&line)cur.text+=(cur.text?' ':'')+line;
@@ -74,8 +74,12 @@
     $('#release-notes-list').innerHTML=items.slice(0,6).map(i=>'<li><strong>'+clean(i.title)+'</strong><span>'+clean(i.text)+'</span></li>').join('');
     box.hidden=false;
   }
-  async function updateLatest(){
-   let r=store.get('kv-latest',60000);
+   let releaseBusy=false;
+   async function updateLatest(force=false){
+    if(releaseBusy)return;
+    releaseBusy=true;
+    try {
+    let r=force?null:store.get('kv-latest',60000);
    // Old cached entries carry no body: refetch so the What's new card appears
    // even for visitors who already had a cached release from a previous visit.
    if(!r||!r.body){
@@ -83,9 +87,10 @@
     r={tag:rel.tag_name,body:rel.body||'',android:apkUrl(rel.assets,false),quest:apkUrl(rel.assets,true)};
     store.set('kv-latest',r);
    }
-   renderWhatsNew(r.tag,r.body);showRelease(r)}
+    renderWhatsNew(r.tag,r.body);showRelease(r)
+    } finally {releaseBusy=false}}
   async function updateStats(){let s=store.get('kv-stats',180000);if(!s){const releases=[];for(let p=1;p<=5;p++){const r=await api('/releases?per_page=100&page='+p);releases.push(...r);if(r.length<100)break}let count=0;for(const rel of releases)for(const a of rel.assets||[])if(/\.apk$/i.test(a.name||''))count+=Number(a.download_count||0);s={count,releases:releases.length};store.set('kv-stats',s)}animateNumber($('#stat-downloads'),s.count);$('#downloads-caption').textContent='APK downloads · '+s.releases+' releases'}
-  async function updateGitHub(){const cached=store.get('kv-stats',180000);if(cached){animateNumber($('#stat-downloads'),cached.count);$('#downloads-caption').textContent='APK downloads · '+cached.releases+' releases'}try{await updateLatest()}catch(e){showRelease({});console.info('GitHub releases unavailable; download buttons use the latest-release page.')}try{await updateStats()}catch(e){console.info('GitHub download statistics unavailable.')}}
+   async function updateGitHub(force=false){const cached=store.get('kv-stats',180000);if(cached){animateNumber($('#stat-downloads'),cached.count);$('#downloads-caption').textContent='APK downloads · '+cached.releases+' releases'}try{await updateLatest(force)}catch(e){showRelease({});console.info('GitHub releases unavailable; download buttons use the latest-release page.')}try{await updateStats()}catch(e){console.info('GitHub download statistics unavailable.')}}
  async function updateListeners(){
    if(!CONFIG.activeListenersEndpoint||listenersBusy)return;listenersBusy=true;
    try{
@@ -128,5 +133,8 @@
    },10000);
    document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateListeners()});
   }
-  updateGitHub();updateListeners();scheduleListeners();
+   updateGitHub();updateListeners();scheduleListeners();
+   // New releases become visible in an already open tab, not just after reload.
+   setInterval(()=>{if(!document.hidden)updateGitHub(true)},60000);
+   document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateGitHub(true)});
 })();
