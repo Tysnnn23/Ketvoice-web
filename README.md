@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.13.7 removes the permanent lyric halo — only notes held for 650 ms or
+longer glow, in line, word and syllable modes alike — and makes **Activer via
+l'app Discord** open the Discord app before connecting, with an explicit message
+when it is missing. It also shows the OAuth2 redirect that was absent from the
+Discord Developer Portal.
+
 Ketvoice 3.13.6 moves Discord into Settings → Compte, adds an optional OAuth2 token
 connection with a readable SDK log when a connection fails, restores the soft
 active-line lyric halo while keeping the bloom for held notes only, aligns word
