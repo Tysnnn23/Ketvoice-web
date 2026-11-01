@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.13.6 moves Discord into Settings → Compte, adds an optional OAuth2 token
+connection with a readable SDK log when a connection fails, restores the soft
+active-line lyric halo while keeping the bloom for held notes only, aligns word
+highlights for foreign scripts, gives artist pages a blurred-ambience hero and
+ringed avatars, fixes artist-logo rate limiting, and adds an album Canvas upload
+to Ketvoice Studio.
+
 Ketvoice 3.13.5 keeps the lyric glow on sustained notes only, holds backing vocals
 for their real duration instead of a flash, eases the translated-line reveal,
 keeps title/artist/duration visible in fullscreen with tap-to-return, and prefers
