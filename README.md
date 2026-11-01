@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.13.9 rebuilds the artist page around real HD artwork: Fanart portraits
+and backgrounds resolved by MusicBrainz identity, authentic Wikidata signatures
+when they exist, a long Apple-Music-style gradient, crossfade loading and no
+invented image. The lyric glow now starts at 1.05 s, stays soft and diffuse, grows
+to 1.07× and sweeps with the note. Discord OAuth uses the HTTPS bridge page as its
+redirect.
+
 Ketvoice 3.13.8 adds album management to Ketvoice Studio: search albums, set one
 Canvas for the whole album or for a single track, and add or remove tracks — the
 app reads the same published video. Artist pages now say Listen/Écouter and Show
