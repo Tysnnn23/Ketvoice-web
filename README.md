@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.13.8 adds album management to Ketvoice Studio: search albums, set one
+Canvas for the whole album or for a single track, and add or remove tracks — the
+app reads the same published video. Artist pages now say Listen/Écouter and Show
+less, EP and Compilation are translated, artist logos are on by default, Discord
+opening tries several routes, and the oversized first-letter artwork fallback is
+gone.
+
 Ketvoice 3.13.7 removes the permanent lyric halo — only notes held for 650 ms or
 longer glow, in line, word and syllable modes alike — and makes **Activer via
 l'app Discord** open the Discord app before connecting, with an explicit message
