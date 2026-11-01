@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.13.5 keeps the lyric glow on sustained notes only, holds backing vocals
+for their real duration instead of a flash, eases the translated-line reveal,
+keeps title/artist/duration visible in fullscreen with tap-to-return, and prefers
+YouTube's adaptive audio over the broker's 128 kb/s MP3 for high-quality playback
+and downloads.
+
 Ketvoice 3.13.4 publishes the Discord listening activity through the installed
 Discord app without an OAuth page, so the connection loop cannot happen, and keeps
 account linking as an optional action. Backing-vocal rows now appear only 200 ms
