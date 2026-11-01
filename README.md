@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.13.1 fixes Discord linking: the OAuth2 redirect is now received by
+Ketvoice's own activity, with a browser-based PKCE flow, local `state` validation
+and a three-minute timeout instead of a panel stuck on "Connecting to Discord…".
+The app also starts in the user's system language when supported (English
+otherwise) instead of forcing French.
+
 Ketvoice 3.13.0 adds real Discord account linking and live listening presence
 through the official Discord Social SDK: the linked profile shows the playing
 track, artist, cover, an elapsed timer and **Download ketvoice** / **Listen now**
