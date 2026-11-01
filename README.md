@@ -10,6 +10,11 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.13.2 cancels a pending Discord link 8 seconds after returning without a
+code, tries the Discord app before the browser, puts the equalizer back in the
+track's three-dot menu with native-band readout and reset, and rebuilds Reverb as
+a Freeverb-style room with adjustable room size and damping.
+
 Ketvoice 3.13.1 fixes Discord linking: the OAuth2 redirect is now received by
 Ketvoice's own activity, with a browser-based PKCE flow, local `state` validation
 and a three-minute timeout instead of a panel stuck on "Connecting to Discord…".
