@@ -10,10 +10,15 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
-Ketvoice 3.10.1 restores in-app foreground/periodic update checks, a manual
-Settings → About check, verified APK downloads and reusable installer actions.
-Android still requires installation confirmation. Users whose older updater
-cannot discover the fix can download that version once from the release feed.
+Ketvoice 3.11.0 adds continuous Canvas/lyrics control transitions, readable dark
+action sheets, a charcoal dark theme, timed backing-vocal visibility and larger
+artist portraits. Optional public-domain artist signatures and native 120 Hz
+requests on compatible phones live in Appearance. 120 Hz is subject to Android
+policy, not a measured 120 FPS guarantee; Quest keeps its own platform rate.
+Signatures are opt-in with a normal-name fallback when unavailable. Automatic
+update popups retain English notes and the release banner. Android still
+requires installation confirmation. Older broken updaters may need one initial
+GitHub install. Host/mock checks are not physical phone/Quest validation.
 
 ## Structure
 
