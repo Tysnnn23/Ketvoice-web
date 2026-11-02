@@ -10,6 +10,15 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.14.1 fixes the playlist header's leftover opacity fade and reordering,
+with a compact layout for short landscape windows. Studio adds real app-catalogue
+track/album/artist search, categorized inventory of 30 integrations, ten configurable
+public JSON adapters, two app streaming switches and overview metrics. Settings
+are owner-validated, retrieved by the new app every five minutes and cached offline;
+protected services still require deployment. General catalogue media remain
+read-only; owner imports and authorized lyric publications retain their editing
+actions. Browser authentication checks are mocked, not a real owner session.
+
 Ketvoice 3.14.0 turns Ketvoice Studio into a pink-on-black dashboard with a
 persistent sidebar, a remembered owner session and draggable source priority,
 adds the same drag priority to the app's custom sources, keeps the playlist
