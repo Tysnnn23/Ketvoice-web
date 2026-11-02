@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.14.0 turns Ketvoice Studio into a pink-on-black dashboard with a
+persistent sidebar, a remembered owner session and draggable source priority,
+adds the same drag priority to the app's custom sources, keeps the playlist
+artwork fixed while tracks scroll, condenses the bottom bar after 24 px, and
+starts the held-note lyric glow at 870 ms.
+
 Ketvoice 3.13.9 rebuilds the artist page around real HD artwork: Fanart portraits
 and backgrounds resolved by MusicBrainz identity, authentic Wikidata signatures
 when they exist, a long Apple-Music-style gradient, crossfade loading and no
