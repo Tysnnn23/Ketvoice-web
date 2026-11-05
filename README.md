@@ -10,6 +10,30 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 3.18.0 is a design-system pass shipped as source only (no APK): it unifies
+every glass shadow under one elevation ladder (card 1 dp → button 4 dp → pill 8 dp →
+sheet 16 dp), gives static glass a real theme-aware drop shadow instead of a flat
+rectangle, and adds a diagonal specular band plus a bottom-right bounce halo to the
+Android 13+ shader. Motion now lives in a single object with a named duration scale,
+easing curves, springs and elevation steps (legacy API preserved; reduce-motion still
+collapses everything to instant). New contrast helpers pick ink and tint from the real
+backdrop luminance with a WCAG 4.5:1 check, and Material3 window tiers add up to three
+track columns, a 720 dp reading cap and 16→32 dp gutters. Compilation and on-device
+validation were not performed where it was authored (no JDK/SDK), so treat it as
+unverified until a Gradle build runs.
+
+Ketvoice 3.18.0 is a design-system pass committed without an APK: one elevation
+ladder drives every glass shadow (card 1 dp → button 4 dp → pill 8 dp → sheet
+16 dp), static glass now casts a real drop shadow instead of reading as a flat
+rectangle, and the Android 13+ shader gains a diagonal specular band and a
+bottom-right bounce halo. Motion, contrast and responsive layout now live in
+shared primitives: a single `Motion` object holds the durations/curves/springs
+with the legacy API preserved, new contrast helpers pick ink and tint from the
+backdrop luminance (WCAG 4.5:1), and window tiers reach three track columns with
+a 720 dp reading cap. No behaviour change to playback, sources, Discord or
+publications. Compilation and on-device checks remain required before any store
+release, so the download links still point at the last fully built version.
+
 Ketvoice 3.14.1 fixes the playlist header's leftover opacity fade and reordering,
 with a compact layout for short landscape windows. Studio adds real app-catalogue
 track/album/artist search, categorized inventory of 30 integrations, ten configurable
