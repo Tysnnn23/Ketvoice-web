@@ -10,6 +10,22 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.0.1 (versionCode 78, Mobile and Quest APKs) removes the square album
+artwork card: the cover now reaches both edges and the sampled album colour washes
+the top of the page before fading into the background. A new Apparence switch shows
+the album Canvas in that area when one exists, independent from the player's Canvas
+setting; reduced motion and high-performance mode fall back to the cover. Android 13
+themed icons gain a monochrome layer on every launcher variant, and Android 12+
+hands its splash over to an in-app spring mark. The Discord account panel adds a
+copyable diagnostic journal and a relink action, the duplicated Gradle imports that
+blocked configuration are removed, and CI refuses to attach APKs signed with the
+throwaway debug key. The existing cover-to-player flight, condensing mini-player,
+dynamic cover palette and per-track download progress are retained.
+
+Ketvoice 3.19.0 introduced the dynamic cover palette, the Wrapped-style listening
+stats and the first full-bleed player experiments; its published APKs were rebuilt
+with the stable Ketvoice certificate after CI attached a debug-signed build.
+
 Ketvoice 3.18.0 is a design-system pass shipped as source only (no APK): it unifies
 every glass shadow under one elevation ladder (card 1 dp → button 4 dp → pill 8 dp →
 sheet 16 dp), gives static glass a real theme-aware drop shadow instead of a flat
