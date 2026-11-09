@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.3.0 (versionCode 81) adds card-origin artist/album reveals, saved tab
+positions, collapsing headers, skeletons and progressive artwork dissolution.
+Optional Bit-Perfect requests Android 14+'s compatible USB mixer contract and
+writes decoded PCM through a native AudioTrack; unavailable paths fall back to
+standard playback. No physical DAC/Quest or FPS validation is claimed. The
+website's live English notes and both APK links follow the latest stable release.
+
 Ketvoice 4.2.0 (versionCode 80) replaces the competing player slide/flying-cover
 animations with one reversible rounded-surface reveal and makes the mini-player
 resize without replacing its component tree. Album images begin behind the top

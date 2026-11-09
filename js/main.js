@@ -4,10 +4,10 @@
  const $=(s)=>document.querySelector(s), $$=(s)=>[...document.querySelectorAll(s)];
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const screens={
-  player:{title:'Music, up close.',desc:'Classic Canvas framing, fullscreen for 9:16 clips, sampled-glass menus and adjustable room reverb. Optional progressive quality prepares upgrades in the background.',src:'assets/player.webp',name:'THE PLAYER',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#65747e 0%,#29343d 40%,#131a23 86%)'},
+  player:{title:'Music, up close.',desc:'A reversible player reveal, full-frame Canvas and optional Stats info. Bit-Perfect requests Android 14+ compatible USB mixer playback with transparent standard fallback; room reverb and progressive quality remain available in standard mode.',src:'assets/player.webp',name:'THE PLAYER',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#65747e 0%,#29343d 40%,#131a23 86%)'},
   lyrics:{title:'Every word, in time.',desc:'Synchronized words, backing vocals only in their turn, and smoothly returning playback controls.',src:'assets/lyrics.webp',name:'LIVE LYRICS',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#6a737b 0%,#343c40 40%,#15191d 86%)'},
-  home:{title:'Your music, your space.',desc:'Your recent and featured tracks, with live circular download progress on their artwork.',src:'assets/home.webp',name:'LISTEN NOW',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#b8c3cf 0%,#6c7e8d 40%,#283440 86%)'},
-  artist:{title:'Meet the artists.',desc:'Portrait-led profiles and opt-in Fanart.tv logos with original colors, attribution and a normal-name fallback. The provider key stays on the server.',src:'assets/artist.webp',name:'ARTISTS',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#71707d 0%,#424354 40%,#181b25 86%)'}
+  home:{title:'Your music, your space.',desc:'A spring-driven glass navigation lens, saved tab scroll positions and recent/featured tracks. In-app download controls include pause/resume and an optional Wi-Fi-only gate.',src:'assets/home.webp',name:'LISTEN NOW',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#b8c3cf 0%,#6c7e8d 40%,#283440 86%)'},
+  artist:{title:'Meet the artists.',desc:'Card-origin reveals, collapsing portrait headers, image-derived accents and discreet loading skeletons. Album artwork progressively dissolves into its local colour. Optional attributed Fanart.tv logos retain a normal-name fallback.',src:'assets/artist.webp',name:'ARTISTS',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#71707d 0%,#424354 40%,#181b25 86%)'}
  };
  let current='player';
  function swapIn(el,klass){el.classList.remove(klass);void el.offsetWidth;el.classList.add(klass)}
