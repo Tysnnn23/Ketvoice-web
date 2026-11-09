@@ -10,6 +10,20 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.2.0 (versionCode 80) replaces the competing player slide/flying-cover
+animations with one reversible rounded-surface reveal and makes the mini-player
+resize without replacing its component tree. Album images begin behind the top
+controls, without the large white dissolve, using colours from the album viewed.
+Glass has more restrained rims/refraction; Appearance previews Clear, Frosted and
+Opaque before Apply. Track menus gain Favorite/Play next/Download shortcuts and
+album/search rows have swipe queue actions with occurrence-specific Undo.
+Audio information is **optional Stats info**, off by default, inside the player;
+format/sample-rate/bitrate are decoder-derived when available. Downloads gain
+in-process pause/resume, cancel/retry, HTTP Range recovery with validators, optional
+Wi-Fi gating and remaining bytes when known. Force-stop/reboot resume is not
+promised. Native software host tests and in-memory transfer fixtures are not
+physical phone/Quest validation. The latest release body discloses these limits.
+
 Ketvoice 4.0.1 (versionCode 78, Mobile and Quest APKs) removes the square album
 artwork card: the cover now reaches both edges and the sampled album colour washes
 the top of the page before fading into the background. A new Apparence switch shows
