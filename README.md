@@ -10,6 +10,16 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.3.1 (versionCode 82) completes the interface translations: the 116
+user-facing strings that only existed in French are now written in all ten other
+tables (playback and source ordering, the Bit-Perfect panel, download states,
+updater errors, Discord diagnostics, the recap and share actions), with
+placeholders, brands and units preserved. CI fails when a new user-facing string
+has no bundled translation, and the machine-translation helper now drafts into a
+proposal file instead of overwriting the catalog. A paused or pending download
+queue survives a process kill, and every APK is signed with one pinned
+certificate so updates install over the previous version. Nothing visual changed.
+
 Ketvoice 4.3.0 (versionCode 81) adds card-origin artist/album reveals, saved tab
 positions, collapsing headers, skeletons and progressive artwork dissolution.
 Optional Bit-Perfect requests Android 14+'s compatible USB mixer contract and
