@@ -10,6 +10,15 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.5.0 (versionCode 84) unifies the floating glass enclosure and removes
+scaled/diffused karaoke word copies. The player gains explicit page choices and
+anchored phone controls. Library views, local album grouping, persistent playlist
+pins and multiple selection are joined by offline filters and confirmed batch
+deletion. Home leads with local Resume and pins, without extra recommendation
+requests. French and eleven interface languages, Canvas and optional Stats info
+remain. The release documents physical phone/Quest/GPU checks as unvalidated.
+Existing screenshots depict earlier versions, not a newly tested physical 4.5.0.
+
 Ketvoice 4.4.0 (versionCode 83) refines the optical glass and rebuilds Downloads
 and Albums. Transfers and playable offline files have separate sections, with
 local search, honest byte progress and confirmation before deleting a file.
