@@ -10,6 +10,14 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.6.1 (versionCode 87) repairs lossless and Tidal playback: DASH and native
+FLAC answers are parsed with their MIME type and codec, extensionless manifests are
+played through Media3's DASH source, Play/Pause during loading keeps the requested
+state, real failures replace the endless spinner, and the Lossless addon is registered
+once as the first playback source with a periodic keep-alive while the process lives.
+The owner requested this build and push without a connected phone or Quest, so audible
+lossless playback was not validated; that limit is recorded in the release metadata.
+
 Ketvoice 4.6.0 (versionCode 86) centralizes visual tokens, adds an adjustable live
 glass tint with persistence and explicit AGSL/blur/static fallbacks, and refines
 settings, collection headers, Explorer and floating sheets. The separate
