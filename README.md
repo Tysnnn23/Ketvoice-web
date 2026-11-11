@@ -10,6 +10,16 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.4.0 (versionCode 83) refines the optical glass and rebuilds Downloads
+and Albums. Transfers and playable offline files have separate sections, with
+local search, honest byte progress and confirmation before deleting a file.
+Albums retain edge-to-edge phone artwork with a compact identity, a side-by-side
+landscape header, large-font actions and numbered track rows. Glass uses a narrow
+refracting rim, less blur and one navigation-selection material; reduced motion
+also removes colour fades. Player Canvas, karaoke, optional Stats info and French
+by default among eleven interface languages are retained. Host software tests are
+not physical phone/Quest or GPU validation; the release metadata records this.
+
 Ketvoice 4.3.1 (versionCode 82) completes the interface translations: the 116
 user-facing strings that only existed in French are now written in all ten other
 tables (playback and source ordering, the Bit-Perfect panel, download states,
