@@ -53,7 +53,7 @@
   // fall back to the releases/latest page, which GitHub keeps current by itself.
   const LATEST_PAGE='https://github.com/'+CONFIG.repo+'/releases/latest';
   const store={get(k,ttl){try{const v=JSON.parse(localStorage.getItem(k)||'null');return v&&Date.now()-v.t<ttl?v.d:null}catch(e){return null}},set(k,d){try{localStorage.setItem(k,JSON.stringify({t:Date.now(),d}))}catch(e){}}};
-  const apkUrl=(assets,quest)=>((assets||[]).find(a=>/\.apk$/i.test(a.name||'')&&/quest/i.test(a.name)===quest)||{}).browser_download_url;
+  const apkUrl=(assets,quest)=>{const matches=(assets||[]).filter(a=>/\.apk$/i.test(a.name||'')&&/quest/i.test(a.name)===quest);return(matches.find(a=>/^Ketvoice-/i.test(a.name))||matches[0]||{}).browser_download_url};
   function showRelease(r){const rv=$('#release-version');if(rv&&r.tag)rv.textContent='Latest release: '+r.tag;const a=$('#android-apk'),q=$('#quest-apk');if(a)a.href=r.android||LATEST_PAGE;if(q)q.href=r.quest||LATEST_PAGE}
   // WHAT'S NEW: the download section mirrors the body of the latest GitHub
   // release, so the site stays in sync with every published version.
