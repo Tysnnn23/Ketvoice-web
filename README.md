@@ -10,6 +10,14 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.6.0 (versionCode 86) centralizes visual tokens, adds an adjustable live
+glass tint with persistence and explicit AGSL/blur/static fallbacks, and refines
+settings, collection headers, Explorer and floating sheets. The separate
+navigation, cover-first player, clean karaoke, Canvas and Quest landscape layout
+remain. The owner accepted publication without phone/emulator GPU calibration;
+some secondary legacy dialogs still use Material. These limits are in the English
+release notes and validation metadata. Existing screenshots depict earlier builds.
+
 Ketvoice 4.5.1 (versionCode 85) restores the pre-4.5 navigation and music-player
 presentation: separate mini-player, tab capsule and search surfaces; phone title
 and actions below artwork; no added player page selector at the top. The clean
