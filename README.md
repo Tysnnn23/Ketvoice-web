@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.5.1 (versionCode 85) restores the pre-4.5 navigation and music-player
+presentation: separate mini-player, tab capsule and search surfaces; phone title
+and actions below artwork; no added player page selector at the top. The clean
+4.5 lyric renderer is retained unchanged, alongside pins, local albums, selection,
+offline filters and confirmed deletion. No physical phone/Quest or GPU check is
+claimed. Downloads and live English release notes follow the latest stable tag.
+
 Ketvoice 4.5.0 (versionCode 84) unifies the floating glass enclosure and removes
 scaled/diffused karaoke word copies. The player gains explicit page choices and
 anchored phone controls. Library views, local album grouping, persistent playlist
