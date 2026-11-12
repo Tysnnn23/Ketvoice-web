@@ -10,6 +10,15 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.7.0 (versionCode 88) is prepared as a draft, not a stable public release.
+It introduces pressure-reactive AGSL edge refraction,
+directional reflections and independent slider-track capture. Library, Downloads,
+Albums and Settings use a cohesive outline icon family, editorial hierarchy, matte
+content and floating optical controls. The restored navigation/player layout and
+all audio behavior remain. Host tests are not physical GPU/phone/Quest validation;
+emulator setup was blocked by insufficient disk space. Existing screenshots are
+from earlier builds, not evidence of physical-device validation of 4.7.0.
+
 Ketvoice 4.6.1 (versionCode 87) repairs lossless and Tidal playback: DASH and native
 FLAC answers are parsed with their MIME type and codec, extensionless manifests are
 played through Media3's DASH source, Play/Pause during loading keeps the requested
