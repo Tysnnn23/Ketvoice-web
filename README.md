@@ -10,6 +10,14 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.8.3 (versionCode 92) collapses the floating chrome into one liquid-glass
+row while a page is scrolled: Home on the left, a smaller mini-player in the middle
+and Search on the right. The three-tab capsule morphs into the Home button, the
+mini-player shrinks continuously with 48 dp transport targets, and scrolling back up
+restores the full layout. The 4.8.2 Discord RPC presence and 4.8.1 device-language
+behaviour are retained. Physical phone/Quest playback and the real glass motion were
+not validated.
+
 Ketvoice 4.8.2 (versionCode 91) publishes Discord presence through the installed
 Discord app over RPC, without account linking or a gateway Ready state. The new
 "Afficher via l'app Discord" action reports the SDK result for every update, keeps
