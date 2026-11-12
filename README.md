@@ -10,7 +10,15 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
-Ketvoice 4.7.0 (versionCode 88) is prepared as a draft, not a stable public release.
+Ketvoice 4.8.0 (versionCode 89) restores the saved queue paused, progressively
+shows source results, offers provider choices, per-track lyric timing adjustments
+and a personal backup preview with non-destructive playlist merging. Both release
+APKs include Discord. Offline DASH requires explicitly authorized unprotected
+FLAC streams; the current Lossless source does not declare download permission.
+Physical phone/Quest playback, real Discord authorization and DAC output were not
+validated. Existing screenshots depict earlier builds.
+
+Ketvoice 4.7.0 (versionCode 88) is a previous stable public release.
 It introduces pressure-reactive AGSL edge refraction,
 directional reflections and independent slider-track capture. Library, Downloads,
 Albums and Settings use a cohesive outline icon family, editorial hierarchy, matte
