@@ -10,6 +10,15 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.8.1 (versionCode 90) starts in the phone's language whenever it is one of
+the eleven supported languages, with an explicit System language entry in Settings,
+and clears a previously pinned per-app locale. Discord linking no longer stays on
+"waiting for the Discord app": the connection has a bounded deadline, retries with
+backoff, reports account and presence separately, reads the authorization code from
+the bridge page and publishes presence as Listening. All 4.8.0 playback, search,
+backup, lyric and restricted offline DASH behaviour remains. Physical phone/Quest
+playback, the real Discord presence round-trip and DAC output were not validated.
+
 Ketvoice 4.8.0 (versionCode 89) restores the saved queue paused, progressively
 shows source results, offers provider choices, per-track lyric timing adjustments
 and a personal backup preview with non-destructive playlist merging. Both release
