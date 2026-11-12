@@ -10,6 +10,14 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.8.2 (versionCode 91) publishes Discord presence through the installed
+Discord app over RPC, without account linking or a gateway Ready state. The new
+"Afficher via l'app Discord" action reports the SDK result for every update, keeps
+the Listening type with the track title in the status line, and leaves account
+linking as an advanced option. The 4.8.1 device-language behaviour and all 4.8.0
+playback, search, backup and lyric work remain. Physical phone/Quest playback, the
+real Discord RPC presence and DAC output were not validated.
+
 Ketvoice 4.8.1 (versionCode 90) starts in the phone's language whenever it is one of
 the eleven supported languages, with an explicit System language entry in Settings,
 and clears a previously pinned per-app locale. Discord linking no longer stays on
