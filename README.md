@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.9.0 (versionCode 94) adds Liquid 27, a fourth glass style next to
+Clair, Dépoli and Opaque: continuous corners, uniform edge refraction, defined
+borders instead of shadows, a Clear ↔ Tinted slider, tilt-following highlights, a
+touch glow and a scroll-edge fade. Discord presence now receives the SDK callbacks
+it was missing, Skip silence works again, sharing the current track on the website
+is opt-in, and the lyrics, artwork and Canvas caches are bounded.
+
 Ketvoice 4.8.4 (versionCode 93) fixes the collapsed chrome on 320–379 dp phones:
 the 380 dp gate used to disable the animation on common 360 dp screens. Home, the
 smaller mini-player and Search now dock in one glass row while scrolled, and the
