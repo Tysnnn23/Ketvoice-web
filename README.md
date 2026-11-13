@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.10.0 (versionCode 95) is a design release: the player artwork grows out
+of the mini-player cover, Android 14+ gets predictive back, and scrolled tabs show a
+compact glass title. In Liquid 27, Home, the mini-player and Search merge and split
+like droplets; the glass takes a light tint from the cover and a slow colour mesh
+moves behind the player. A home-screen widget, a tabletop layout for flip-style
+phones, haptics and screen-reader improvements complete the release.
+
 Ketvoice 4.9.0 (versionCode 94) adds Liquid 27, a fourth glass style next to
 Clair, Dépoli and Opaque: continuous corners, uniform edge refraction, defined
 borders instead of shadows, a Clear ↔ Tinted slider, tilt-following highlights, a
