@@ -10,6 +10,10 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.14.1 (versionCode 100) changes the artist page: the portrait fills the top
+of the page again and dissolves, without a line, into a colour taken from the photo,
+which tints the whole page.
+
 Ketvoice 4.14.0 (versionCode 99) gives album, playlist, artist and Downloads one
 layout: the cover's colours blurred edge to edge, the artwork floating over them, the
 name centred, then Play and Shuffle as a pair, with a glass title bar that follows
