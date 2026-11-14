@@ -10,6 +10,11 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.16.1 (versionCode 104) shows refreshed covers, Canvas and artist photos
+chosen by Ketvoice across the app — player, mini-player, lists, search, Home, album and
+artist pages, lock screen and widget — without an app update.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v4.16.1.md).
+
 Ketvoice 4.16.0 (versionCode 103) makes Home more personal: a For you card (resume,
 new release, mix of the hour), new releases from your artists, your week and shelves
 that follow what you open. The player artwork steps back when paused, the mini-player
