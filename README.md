@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.0.0 (versionCode 106) brings Automix: titles flow into each other like a
+mix (matched tempos, aligned beats, a bass hand-over, never over a sung line), with a
+crossfade when two titles do not share a tempo and nothing at all for albums played in
+order. It is switched on from the queue or from Settings. Album and artist pages gather
+their actions in one capsule of glass.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.0.0.md).
+
 Ketvoice 4.17.0 (versionCode 105) fixes Share a moment from lyrics, keeps sung lines
 white, smooths the Cascade style, brings the floating bar back on a small scroll up,
 pushes pages like on iOS, adds a bevel highlight to Liquid Glass, tightens the album
