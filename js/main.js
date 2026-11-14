@@ -60,18 +60,22 @@
   function renderWhatsNew(tag,body){
     const box=$('#release-notes');if(!box||!body)return;
     const esc=v=>v.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    // Each "## Section" keeps its bullet points as a list; a wrapped line continues its bullet.
     const items=[];let cur=null;
     for(const raw of body.split(/\r?\n/)){
       const line=raw.trim();
       if(/^##\s+(?:Install|Validation)/i.test(line))break;
-      if(/^#\s/.test(line)||/^\*\*versionCode/.test(line))continue;
-      if(/^##\s+/.test(line)){cur={title:line.replace(/^##\s+/,''),text:''};items.push(cur)}
-      else if(cur&&line)cur.text+=(cur.text?' ':'')+line;
+      if(/^#\s/.test(line)||/^\*\*versionCode/.test(line)||/^!\[/.test(line))continue;
+      if(/^##\s+/.test(line)){cur={title:line.replace(/^##\s+/,''),points:[]};items.push(cur)}
+      else if(cur&&/^[-*]\s+/.test(line))cur.points.push(line.replace(/^[-*]\s+/,''));
+      else if(cur&&line){if(cur.points.length)cur.points[cur.points.length-1]+=' '+line;else cur.points.push(line)}
     }
     if(!items.length)return;
     const t=$('#release-notes-title');if(t)t.textContent='What\'s new in '+tag;
-    const clean=v=>esc(v).split('*').join('').split('`').join('');
-    $('#release-notes-list').innerHTML=items.slice(0,6).map(i=>'<li><strong>'+clean(i.title)+'</strong><span>'+clean(i.text)+'</span></li>').join('');
+    // **Lead.** becomes a bold lead-in; other markdown marks are dropped.
+    const clean=v=>esc(v).replace(/\*\*([^*]+)\*\*/g,'<b>$1</b>').split('*').join('').split('`').join('');
+    $('#release-notes-list').innerHTML=items.slice(0,6).map(i=>'<li><strong>'+clean(i.title)+'</strong><ul class="rn-points">'+
+      i.points.slice(0,8).map(pt=>'<li>'+clean(pt)+'</li>').join('')+'</ul></li>').join('');
     box.hidden=false;
   }
    let releaseBusy=false;
@@ -138,3 +142,5 @@
    setInterval(()=>{if(!document.hidden)updateGitHub(true)},60000);
    document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateGitHub(true)});
 })();
+// A hairline at the top follows the reading position (hidden with reduced motion).
+(()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const bar=document.createElement('div');bar.className='scroll-progress';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);let queued=false;const update=()=>{queued=false;const max=document.documentElement.scrollHeight-innerHeight;bar.style.setProperty('--scroll',max>0?Math.min(1,scrollY/max).toFixed(4):'0')};addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(update)}},{passive:true});addEventListener('resize',update);update()})();

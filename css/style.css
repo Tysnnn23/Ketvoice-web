@@ -262,3 +262,23 @@ footer{background:#0e1115;color:#d7dce2;padding:55px 0 30px;border-top:1px solid
 .release-notes li strong{display:block;color:#111318;font-size:13.5px;letter-spacing:-.02em;font-weight:680;margin-bottom:3px}
 @media(max-width:600px){.release-notes{padding:18px 18px 4px;margin-top:24px}.release-notes h3{font-size:16px}.release-notes li{font-size:11.5px;padding:10px 0}}
 @media(prefers-reduced-motion:reduce){.release-notes{transition:none}}
+/* 4.17 polish: release-note bullets, a readable footnote card, softer reveals and a scroll indicator. */
+.release-notes .rn-points{margin:6px 0 2px;padding:0;display:grid;gap:6px}
+.release-notes .rn-points li{border:0;padding:0 0 0 18px;position:relative;color:#6d727a}
+.release-notes .rn-points li:before{content:"";position:absolute;left:3px;top:.72em;width:6px;height:6px;border-radius:50%;background:linear-gradient(145deg,#9fb4c4,#5d7385);box-shadow:0 0 0 3px rgba(93,115,133,.12)}
+.release-notes .rn-points b{color:#22272e;font-weight:680}
+.release-notes>ul>li{transition:background .3s ease}
+.release-notes>ul>li:hover{background:linear-gradient(90deg,rgba(120,140,160,.05),transparent 70%)}
+.container>.download-footnote{max-width:760px;margin:26px auto;padding:16px 22px;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);color:#a6adb6;font-size:12px;line-height:1.75;box-shadow:inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(12px)}
+.container>.download-footnote a{color:#dfe7ee}
+.scroll-progress{position:fixed;z-index:120;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(var(--scroll,0));background:linear-gradient(90deg,#7fa3bd,#e8f1f7 60%,#ffffff);opacity:.85;pointer-events:none}
+.js .reveal{transform:translateY(28px) scale(.985);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.16,1,.3,1),filter .8s ease}
+.js .reveal.visible{transform:none}
+.js .reveal-group>*{transform:translateY(26px) scale(.985);transition:opacity .85s cubic-bezier(.2,.8,.2,1),transform .95s cubic-bezier(.16,1,.3,1)}
+.download-row{transition:background .3s ease,transform .45s cubic-bezier(.16,1,.3,1)}
+.download-row:hover{transform:translateX(4px)}
+.capability{transition:background .35s ease}
+.capability:hover{background:linear-gradient(160deg,#ffffff,#f3f6f8)}
+.capability .icon{transition:transform .5s cubic-bezier(.34,1.56,.64,1)}
+.capability:hover .icon{transform:translateY(-3px) scale(1.12)}
+@media(prefers-reduced-motion:reduce){.scroll-progress{display:none}.js .reveal,.js .reveal-group>*{transform:none!important}.download-row:hover{transform:none}.capability:hover .icon{transform:none}}
