@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.13.0 (versionCode 98) gives every collection the same two glass buttons:
+a prominent capsule tinted with the accent colour for the main action and plain glass
+capsules for the others. In Liquid 27 they swell under the finger and settle with a
+small bounce. Playlist, artist and Downloads headers glow with the colours of their
+cover, and the droplet morph of the navigation bar is 3 % slower.
+
 Ketvoice 4.12.0 (versionCode 97) brings Next and Previous to the notification, the
 lock screen and headset buttons. Shuffle reorders the visible queue, Previous returns
 to the title you came from, and repeat cycles through off, queue and title. The queue
