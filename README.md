@@ -10,6 +10,16 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.12.0 (versionCode 97) brings Next and Previous to the notification, the
+lock screen and headset buttons. Shuffle reorders the visible queue, Previous returns
+to the title you came from, and repeat cycles through off, queue and title. The queue
+reorders live, removes with a swipe and Undo, and can be cleared or saved as a
+playlist. A sleep timer reaches phones, a swipe on the mini-player or the artwork
+changes title, and every list of titles shares the same swipe and long-press
+gestures. Replay shows real listening time, Local music gains search, sorting and
+Albums/Artists views, Search gains an Albums shelf and a whole-library scope, and
+Explorer opens on the catalogue chart.
+
 Ketvoice 4.11.0 (versionCode 96) makes Home personal: a greeting for the time of
 day, shortcuts to what is on the device, and after ten plays up to four mixes built
 from the listening history (artist, similar style, on repeat, rediscover), each of
