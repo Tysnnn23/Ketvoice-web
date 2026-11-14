@@ -10,6 +10,10 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.15.0 (versionCode 102) gives the album page the effect of the artist page:
+the cover or its Canvas fills the top, dissolves into a colour taken from it, and that
+colour tints the whole page. The artwork is sized to the window and never cut to a band.
+
 Ketvoice 4.14.2 (versionCode 101) makes the droplet morph of the navigation bar 17 %
 slower than its original speed.
 
