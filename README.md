@@ -10,6 +10,11 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.16.0 (versionCode 103) makes Home more personal: a For you card (resume,
+new release, mix of the hour), new releases from your artists, your week and shelves
+that follow what you open. The player artwork steps back when paused, the mini-player
+plays the Canvas, lyrics gain a Cascade style, and lyric lines become shareable cards.
+
 Ketvoice 4.15.0 (versionCode 102) gives the album page the effect of the artist page:
 the cover or its Canvas fills the top, dissolves into a colour taken from it, and that
 colour tints the whole page. The artwork is sized to the window and never cut to a band.
