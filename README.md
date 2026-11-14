@@ -10,6 +10,9 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.14.2 (versionCode 101) makes the droplet morph of the navigation bar 17 %
+slower than its original speed.
+
 Ketvoice 4.14.1 (versionCode 100) changes the artist page: the portrait fills the top
 of the page again and dissolves, without a line, into a colour taken from the photo,
 which tints the whole page.
