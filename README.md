@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.11.0 (versionCode 96) makes Home personal: a greeting for the time of
+day, shortcuts to what is on the device, and after ten plays up to four mixes built
+from the listening history (artist, similar style, on repeat, rediscover), each of
+which can be saved as a playlist. Downloads is redesigned with a storage summary,
+Titles/Albums/Artists views, sorting and format badges.
+
 Ketvoice 4.10.0 (versionCode 95) is a design release: the player artwork grows out
 of the mini-player cover, Android 14+ gets predictive back, and scrolled tabs show a
 compact glass title. In Liquid 27, Home, the mini-player and Search merge and split
