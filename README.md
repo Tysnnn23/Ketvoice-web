@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 4.17.0 (versionCode 105) fixes Share a moment from lyrics, keeps sung lines
+white, smooths the Cascade style, brings the floating bar back on a small scroll up,
+pushes pages like on iOS, adds a bevel highlight to Liquid Glass, tightens the album
+page and shows more artist signatures.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v4.17.0.md).
+
 Ketvoice 4.16.1 (versionCode 104) shows refreshed covers, Canvas and artist photos
 chosen by Ketvoice across the app — player, mini-player, lists, search, Home, album and
 artist pages, lock screen and widget — without an app update.
