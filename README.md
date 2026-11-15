@@ -10,6 +10,14 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.2.0 (versionCode 108) turns Automix into Ketmix (beta): six kinds of transition
+chosen from the two titles (in time with tempos that meet, echo out, crossing of filters,
+dissolve, cut on the beat, a plain crossfade as a last resort), the key of each title read and
+shown, three analysis settings, and its switch in the bar under the transport. The dark theme
+is new (a neutral near-black, pages lit by the accent colour) and Home is rebuilt around a
+lead card, tiles and the week in seven bars.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.2.0.md).
+
 Ketvoice 5.1.0 (versionCode 107) makes Automix explain itself: a status line in the queue and
 in Settings says what it is doing or why it is not mixing. It mixes albums too (a setting, on by
 default), prepares the next title two and a half minutes ahead and mixes more boldly; artist
