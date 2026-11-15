@@ -10,6 +10,13 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.3.0 (versionCode 109) starts Ketmix mixes on eight-bar phrases, brings the next
+title in highs, mids then bass, mixes a title on repeat into its own start, adds a transition
+style setting, an animated mix strip and an optional vibration on the bass swap. Liquid Glass gets
+a squircle bezel, a Fresnel edge, glass that forms by bending the light, calmer springs and switches
+that turn into lenses; the queue can be edited several titles at a time and shuffle repeats less.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.3.0.md).
+
 Ketvoice 5.2.0 (versionCode 108) turns Automix into Ketmix (beta): six kinds of transition
 chosen from the two titles (in time with tempos that meet, echo out, crossing of filters,
 dissolve, cut on the beat, a plain crossfade as a last resort), the key of each title read and
