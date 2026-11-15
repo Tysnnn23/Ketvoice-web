@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.1.0 (versionCode 107) makes Automix explain itself: a status line in the queue and
+in Settings says what it is doing or why it is not mixing. It mixes albums too (a setting, on by
+default), prepares the next title two and a half minutes ahead and mixes more boldly; artist
+signatures are shown even when the artwork service is busy.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.1.0.md).
+
 Ketvoice 5.0.0 (versionCode 106) brings Automix: titles flow into each other like a
 mix (matched tempos, aligned beats, a bass hand-over, never over a sung line), with a
 crossfade when two titles do not share a tempo and nothing at all for albums played in
