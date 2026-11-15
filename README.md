@@ -10,6 +10,11 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.4.1 (versionCode 111) keeps Ketmix transitions filtered and echoed instead of falling back
+to a plain fade, lets a last note at full level ring on in an echo past the end of the title, and brings
+a next title that does not sing yet in under the last sung words while the outgoing voice steps back.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.4.1.md).
+
 Ketvoice 5.4.0 (versionCode 110) gives Ketmix blends of up to 16 bars, tempo matching up to
 5/8/12 %, blends that start under the last sung bars while the outgoing voice steps back, and a
 copyable mix journal; the chosen accent colour applies everywhere except album pages, artist pages
