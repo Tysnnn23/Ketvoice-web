@@ -10,6 +10,12 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.4.0 (versionCode 110) gives Ketmix blends of up to 16 bars, tempo matching up to
+5/8/12 %, blends that start under the last sung bars while the outgoing voice steps back, and a
+copyable mix journal; the chosen accent colour applies everywhere except album pages, artist pages
+and the player, and recent titles on Home are a shelf of large covers.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.4.0.md).
+
 Ketvoice 5.3.0 (versionCode 109) starts Ketmix mixes on eight-bar phrases, brings the next
 title in highs, mids then bass, mixes a title on repeat into its own start, adds a transition
 style setting, an animated mix strip and an optional vibration on the bass swap. Liquid Glass gets
