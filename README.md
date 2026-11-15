@@ -10,6 +10,10 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.5.0 (versionCode 112) makes Ketmix play far more titles in time (tempo read where the drums
+play, blends within 6/14/18 %), and adds Ket 27 (Alpha), an optional interface in the manner of iOS 27.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.5.0.md).
+
 Ketvoice 5.4.1 (versionCode 111) keeps Ketmix transitions filtered and echoed instead of falling back
 to a plain fade, lets a last note at full level ring on in an echo past the end of the title, and brings
 a next title that does not sing yet in under the last sung words while the outgoing voice steps back.
