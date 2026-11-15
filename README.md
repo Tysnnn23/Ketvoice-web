@@ -10,9 +10,9 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
-Ketvoice 5.8.0 (versionCode 115) is faster, keeps the music playing behind other apps, searches by lyrics,
-adds radios and offline favourites, and brings an Apple-style library, pages, animations and a Liquid Glass icon.
-[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.8.0.md).
+Ketvoice 5.8.1 (versionCode 116) makes titles start again and the app smooth again, keeps every feature
+of 5.8.0 and brings a new Liquid Glass app icon.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.8.1.md).
 
 Ketvoice 5.6.0 (versionCode 113) makes Ket 27 (Alpha) the default interface with the regular glass of
 iOS 27, buffers more audio against gaps behind other apps, and keeps Ketmix filters and echoes through tempo nudges.
