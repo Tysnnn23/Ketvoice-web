@@ -10,6 +10,10 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.6.0 (versionCode 113) makes Ket 27 (Alpha) the default interface with the regular glass of
+iOS 27, buffers more audio against gaps behind other apps, and keeps Ketmix filters and echoes through tempo nudges.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.6.0.md).
+
 Ketvoice 5.5.0 (versionCode 112) makes Ketmix play far more titles in time (tempo read where the drums
 play, blends within 6/14/18 %), and adds Ket 27 (Alpha), an optional interface in the manner of iOS 27.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.5.0.md).
