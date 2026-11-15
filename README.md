@@ -10,6 +10,10 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 5.7.0 (versionCode 114) keeps Ketmix free of speed effects and adds a build-up transition, lets
+listeners block or keep artists from the search, translates artist biographies and adds the held tab lens.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.7.0.md).
+
 Ketvoice 5.6.0 (versionCode 113) makes Ket 27 (Alpha) the default interface with the regular glass of
 iOS 27, buffers more audio against gaps behind other apps, and keeps Ketmix filters and echoes through tempo nudges.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.6.0.md).
