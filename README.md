@@ -10,9 +10,9 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
-Ketvoice 5.9.2 (versionCode 121) adds lyrics videos to share, a performance mode that keeps the effects
-visible, and a like that no longer moves the player.
-[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.9.2.md).
+Ketvoice 5.10.0 (versionCode 122) makes Ketmix really separate the voices with an optional on-device model,
+keeps playback going when the network drops, adds a playback log and lyrics videos with the song's sound.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.10.0.md).
 
 Ketvoice 5.6.0 (versionCode 113) makes Ket 27 (Alpha) the default interface with the regular glass of
 iOS 27, buffers more audio against gaps behind other apps, and keeps Ketmix filters and echoes through tempo nudges.
