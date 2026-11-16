@@ -10,6 +10,11 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 6.0.0 Beta 4 (versionCode 127) brings Ketmix to AutoMix's level (beat matching, a glide back to each
+song's tempo, a three-band mixer), an instant voice slider, gapless quality upgrades and a finer Ket 27 with the
+new glass icon.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.0.0-beta.4.md).
+
 Ketvoice 6.0.0 Beta 3 (versionCode 126) puts the voice level slider on every song: the song you are hearing is
 separated on the phone when you touch it.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.0.0-beta.3.md).
