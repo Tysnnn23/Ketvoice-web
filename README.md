@@ -10,9 +10,10 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
-Ketvoice 6.0.0 Beta (versionCode 124), the first beta of Ketvoice 6, adds an optional high-quality voice
-separation model to Ketmix, with cleaner instrumentals and voices.
-[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.0.0-beta.md).
+Ketvoice 6.0.0 Beta 2 (versionCode 125) is the Ketvoice 6 redesign: Ket 27 as the only interface, Cascade
+lyrics, the glass menu on every song, tablet and large-window layouts, and a voice level slider on the lyrics
+screen for separated downloads.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.0.0-beta.2.md).
 
 Ketvoice 5.6.0 (versionCode 113) makes Ket 27 (Alpha) the default interface with the regular glass of
 iOS 27, buffers more audio against gaps behind other apps, and keeps Ketmix filters and echoes through tempo nudges.
