@@ -10,6 +10,10 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
+Ketvoice 6.0.0 Beta 3 (versionCode 126) puts the voice level slider on every song: the song you are hearing is
+separated on the phone when you touch it.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.0.0-beta.3.md).
+
 Ketvoice 6.0.0 Beta 2 (versionCode 125) is the Ketvoice 6 redesign: Ket 27 as the only interface, Cascade
 lyrics, the glass menu on every song, tablet and large-window layouts, and a voice level slider on the lyrics
 screen for separated downloads.
