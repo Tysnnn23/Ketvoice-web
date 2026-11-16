@@ -10,9 +10,9 @@ page is visible, and when returning to the tab. The banner is the canonical
 `https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
 Existing animations, live-listener integration and upstream changes are retained.
 
-Ketvoice 5.8.2 (versionCode 117) fixes the reading error that stopped every title in 5.8.0 and 5.8.1 and
-makes the app smoother while music plays, every effect kept.
-[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.8.2.md).
+Ketvoice 5.8.3 (versionCode 118) places the artist radio under the artist page's buttons, labels album
+buttons Play and translates Home's For you card.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v5.8.3.md).
 
 Ketvoice 5.6.0 (versionCode 113) makes Ket 27 (Alpha) the default interface with the regular glass of
 iOS 27, buffers more audio against gaps behind other apps, and keeps Ketmix filters and echoes through tempo nudges.
