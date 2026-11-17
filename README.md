@@ -15,6 +15,30 @@ carries those assets, and stay hidden otherwise (`apkUrl` in `js/main.js`, teste
 (`assets/banner-vc-*.avif|webp`, PNG fallback).
 Existing animations, live-listener integration and upstream changes are retained.
 
+## Changelog page (`/changelog`)
+
+`changelog.html` (served at `/changelog` by the `vercel.json` rewrite) reads every release of `Tysnnn23/Ketvoice`
+from the public GitHub API (`/releases?per_page=100`, page by page), cached ten minutes in `localStorage`. When the
+API is rate limited or offline it reads `data/releases.json`, a trimmed copy committed in the repo; refresh it with
+`node tools/update-releases-cache.cjs page1.json page2.json …` (pages saved from `gh api 'repos/Tysnnn23/Ketvoice/releases?per_page=100&page=N'`).
+`js/changelog-data.js` parses each release's notes (headings → sections, bullets → points, install/validation/limits
+sections dropped), finds the channel (stable, beta — beta tags count even when GitHub does not flag a pre-release —
+or "resource" for the voice models), the feature tags (Ketogether, Ketmix, Lyrics, Voice slider, Vice City, Android
+Auto, Design, Discord, Fixes, from headings and bold lead-ins), the banner and screenshots, and one download button per
+APK. Filters, search and `#v6.1.0` links live in the URL. Cards rise in as they enter; nothing moves with reduced
+motion. Tests: `node tests/changelog-parser.test.cjs`.
+
+## Share page (`/listen`)
+
+`listen.html` is the same file as `listen.html` in `Tysnnn23/Ketvoice` (GitHub Pages, the address the app's share
+and Ketogether links use); the `/listen` rewrite serves it here too, without changing the app's links. It keeps
+every parameter of the original page (`track`, `title`, `artist`, `kind=album|together`, `noredirect`, plus
+`playlist`/`collection` + `name`) and its `intent://` deep link with the `noredirect=1` fallback, character for
+character. Optional new parameters: `cover` (an https image), `t` (seconds or m:ss) and `line`. The « paroles du
+moment » are one or two lines from LRCLIB's synced lyrics (the line at `t`, else the most repeated line), never the
+whole text. Preview tags (Open Graph / Twitter) are static: link-preview robots do not run JavaScript, and per-title
+previews would need server rendering.
+
 ## Vice City edition (until 10 December 2026)
 
 The site wears the limited Vice City theme of the app in the design language of
