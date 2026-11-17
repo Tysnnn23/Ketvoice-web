@@ -3,23 +3,6 @@
  const CONFIG={repo:'Tysnnn23/Ketvoice',discordInvite:'https://discord.gg/FyKjAXHvfY',activeListenersEndpoint:'https://xodklrunqlzyeiqtovgx.supabase.co/functions/v1/ketvoice-api/listeners'};
  const $=(s)=>document.querySelector(s), $$=(s)=>[...document.querySelectorAll(s)];
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
- const screens={
-  player:{title:'Music, up close.',desc:'A reversible player reveal, full-frame Canvas and optional Stats info. Bit-Perfect requests Android 14+ compatible USB mixer playback with transparent standard fallback; room reverb and progressive quality remain available in standard mode.',src:'assets/player.webp',name:'THE PLAYER',shade:'radial-gradient(ellipse 55% 62% at 55% 58%,#ff7a8a 0%,#b0307f 34%,#3b1066 66%,#140726 92%)'},
-  lyrics:{title:'Every word, in time.',desc:'Synchronized words, backing vocals only in their turn, and smoothly returning playback controls.',src:'assets/lyrics.webp',name:'LIVE LYRICS',shade:'radial-gradient(ellipse 55% 62% at 55% 58%,#ff9a5c 0%,#c23a6e 36%,#43105e 68%,#140726 92%)'},
-  home:{title:'Your music, your space.',desc:'A spring-driven glass navigation lens, saved tab scroll positions and recent/featured tracks. In-app download controls include pause/resume and an optional Wi-Fi-only gate.',src:'assets/home.webp',name:'LISTEN NOW',shade:'radial-gradient(ellipse 55% 62% at 55% 58%,#3fd5f0 0%,#3a5cc0 36%,#30106a 68%,#140726 92%)'},
-  artist:{title:'Meet the artists.',desc:'Card-origin reveals, collapsing portrait headers, image-derived accents and discreet loading skeletons. Album artwork progressively dissolves into its local colour. Optional attributed Fanart.tv logos retain a normal-name fallback.',src:'assets/artist.webp',name:'ARTISTS',shade:'radial-gradient(ellipse 55% 62% at 55% 58%,#d65cff 0%,#7a2bb8 36%,#2f0f63 68%,#140726 92%)'}
- };
- let current='player';
- function swapIn(el,klass){el.classList.remove(klass);void el.offsetWidth;el.classList.add(klass)}
- function setScreen(key,focus=false){if(!screens[key]||current===key)return;current=key;const x=screens[key],dev=$('#screen-device');dev.classList.add('changing');$$('.screen-tab').forEach((tab,i)=>{const active=tab.dataset.screen===key;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1});$$('.stage-pagination [data-screen]').forEach(b=>{const active=b.dataset.screen===key;b.classList.toggle('on',active);b.setAttribute('aria-selected',String(active))});
-  const counter=$('#screen-counter'),title=$('#screen-title'),desc=$('#screen-description'),stage=$('#experience-stage');
-  counter.innerHTML=String(Object.keys(screens).indexOf(key)+1).padStart(2,'0')+' / 04 &nbsp; '+x.name;swapIn(counter,'counter-swap');
-  title.innerHTML=x.title;swapIn(title,'screen-title-swap');
-  desc.textContent=x.desc;swapIn(desc,'screen-desc-swap');
-  stage.style.background=x.shade;swapIn(stage,'sweep');
-  setTimeout(()=>{const im=$('#screen-img');im.src=x.src;im.alt='Ketvoice '+x.name.toLowerCase()+' real Android screenshot';dev.classList.remove('changing')},reduce?0:190);if(focus){$('.screen-tab[data-screen="'+key+'"]').focus()}}
- $$('.screen-tab').forEach(btn=>{btn.addEventListener('click',()=>setScreen(btn.dataset.screen));btn.addEventListener('keydown',e=>{if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;e.preventDefault();const keys=Object.keys(screens),i=keys.indexOf(btn.dataset.screen),next=keys[(i+(e.key==='ArrowRight'?1:keys.length-1))%keys.length];setScreen(next,true)})});
- $$('.stage-pagination [data-screen]').forEach(b=>b.addEventListener('click',()=>setScreen(b.dataset.screen)));
  const toggle=$('#menu-toggle'),mobile=$('#mobile-menu');toggle.addEventListener('click',()=>{const open=mobile.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close navigation':'Open navigation')});mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{mobile.classList.remove('open');toggle.setAttribute('aria-expanded','false')}));
  let toastTimer;function toast(m){const el=$('#toast');el.textContent=m;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),4000)}
  $$('.discord-action').forEach(btn=>btn.addEventListener('click',()=>{if(/^https:\/\//.test(CONFIG.discordInvite))window.open(CONFIG.discordInvite,'_blank','noopener,noreferrer');else toast('Add your Discord invite URL in CONFIG.discordInvite to enable this button.')}));
@@ -30,10 +13,9 @@
   const dz=y-lastY;lastY=y;const hz=$('.header-zone'),menuOpen=$('#mobile-menu').classList.contains('open');
   if(hz){if(!menuOpen&&y>430&&dz>6)hz.classList.add('idle');else if(dz<-6||y<=430||menuOpen)hz.classList.remove('idle')}
   const toTop=$('#to-top');if(toTop)toTop.classList.toggle('show',y>700);
-  const fade=Math.max(0,1-y/190),glow=$('#hero-glow'),hero=$('.hero');if(glow)glow.style.opacity=fade;if(hero)hero.classList.toggle('scene-paused',y>hero.offsetHeight);for(const s of sections){const r=s.getBoundingClientRect();if(r.top<innerHeight*.32&&r.bottom>120){$$('.nav-links a').forEach(a=>a.classList.toggle('active',a.hash==='#'+s.id));break}}scheduled=false})};window.addEventListener('scroll',scrollUpdate,{passive:true});scrollUpdate();
+  for(const s of sections){const r=s.getBoundingClientRect();if(r.top<innerHeight*.32&&r.bottom>120){$$('.nav-links a').forEach(a=>a.classList.toggle('active',a.hash==='#'+s.id));break}}scheduled=false})};window.addEventListener('scroll',scrollUpdate,{passive:true});scrollUpdate();
  const toTopBtn=$('#to-top');if(toTopBtn)toTopBtn.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'})});
  if('IntersectionObserver'in window){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.075,rootMargin:'0px 0px -25px 0px'});$$('.reveal,.reveal-group').forEach(x=>obs.observe(x))}else $$('.reveal,.reveal-group').forEach(x=>x.classList.add('visible'));
- if(!reduce&&$('#hero-glow')){let pointerTick=false;const glow=$('#hero-glow');$('.hero').addEventListener('pointermove',e=>{if(pointerTick)return;pointerTick=true;requestAnimationFrame(()=>{const r=$('.hero').getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5;const py=(e.clientY-r.top)/r.height-.5;glow.style.transform='translate('+px*30+'px,'+py*25+'px)';pointerTick=false})},{passive:true})}
 
  const format=new Intl.NumberFormat('en-US');
  // Counts a number from the current displayed value to the next one with an
@@ -59,7 +41,7 @@
   // Mobile and Quest always show (falling back to the latest-release page); the Lite and Wear rows only
   // appear when the latest release actually carries their APK.
   function showRelease(r){const rv=$('#release-version');if(rv&&r.tag)rv.textContent='Latest release: '+r.tag;const a=$('#android-apk'),q=$('#quest-apk');if(a)a.href=r.android||LATEST_PAGE;if(q)q.href=r.quest||LATEST_PAGE;
-   for(const k of ['lite','wear']){const row=$('#'+k+'-row'),btn=$('#'+k+'-apk');if(!row||!btn)continue;if(r[k])btn.href=r[k];row.hidden=!r[k]}
+   for(const k of ['lite','wear']){const row=$('#'+k+'-row'),btn=$('#'+k+'-apk'),soon=$('#coming [data-edition="'+k+'"]');if(soon)soon.hidden=!!r[k];if(!row||!btn)continue;if(r[k])btn.href=r[k];row.hidden=!r[k]}
    const sub=$('#download-sub');if(sub)sub.textContent=r.wear?'Free for Android, Meta Quest and Wear OS.':'Free for Android and Meta Quest.'}
   // WHAT'S NEW: the download section mirrors the body of the latest GitHub
   // release, so the site stays in sync with every published version.
@@ -83,7 +65,10 @@
     $('#release-notes-list').innerHTML=items.slice(0,6).map(i=>'<li><strong>'+clean(i.title)+'</strong><ul class="rn-points">'+
       i.points.slice(0,8).map(pt=>'<li>'+clean(pt)+'</li>').join('')+'</ul></li>').join('');
     box.hidden=false;
+    // The two first sections show; the rest opens on demand.
+    const more=$('#rn-more');if(more){more.hidden=items.slice(0,6).length<3;box.classList.toggle('collapsed',more.getAttribute('aria-expanded')!=='true')}
   }
+  const moreBtn=$('#rn-more');if(moreBtn)moreBtn.addEventListener('click',()=>{const open=moreBtn.getAttribute('aria-expanded')!=='true';moreBtn.setAttribute('aria-expanded',String(open));moreBtn.textContent=open?'Show less':'Show every change';$('#release-notes').classList.toggle('collapsed',!open)});
    let releaseBusy=false;
    async function updateLatest(force=false){
     if(releaseBusy)return;

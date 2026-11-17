@@ -17,12 +17,25 @@ Existing animations, live-listener integration and upstream changes are retained
 
 ## Vice City edition (until 10 December 2026)
 
-The site wears the limited Vice City theme of the app (owner, 2026-11-17): an animated
-CSS/SVG sunset hero (drifting sky, banded sun, palm silhouettes, perspective grid and sea
-shimmer — paused off-screen and off with `prefers-reduced-motion`), neon-edged glass cards,
-Outfit + Yellowtail from Google Fonts, the Vice City logo and favicons, and a Vice City /
-GTA VI note with « Ketvoice is not affiliated with Rockstar Games. ». Night is the default
-theme; the toggle switches to a pastel daylight variant.
+The site wears the limited Vice City theme of the app (owner, 2026-11-17: « fait paraître le
+site beaucoup moins vibecodé tout en ayant des animations de malade »). Art direction:
+- Type: Big Shoulders Display (condensed, display only), Schibsted Grotesk (text), IBM Plex
+  Mono (labels and metadata), from Google Fonts. One accent (sunset orange) for actions, the
+  pink neon only on « Vice City », glass only on the nav bar, no badges or icon-card grids.
+- Hero: the owner's VI sunset (`assets/hero-vi-*`, portrait crop `hero-vi-portrait-*` on tall
+  screens) pinned while the page scrolls into it: the sea layer dollies in around the horizon
+  faster than the sky, the sun glow sinks, the light grades to night, foreground fronds part
+  and the player rises from the sea. `--p` comes from a CSS scroll-driven animation
+  (`animation-timeline: view(block 0px)`) or from `js/scenes.js` where that is unsupported.
+- The headline's letters thin out under the cursor (variable weight, spring-damped), a
+  ticker of features drifts and skews with scroll speed, and « The player » pins a phone
+  that turns to each screen as its step crosses the middle of the screen.
+- `prefers-reduced-motion`: no pinning, no movement; everything is shown in its final state.
+- Copy describes what ships in 6.0 (Ketmix, voice slider, word-by-word lyrics, Android Auto,
+  Quest, Canvas). Lite, Wear OS and Ketogether are listed as « in the works for 6.1 »; the
+  Lite/Wear mentions disappear when their APKs are in the latest release.
+- « Ketvoice is not affiliated with Rockstar Games. » sits next to the VI artwork, in the
+  Vice City section and in the footer. Night is the default theme; the toggle gives daylight.
 
 Ketvoice 6.0.0 Beta 5 (versionCode 128) brings Android Auto (browse, search and voice), background playback that
 holds with three minutes read ahead, iOS 27 sliders that swell under the finger, and Ketmix's sign under the seek bar.
@@ -425,9 +438,10 @@ phone/Quest validation.
 
 - `index.html` — main page
 - `css/style.css` — styling, night/daylight themes and the Vice City scene
-- `js/main.js` — interactions, screen switcher, toast, download links (Mobile, Quest, Lite, Wear)
-- `assets/` — spring physics, magnetic buttons, glass motion, theme toggle, screenshots,
-  the Vice City logo (`ketvoice-logo-vc-*`), banner (`banner-vc-*`) and GTA VI art (`gta6-welcome-*`)
+- `js/main.js` — menu, toast, release notes, download links (Mobile, Quest, Lite, Wear), live stats
+- `js/scenes.js` — scroll scenes: hero progress fallback, kinetic headline, ticker, pinned story
+- `assets/` — magnetic buttons, glass nav, theme toggle, screenshots, the Vice City logo
+  (`ketvoice-logo-vc-*`), banner (`banner-vc-*`) and hero art (`hero-vi-*`)
 - `tests/release-assets.test.cjs` — release asset selection (`node tests/release-assets.test.cjs`)
 
 ## Run locally

@@ -61,7 +61,7 @@ test('the page has a hidden-by-default row and button for each optional edition'
     assert.match(html, new RegExp(`<div class="download-row" id="${edition}-row" hidden>`));
     assert.match(html, new RegExp(`id="${edition}-apk"`));
   }
-  for (const id of ['android-apk', 'quest-apk', 'release-version', 'release-notes', 'stat-downloads', 'stat-listeners', 'hero-glow']) {
+  for (const id of ['android-apk', 'quest-apk', 'release-version', 'release-notes', 'stat-downloads', 'stat-listeners', 'downloads-caption', 'listeners-caption', 'now-playing']) {
     assert.match(html, new RegExp(`id="${id}"`));
   }
 });
