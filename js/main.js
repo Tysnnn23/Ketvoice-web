@@ -4,10 +4,10 @@
  const $=(s)=>document.querySelector(s), $$=(s)=>[...document.querySelectorAll(s)];
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const screens={
-  player:{title:'Music, up close.',desc:'A reversible player reveal, full-frame Canvas and optional Stats info. Bit-Perfect requests Android 14+ compatible USB mixer playback with transparent standard fallback; room reverb and progressive quality remain available in standard mode.',src:'assets/player.webp',name:'THE PLAYER',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#65747e 0%,#29343d 40%,#131a23 86%)'},
-  lyrics:{title:'Every word, in time.',desc:'Synchronized words, backing vocals only in their turn, and smoothly returning playback controls.',src:'assets/lyrics.webp',name:'LIVE LYRICS',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#6a737b 0%,#343c40 40%,#15191d 86%)'},
-  home:{title:'Your music, your space.',desc:'A spring-driven glass navigation lens, saved tab scroll positions and recent/featured tracks. In-app download controls include pause/resume and an optional Wi-Fi-only gate.',src:'assets/home.webp',name:'LISTEN NOW',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#b8c3cf 0%,#6c7e8d 40%,#283440 86%)'},
-  artist:{title:'Meet the artists.',desc:'Card-origin reveals, collapsing portrait headers, image-derived accents and discreet loading skeletons. Album artwork progressively dissolves into its local colour. Optional attributed Fanart.tv logos retain a normal-name fallback.',src:'assets/artist.webp',name:'ARTISTS',shade:'radial-gradient(ellipse 50% 66% at 55% 47%,#71707d 0%,#424354 40%,#181b25 86%)'}
+  player:{title:'Music, up close.',desc:'A reversible player reveal, full-frame Canvas and optional Stats info. Bit-Perfect requests Android 14+ compatible USB mixer playback with transparent standard fallback; room reverb and progressive quality remain available in standard mode.',src:'assets/player.webp',name:'THE PLAYER',shade:'radial-gradient(ellipse 55% 62% at 55% 58%,#ff7a8a 0%,#b0307f 34%,#3b1066 66%,#140726 92%)'},
+  lyrics:{title:'Every word, in time.',desc:'Synchronized words, backing vocals only in their turn, and smoothly returning playback controls.',src:'assets/lyrics.webp',name:'LIVE LYRICS',shade:'radial-gradient(ellipse 55% 62% at 55% 58%,#ff9a5c 0%,#c23a6e 36%,#43105e 68%,#140726 92%)'},
+  home:{title:'Your music, your space.',desc:'A spring-driven glass navigation lens, saved tab scroll positions and recent/featured tracks. In-app download controls include pause/resume and an optional Wi-Fi-only gate.',src:'assets/home.webp',name:'LISTEN NOW',shade:'radial-gradient(ellipse 55% 62% at 55% 58%,#3fd5f0 0%,#3a5cc0 36%,#30106a 68%,#140726 92%)'},
+  artist:{title:'Meet the artists.',desc:'Card-origin reveals, collapsing portrait headers, image-derived accents and discreet loading skeletons. Album artwork progressively dissolves into its local colour. Optional attributed Fanart.tv logos retain a normal-name fallback.',src:'assets/artist.webp',name:'ARTISTS',shade:'radial-gradient(ellipse 55% 62% at 55% 58%,#d65cff 0%,#7a2bb8 36%,#2f0f63 68%,#140726 92%)'}
  };
  let current='player';
  function swapIn(el,klass){el.classList.remove(klass);void el.offsetWidth;el.classList.add(klass)}
@@ -30,10 +30,10 @@
   const dz=y-lastY;lastY=y;const hz=$('.header-zone'),menuOpen=$('#mobile-menu').classList.contains('open');
   if(hz){if(!menuOpen&&y>430&&dz>6)hz.classList.add('idle');else if(dz<-6||y<=430||menuOpen)hz.classList.remove('idle')}
   const toTop=$('#to-top');if(toTop)toTop.classList.toggle('show',y>700);
-  const fade=Math.max(0,1-y/190);$('#hero-waves').style.opacity=fade;$('#hero-glow').style.opacity=fade;$$('.hero-waves path').forEach(n=>n.style.animationPlayState=y>230?'paused':'running');for(const s of sections){const r=s.getBoundingClientRect();if(r.top<innerHeight*.32&&r.bottom>120){$$('.nav-links a').forEach(a=>a.classList.toggle('active',a.hash==='#'+s.id));break}}scheduled=false})};window.addEventListener('scroll',scrollUpdate,{passive:true});scrollUpdate();
+  const fade=Math.max(0,1-y/190),glow=$('#hero-glow'),hero=$('.hero');if(glow)glow.style.opacity=fade;if(hero)hero.classList.toggle('scene-paused',y>hero.offsetHeight);for(const s of sections){const r=s.getBoundingClientRect();if(r.top<innerHeight*.32&&r.bottom>120){$$('.nav-links a').forEach(a=>a.classList.toggle('active',a.hash==='#'+s.id));break}}scheduled=false})};window.addEventListener('scroll',scrollUpdate,{passive:true});scrollUpdate();
  const toTopBtn=$('#to-top');if(toTopBtn)toTopBtn.addEventListener('click',()=>{scrollTo({top:0,behavior:reduce?'auto':'smooth'})});
  if('IntersectionObserver'in window){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.075,rootMargin:'0px 0px -25px 0px'});$$('.reveal,.reveal-group').forEach(x=>obs.observe(x))}else $$('.reveal,.reveal-group').forEach(x=>x.classList.add('visible'));
- if(!reduce){let pointerTick=false;const glow=$('#hero-glow');$('.hero').addEventListener('pointermove',e=>{if(pointerTick)return;pointerTick=true;requestAnimationFrame(()=>{const r=$('.hero').getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5;const py=(e.clientY-r.top)/r.height-.5;glow.style.transform='translate('+px*30+'px,'+py*25+'px)';pointerTick=false})},{passive:true})}
+ if(!reduce&&$('#hero-glow')){let pointerTick=false;const glow=$('#hero-glow');$('.hero').addEventListener('pointermove',e=>{if(pointerTick)return;pointerTick=true;requestAnimationFrame(()=>{const r=$('.hero').getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5;const py=(e.clientY-r.top)/r.height-.5;glow.style.transform='translate('+px*30+'px,'+py*25+'px)';pointerTick=false})},{passive:true})}
 
  const format=new Intl.NumberFormat('en-US');
  // Counts a number from the current displayed value to the next one with an
@@ -53,8 +53,14 @@
   // fall back to the releases/latest page, which GitHub keeps current by itself.
   const LATEST_PAGE='https://github.com/'+CONFIG.repo+'/releases/latest';
   const store={get(k,ttl){try{const v=JSON.parse(localStorage.getItem(k)||'null');return v&&Date.now()-v.t<ttl?v.d:null}catch(e){return null}},set(k,d){try{localStorage.setItem(k,JSON.stringify({t:Date.now(),d}))}catch(e){}}};
-  const apkUrl=(assets,quest)=>{const matches=(assets||[]).filter(a=>/\.apk$/i.test(a.name||'')&&/quest/i.test(a.name)===quest);return(matches.find(a=>/^Ketvoice-/i.test(a.name))||matches[0]||{}).browser_download_url};
-  function showRelease(r){const rv=$('#release-version');if(rv&&r.tag)rv.textContent='Latest release: '+r.tag;const a=$('#android-apk'),q=$('#quest-apk');if(a)a.href=r.android||LATEST_PAGE;if(q)q.href=r.quest||LATEST_PAGE}
+  // Each edition is its own asset of the release: Ketvoice-<v>.apk (mobile), -Quest.apk, -Lite.apk, -Wear.apk.
+  // `edition` is 'mobile' | 'quest' | 'lite' | 'wear' (true/false still mean Quest/mobile).
+  const apkUrl=(assets,edition)=>{const want=edition===true?'quest':(edition===false||edition==null)?'mobile':String(edition).toLowerCase();const kind=n=>/quest/i.test(n)?'quest':/wear/i.test(n)?'wear':/(^|[^a-z])lite([^a-z]|$)/i.test(n)?'lite':'mobile';const matches=(assets||[]).filter(a=>/\.apk$/i.test(a.name||'')&&kind(a.name)===want);return(matches.find(a=>/^Ketvoice-/i.test(a.name))||matches[0]||{}).browser_download_url};
+  // Mobile and Quest always show (falling back to the latest-release page); the Lite and Wear rows only
+  // appear when the latest release actually carries their APK.
+  function showRelease(r){const rv=$('#release-version');if(rv&&r.tag)rv.textContent='Latest release: '+r.tag;const a=$('#android-apk'),q=$('#quest-apk');if(a)a.href=r.android||LATEST_PAGE;if(q)q.href=r.quest||LATEST_PAGE;
+   for(const k of ['lite','wear']){const row=$('#'+k+'-row'),btn=$('#'+k+'-apk');if(!row||!btn)continue;if(r[k])btn.href=r[k];row.hidden=!r[k]}
+   const sub=$('#download-sub');if(sub)sub.textContent=r.wear?'Free for Android, Meta Quest and Wear OS.':'Free for Android and Meta Quest.'}
   // WHAT'S NEW: the download section mirrors the body of the latest GitHub
   // release, so the site stays in sync with every published version.
   function renderWhatsNew(tag,body){
@@ -86,9 +92,9 @@
     let r=force?null:store.get('kv-latest',60000);
    // Old cached entries carry no body: refetch so the What's new card appears
    // even for visitors who already had a cached release from a previous visit.
-   if(!r||!r.body){
+   if(!r||!r.body||!('lite' in r)){
     const rel=await api('/releases/latest');
-    r={tag:rel.tag_name,body:rel.body||'',android:apkUrl(rel.assets,false),quest:apkUrl(rel.assets,true)};
+    r={tag:rel.tag_name,body:rel.body||'',android:apkUrl(rel.assets,'mobile'),quest:apkUrl(rel.assets,'quest'),lite:apkUrl(rel.assets,'lite')||'',wear:apkUrl(rel.assets,'wear')||''};
     store.set('kv-latest',r);
    }
     renderWhatsNew(r.tag,r.body);showRelease(r)

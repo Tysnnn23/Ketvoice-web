@@ -6,9 +6,23 @@ Official website for Ketvoice — an Android music player with Spotify lyrics.
 
 Current app features exclude AutoMix. Stable Mobile/Quest downloads and English
 release notes are read from `Tysnnn23/Ketvoice` on load, every minute while the
-page is visible, and when returning to the tab. The banner is the canonical
-`https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`.
+page is visible, and when returning to the tab. The Lite (`Ketvoice-<version>-Lite.apk`)
+and Wear OS (`Ketvoice-<version>-Wear.apk`) rows appear only when the latest release
+carries those assets, and stay hidden otherwise (`apkUrl` in `js/main.js`, tested by
+`node tests/release-assets.test.cjs`). The banner is the canonical
+`https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png`
+(used for `og:image`); the page itself shows optimised copies of the same image
+(`assets/banner-vc-*.avif|webp`, PNG fallback).
 Existing animations, live-listener integration and upstream changes are retained.
+
+## Vice City edition (until 10 December 2026)
+
+The site wears the limited Vice City theme of the app (owner, 2026-11-17): an animated
+CSS/SVG sunset hero (drifting sky, banded sun, palm silhouettes, perspective grid and sea
+shimmer — paused off-screen and off with `prefers-reduced-motion`), neon-edged glass cards,
+Outfit + Yellowtail from Google Fonts, the Vice City logo and favicons, and a Vice City /
+GTA VI note with « Ketvoice is not affiliated with Rockstar Games. ». Night is the default
+theme; the toggle switches to a pastel daylight variant.
 
 Ketvoice 6.0.0 Beta 5 (versionCode 128) brings Android Auto (browse, search and voice), background playback that
 holds with three minutes read ahead, iOS 27 sliders that swell under the finger, and Ketmix's sign under the seek bar.
@@ -410,9 +424,11 @@ phone/Quest validation.
 ## Structure
 
 - `index.html` — main page
-- `css/style.css`, `css/dark.css` — styling and theme
-- `js/main.js` — interactions, screen switcher, toast, download links
-- `assets/` — spring physics, magnetic buttons, glass motion, theme toggle
+- `css/style.css` — styling, night/daylight themes and the Vice City scene
+- `js/main.js` — interactions, screen switcher, toast, download links (Mobile, Quest, Lite, Wear)
+- `assets/` — spring physics, magnetic buttons, glass motion, theme toggle, screenshots,
+  the Vice City logo (`ketvoice-logo-vc-*`), banner (`banner-vc-*`) and GTA VI art (`gta6-welcome-*`)
+- `tests/release-assets.test.cjs` — release asset selection (`node tests/release-assets.test.cjs`)
 
 ## Run locally
 
@@ -424,7 +440,7 @@ Or use any static web server.
 
 ## Configuration
 
-Edit `CONFIG` object in `index.html`:
+Edit the `CONFIG` object at the top of `js/main.js`:
 
 ```js
 const CONFIG = {
