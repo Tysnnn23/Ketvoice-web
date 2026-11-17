@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;family=Geist+Mono:wght@400;500&amp;display=swap"/>
 <link rel="preload" as="image" type="image/avif" imagesrcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w" imagesizes="(max-width: 1240px) 100vw, 1188px"/>
-<link rel="stylesheet" href="css/style.css?v=202611171616"/>
+<link rel="stylesheet" href="css/style.css?v=202611171700"/>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2623695974781872"
      crossorigin="anonymous"></script>
 </head>
@@ -74,7 +74,7 @@
 <div class="wrap showcase-wrap">
 <figure class="showcase appear-late">
 <picture class="showcase-art"><source type="image/avif" sizes="(max-width: 1240px) 100vw, 1188px" srcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w"/><source type="image/webp" sizes="(max-width: 1240px) 100vw, 1188px" srcset="assets/hero-vi-720.webp 720w, assets/hero-vi-1117.webp 1117w"/><img alt="A neon VI over a sunset beach lined with palm trees" decoding="async" fetchpriority="high" height="622" sizes="(max-width: 1240px) 100vw, 1188px" src="assets/hero-vi-1117.jpg" srcset="assets/hero-vi-720.jpg 720w, assets/hero-vi-1117.jpg 1117w" width="1117"/></picture>
-<div class="showcase-phone"><img alt="The Ketvoice player: album artwork, the line being sung, the seek bar and the controls" decoding="async" height="2048" src="assets/player.webp" width="928"/></div>
+<div class="showcase-phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-player-420.webp 420w, assets/app-player-640.webp 640w"/><img alt="The Ketvoice player playing Chicago by Michael Jackson: the XSCAPE artwork, the line being sung, the seek bar and the controls" decoding="async" height="2600" width="1224" src="assets/app-player-420.jpg"/></picture></div>
 <figcaption class="showcase-bar"><span class="sb-dot" aria-hidden="true"></span><span class="sb-title">Vice City edition</span><span class="sb-meta">In the app until 10 December</span><span class="sb-fine">Not affiliated with Rockstar Games.</span></figcaption>
 </figure>
 </div>
@@ -86,9 +86,9 @@
 <div class="bento">
 <article class="cell reveal">
 <div aria-hidden="true" class="widget w-mix">
-<div class="deck deck-a"><span class="cover c1"></span><span class="deck-t"><b>Ocean Drive</b><small>124 BPM · 8A</small></span></div>
-<div class="xfade"><span class="xf-label">Blend · 8 bars</span><span class="xf-track"><i></i></span><span class="xf-keys"><em>LOW</em><em>MID</em><em>HIGH</em></span></div>
-<div class="deck deck-b"><span class="cover c2"></span><span class="deck-t"><b>Neon Pier</b><small>122 → 124 BPM · 8A</small></span></div>
+<div class="deck deck-a"><img alt="" class="cover" height="120" loading="lazy" src="assets/cover-chicago.webp" width="120"/><span class="deck-t"><b>Chicago</b><small>Michael Jackson</small></span></div>
+<div class="xfade"><span class="xf-label">Ketmix · next mix ready</span><span class="xf-track"><i></i></span><span class="xf-keys"><em>LOW</em><em>MID</em><em>HIGH</em></span></div>
+<div class="deck deck-b"><img alt="" class="cover" height="120" loading="lazy" src="assets/cover-colisee.webp" width="120"/><span class="deck-t"><b>Colisée</b><small>Werenoi · next</small></span></div>
 </div>
 <svg aria-hidden="true" class="icon cell-icon"><use href="#i-mix"/></svg>
 <h3>Ketmix mixes like a DJ.</h3>
@@ -96,10 +96,9 @@
 </article>
 <article class="cell reveal">
 <div aria-hidden="true" class="widget w-lyrics">
-<p class="ly ly-past">and the radio is on</p>
-<p class="ly ly-now"><span>so</span> <span>every</span> <span>word</span> <span>lands</span> <span>on</span> <span class="held">time</span></p>
-<p class="ly ly-next">one song fades into the next</p>
-<span class="ly-chip">Word-by-word · held note</span>
+<div class="ly-head"><img alt="" class="cover" height="120" loading="lazy" src="assets/cover-chicago.webp" width="120"/><span class="deck-t"><b>Chicago</b><small>Michael Jackson</small></span></div>
+<p class="ly ly-now"><span>When</span> <span>I</span> <span>held</span> <span>her</span> <span class="held">near</span></p>
+<span class="ly-chip">Word-by-word · syllable by syllable</span>
 </div>
 <svg aria-hidden="true" class="icon cell-icon"><use href="#i-lyrics"/></svg>
 <h3>Lyrics that keep time.</h3>
@@ -117,6 +116,7 @@
 </article>
 <article class="cell reveal">
 <div aria-hidden="true" class="widget w-together">
+<div class="kt-now"><img alt="" class="cover" height="120" loading="lazy" src="assets/cover-blinding.webp" width="120"/><span class="deck-t"><b>Blinding Lights</b><small>The Weeknd · playing for everyone</small></span></div>
 <div class="kt-code"><span class="kt-label">Session</span><b>KV · 7Q2M</b><span class="kt-copy">Copy link</span></div>
 <div class="kt-people"><i>A</i><i>M</i><i>J</i><i>S</i><span>4 listening · in sync</span></div>
 </div>
@@ -144,13 +144,16 @@
 
 <section aria-labelledby="screens-title" class="screens" id="screens">
 <div class="wrap">
-<header class="sec-head center reveal"><p class="tag">/screens</p><h2 id="screens-title">The real app, screen by screen</h2><p class="sec-sub">Screenshots from earlier builds of Ketvoice 6.</p></header>
+<header class="sec-head center reveal"><p class="tag">/screens</p><h2 id="screens-title">The real app, screen by screen</h2><p class="sec-sub">Screenshots from Ketvoice 6.1.2.</p></header>
 </div>
 <div class="strip" tabindex="0" aria-label="Ketvoice screenshots">
-<figure class="shot reveal" data-depth="1"><div class="phone"><img alt="The player with album artwork, the sung line and the controls" height="2048" loading="lazy" src="assets/player.webp" width="928"/></div><figcaption><b>Now playing</b>The artwork, the line being sung and Ketmix’s sign under the seek bar.</figcaption></figure>
-<figure class="shot reveal" data-depth="-1"><div class="phone"><img alt="Synchronized lyrics, the current line highlighted" height="2048" loading="lazy" src="assets/lyrics.webp" width="928"/></div><figcaption><b>Lyrics</b>Word by word, with backing vocals in their turn.</figcaption></figure>
-<figure class="shot reveal" data-depth="1"><div class="phone"><img alt="Home with recent songs and quick picks" height="2048" loading="lazy" src="assets/home.webp" width="928"/></div><figcaption><b>Home</b>Your mixes, what you played last and new releases.</figcaption></figure>
-<figure class="shot reveal" data-depth="-1"><div class="phone"><img alt="An artist page with popular songs" height="2048" loading="lazy" src="assets/artist.webp" width="928"/></div><figcaption><b>Artists</b>Pages that take their colour from the photo.</figcaption></figure>
+<figure class="shot reveal" data-depth="1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-player-420.webp 420w, assets/app-player-640.webp 640w"/><img alt="The player playing Chicago by Michael Jackson" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-player-420.jpg"/></picture></div><figcaption><b>Now playing</b>The full artwork, the line being sung and the controls.</figcaption></figure>
+<figure class="shot reveal" data-depth="-1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-lyrics-420.webp 420w, assets/app-lyrics-640.webp 640w"/><img alt="Word-by-word lyrics of Chicago, with the voice slider open" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-lyrics-420.jpg"/></picture></div><figcaption><b>Lyrics</b>Word by word, with the voice slider at hand.</figcaption></figure>
+<figure class="shot reveal" data-depth="1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-queue-420.webp 420w, assets/app-queue-640.webp 640w"/><img alt="The queue with Ketmix on and the next song’s mix ready" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-queue-420.jpg"/></picture></div><figcaption><b>Ketmix</b>The queue shows when the next mix is ready.</figcaption></figure>
+<figure class="shot reveal" data-depth="-1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-home-420.webp 420w, assets/app-home-640.webp 640w"/><img alt="Home with recent albums and the discoveries of the week" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-home-420.jpg"/></picture></div><figcaption><b>Home</b>What you played last and the discoveries of the week.</figcaption></figure>
+<figure class="shot reveal" data-depth="1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-album-420.webp 420w, assets/app-album-640.webp 640w"/><img alt="The XSCAPE album page by Michael Jackson with its track list" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-album-420.jpg"/></picture></div><figcaption><b>Albums</b>The cover fills the page, the tracks follow.</figcaption></figure>
+<figure class="shot reveal" data-depth="-1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-artist-420.webp 420w, assets/app-artist-640.webp 640w"/><img alt="Michael Jackson’s artist page with popular songs" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-artist-420.jpg"/></picture></div><figcaption><b>Artists</b>Popular songs, artist radio and shuffle.</figcaption></figure>
+<figure class="shot reveal" data-depth="1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-wrapped-420.webp 420w, assets/app-wrapped-640.webp 640w"/><img alt="Ketvoice Wrapped: your songs on repeat" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-wrapped-420.jpg"/></picture></div><figcaption><b>Wrapped</b>Your songs on repeat, ready to share.</figcaption></figure>
 </div>
 <div class="wrap devices reveal"><span><svg aria-hidden="true" class="icon"><use href="#i-car"/></svg>Android Auto: browse, search, or ask “Hey Google, play … on Ketvoice”</span><span>Meta Quest 3 and 3S</span><span>Tablets: two panes, lyrics beside the artwork</span></div>
 </section>
@@ -232,7 +235,7 @@
 </div></div>
 </footer>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
-<script src="js/main.js?v=202611171616"></script>
-<script src="js/flow.js?v=202611171616"></script>
-<script src="js/motion.js?v=202611171616"></script>
-<script src="assets/ketvoice-theme.js?v=202611171616"></script></body></html>
+<script src="js/main.js?v=202611171700"></script>
+<script src="js/flow.js?v=202611171700"></script>
+<script src="js/motion.js?v=202611171700"></script>
+<script src="assets/ketvoice-theme.js?v=202611171700"></script></body></html>

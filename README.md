@@ -462,7 +462,7 @@ phone/Quest validation.
 - `js/main.js` — menu, toast, release notes, download links (Mobile, Quest, Lite, Wear), live stats
 - `js/motion.js` — motion and small interactions (split menu, FAQ, nav pill, scroll scenes)
 - `js/flow.js` — the WebGL sunset band behind the showcase and the footer
-- `assets/` — theme toggle, screenshots, the Vice City logo (`ketvoice-logo-vc-*`), banner
+- `assets/` — theme toggle, app screenshots from 6.1.2 (`app-*`, owner tools and account name blurred), song covers (`cover-*`), the Vice City logo (`ketvoice-logo-vc-*`), banner
   (`banner-vc-*`) and hero art (`hero-vi-*`)
 - `tests/release-assets.test.cjs` — release asset selection (`node tests/release-assets.test.cjs`)
 
