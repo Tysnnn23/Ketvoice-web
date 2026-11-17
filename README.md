@@ -17,35 +17,36 @@ Existing animations, live-listener integration and upstream changes are retained
 
 ## Vice City edition (until 10 December 2026)
 
-The site wears the limited Vice City theme of the app (owner, 2026-11-17: « fait paraître le
-site beaucoup moins vibecodé tout en ayant des animations de malade »). Art direction:
-- Type: Big Shoulders Display (condensed, display only), Schibsted Grotesk (text), IBM Plex
-  Mono (labels and metadata), from Google Fonts. One accent (sunset orange) for actions, the
-  pink neon only on « Vice City », glass only on the nav bar, no badges or icon-card grids.
-- Motion (owner, round 4: « du motion design comme sur le site de tryliner.fun ») lives in
-  `js/motion.js`, on GSAP 3.15.0 + ScrollTrigger and Lenis 1.3.27 from jsDelivr (pinned, with
-  SRI). Language: entrances rise out of a blur on an expo/quint-out curve with 60–100 ms
-  staggers, springy landings, slow idle loops, and scenes scrubbed by the scroll:
-  - hero intro (the photo un-blurs and settles, the fronds swing in and keep breathing, the
-    headline rises word by word, the neon flickers on), then the pinned sunset (`--p`): the
-    sea dollies in, the sun glow sinks, the light grades to night, the player rises;
-  - « Word-by-word lyrics »: a pinned scene where the scroll is the song — each word fills as
-    it is sung, the sung line leans forward, a held note glows (lines written for the page);
-  - « The player »: the phone turns with the scroll and each screen wipes in;
-  - blur-in headings, rules that draw, rows that land, the banner opening like a curtain,
-    dates that roll in, and a wordmark that rises then rides a wave;
-  - the headline's letters thin out under the cursor and the ticker leans into the scroll.
-  Without the CDN the page falls back to a light native version; with
-  `prefers-reduced-motion` nothing moves, nothing is pinned and every state is final.
-- The site goes live with Ketvoice 6.1: « The player » covers Ketmix, the voice slider,
-  word-by-word lyrics, Android Auto, Quest and Canvas, and « New in 6.1 » lists Ketogether,
-  the Ketmix DJ editor, lock-screen lyrics, weekly discoveries and monthly Replay. Ketvoice
-  Lite and Wear OS are only named in their download rows, which appear when the latest
-  release carries `-Lite.apk` / `-Wear.apk`, so the page never promises a missing file.
-- Hero text contrast is measured against the rendered pixels under the glyphs (WCAG AA:
-  body ≥ 4.5:1, headline ≥ 3:1 at the 1st percentile) at 1440, 1280, 390 and 360 px.
-- « Ketvoice is not affiliated with Rockstar Games. » sits next to the VI artwork, in the
-  Vice City section and in the footer. Night is the default theme; the toggle gives daylight.
+The site wears the limited Vice City theme of the app in the design language of
+tryliner.fun (owner, 2026-11-17: « applique au site le thème etc. similaire à tryliner.fun »),
+recreated with original code, copy and art:
+- Light first (`#f3f4f6` / white surfaces, ink `#0e0820`), dark on the toggle (saved in
+  `localStorage`). Geist for all text (52/60 hero, 40/48 sections, 20/28 titles, 16/24 body),
+  Geist Mono for the `/slash` tags and small UI, from Google Fonts. Flat surfaces with hairline
+  rings, 8 px buttons, a floating 800 px nav pill, a pink accent for actions.
+- Structure: centred hero with a split download button (its menu lists the editions the
+  latest release carries) → the owner's VI sunset as the showcase, with the player on a
+  phone and the « Vice City edition · Not affiliated with Rockstar Games » caption → a
+  `/features` bento of small product widgets → `/new-in-6.1` → `/screens` → `/vice-city`
+  → `/download` cards, live stats and release notes → `/faq` → call to action → footer card.
+- `js/flow.js`: an original WebGL band in sunset colours (domain-warped noise, undulating
+  glowing edge) behind the showcase and the footer; half resolution, ~30 fps, paused off
+  screen and in hidden tabs, one still frame with reduced motion, a CSS gradient without WebGL.
+- `js/motion.js` (vanilla, no libraries): the nav drops in and shrinks with a spring while
+  you scroll down; the hero fades in on cubic-bezier(.22,1,.36,1) (1.5 s, the band 2 s);
+  sections rise a few pixels out of a light blur when they enter; a soft spotlight follows the
+  cursor in the hero; the Vice City chips gather onto the banner with the scroll; the
+  screenshots drift; menus and the FAQ open in .16–.25 s with a slight overshoot; the bento
+  widgets loop (words light up, the voice slider glides, the blend bar fills). With
+  `prefers-reduced-motion` nothing moves; menus and the FAQ still work.
+- Copy describes Ketvoice 6.1 as shipped (Ketogether, the Ketmix DJ editor, lock-screen lyrics,
+  weekly discoveries, monthly Replay, automatic resume). Ketvoice Lite and Wear OS are named
+  only in their download card and in the split menu, which appear when the latest release
+  carries `-Lite.apk` / `-Wear.apk` (every `[data-apk]` link follows the release assets).
+- Text contrast is measured against the rendered pixels under the glyphs (WCAG AA) at
+  1440, 1280, 390 and 360 px, including the caption over the photo.
+- « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
+  City section, in the FAQ and in the footer.
 
 Ketvoice 6.1.2 (versionCode 131) fixes the crash at launch of 6.1.0 and 6.1.1 on some phones.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.1.2.md).
@@ -457,11 +458,12 @@ phone/Quest validation.
 ## Structure
 
 - `index.html` — main page
-- `css/style.css` — styling, night/daylight themes and the Vice City scene
+- `css/style.css` — styling, light and dark themes, motion states
 - `js/main.js` — menu, toast, release notes, download links (Mobile, Quest, Lite, Wear), live stats
-- `js/motion.js` — all motion: GSAP/ScrollTrigger/Lenis choreography, native fallback, reduced motion
-- `assets/` — magnetic buttons, glass nav, theme toggle, screenshots, the Vice City logo
-  (`ketvoice-logo-vc-*`), banner (`banner-vc-*`) and hero art (`hero-vi-*`)
+- `js/motion.js` — motion and small interactions (split menu, FAQ, nav pill, scroll scenes)
+- `js/flow.js` — the WebGL sunset band behind the showcase and the footer
+- `assets/` — theme toggle, screenshots, the Vice City logo (`ketvoice-logo-vc-*`), banner
+  (`banner-vc-*`) and hero art (`hero-vi-*`)
 - `tests/release-assets.test.cjs` — release asset selection (`node tests/release-assets.test.cjs`)
 
 ## Run locally

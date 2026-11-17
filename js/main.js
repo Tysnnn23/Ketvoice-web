@@ -42,6 +42,10 @@
   // appear when the latest release actually carries their APK.
   function showRelease(r){const rv=$('#release-version');if(rv&&r.tag)rv.textContent='Latest release: '+r.tag;const a=$('#android-apk'),q=$('#quest-apk');if(a)a.href=r.android||LATEST_PAGE;if(q)q.href=r.quest||LATEST_PAGE;
    for(const k of ['lite','wear']){const row=$('#'+k+'-row'),btn=$('#'+k+'-apk');if(!row||!btn)continue;if(r[k])btn.href=r[k];row.hidden=!r[k]}
+   // Every other download link on the page ([data-apk]: the split button, its menu, the call to action)
+   // follows the same assets; the Lite and Wear entries only show when their APK exists.
+   const urls={android:r.android,quest:r.quest,lite:r.lite,wear:r.wear};
+   $$('[data-apk]').forEach(el=>{const k=el.dataset.apk,u=urls[k];if(k==='lite'||k==='wear'){el.hidden=!u;if(u)el.href=u}else if(el.getAttribute('href')!=='#download')el.href=u||LATEST_PAGE});
    const sub=$('#download-sub');if(sub)sub.textContent=r.wear?'Free for Android, Meta Quest and Wear OS.':'Free for Android and Meta Quest.'}
   // WHAT'S NEW: the download section mirrors the body of the latest GitHub
   // release, so the site stays in sync with every published version.

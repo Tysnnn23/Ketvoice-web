@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="dark light" name="color-scheme"/><meta content="#0c0714" name="theme-color"/>
+<meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="light dark" name="color-scheme"/><meta content="#f3f4f6" name="theme-color"/>
 <title>Ketvoice — a free music player for Android, Quest and the car</title>
 <link rel="icon" href="favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
@@ -17,139 +17,222 @@
 <meta property="og:image:alt" content="Ketvoice — your music, beautifully connected on every device"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png"/>
-<script>document.documentElement.classList.add('js');(function(){var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');setTimeout(function(){if(!d.classList.contains('motion-ready'))d.classList.remove('motion')},3500)}})();(function(){try{var t=localStorage.getItem('ketvoice-theme');if(t!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('dark')}})();</script>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
+<script>document.documentElement.classList.add('js');(function(){var d=document.documentElement;try{if(localStorage.getItem('ketvoice-theme')==='dark')d.classList.add('dark')}catch(e){}if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion')})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500..900&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Schibsted+Grotesk:wght@400..700&amp;display=swap"/>
-<link rel="preload" as="image" type="image/avif" imagesrcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w" imagesizes="100vw" media="(min-aspect-ratio: 3/4)"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;family=Geist+Mono:wght@400;500&amp;display=swap"/>
+<link rel="preload" as="image" type="image/avif" imagesrcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w" imagesizes="(max-width: 1240px) 100vw, 1188px"/>
 <link rel="stylesheet" href="css/style.css"/>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2623695974781872"
      crossorigin="anonymous"></script>
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
-<symbol id="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"></path></symbol>
-<symbol id="down" viewBox="0 0 24 24"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 17v4h14v-4"></path></symbol>
-<symbol id="disc" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.029ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.956 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.946 2.419-2.157 2.419Z"></path></symbol>
-<symbol id="palm" viewBox="0 0 400 600"><path d="M147 600Q146 368 244 136L256 136Q164 368 173 600ZM251 127 242 125 210 124 233 123 197 123 224 122 185 124 216 121 174 124 207 120 164 125 199 120 154 127 190 120 146 129 182 121 139 131 174 122 133 134 166 123 127 136 159 125 122 139 151 127 118 141 144 130 114 144 136 133 110 146 129 136 107 149 122 140 105 151 115 144 102 153 109 148 101 155 102 153 100 156 95 158 96 159 89 164 90 165 83 170 83 171 77 177 77 177 71 183 72 184 77 177 78 177 83 171 84 171 90 165 90 165 96 159 97 160 102 157 103 155 108 159 110 150 113 160 117 146 119 161 124 142 124 162 131 139 130 163 138 136 135 163 145 133 140 164 152 131 146 164 160 129 152 164 167 127 158 164 175 126 164 163 183 126 170 163 191 125 178 162 199 125 185 161 207 126 194 159 215 126 203 157 223 127 212 156 232 129 223 153 240 131 249 133ZM252 128 246 122 230 101 240 118 219 95 234 113 209 90 228 109 199 87 223 106 190 86 217 103 182 86 211 100 174 86 206 98 168 87 201 96 163 89 195 94 159 91 190 93 155 93 185 93 153 94 180 92 151 96 175 92 149 98 170 93 148 99 165 94 148 100 160 95 148 101 156 97 148 102 151 99 150 101 147 102 148 103 143 105 143 105 139 108 139 109 135 112 135 112 131 116 132 117 135 112 136 113 139 109 140 109 143 105 144 106 148 103 148 103 151 103 152 101 154 107 157 99 157 110 161 98 159 112 166 97 161 115 170 96 163 117 175 96 165 120 180 96 168 122 184 96 170 124 189 97 173 126 194 98 176 128 199 100 179 129 204 102 183 131 209 104 188 133 215 107 193 135 220 110 199 136 225 114 206 138 231 118 214 140 236 122 222 142 242 127 248 132ZM253 129 251 123 268 116 249 118 269 109 247 113 269 102 245 109 268 96 244 104 267 90 242 100 265 84 240 97 262 79 238 93 259 74 236 90 255 70 235 87 250 65 233 85 244 62 231 83 236 60 229 81 227 59 228 79 219 62 226 78 213 67 224 77 211 72 223 76 212 75 221 76 214 78 219 76 218 78 218 77 218 78 216 78 217 78 215 79 215 79 214 80 214 81 212 82 213 83 214 81 215 81 215 79 216 80 217 78 217 79 218 78 218 79 219 79 220 79 217 83 221 79 216 86 222 79 214 89 223 80 212 91 224 81 210 92 225 82 209 94 227 83 208 96 228 85 207 98 230 87 207 101 231 90 207 103 232 92 208 106 234 95 209 109 235 99 210 112 237 102 213 115 239 106 215 119 240 111 219 122 242 115 223 126 244 120 227 131 245 125 247 131ZM253 131 255 125 273 130 257 120 277 126 258 115 281 122 260 110 285 118 262 106 288 114 263 101 290 111 265 98 292 108 267 94 293 105 268 91 293 103 270 89 294 100 271 86 293 98 273 84 293 96 274 83 292 94 275 81 290 93 277 80 288 91 278 80 287 89 279 79 285 87 280 79 283 84 281 79 282 80 283 80 283 79 284 80 285 80 285 82 286 81 287 83 287 83 288 85 289 84 287 83 288 82 286 81 287 80 285 80 285 79 283 79 284 78 284 79 282 77 287 79 281 76 290 78 279 76 291 74 277 77 291 70 275 77 287 64 273 79 279 59 272 80 269 58 270 82 260 60 268 84 253 63 266 86 247 67 264 89 242 72 263 92 239 77 261 96 236 83 259 99 234 89 257 103 232 95 255 108 232 101 253 113 232 108 251 118 232 115 249 123 247 129ZM252 132 258 127 278 142 264 122 287 140 270 118 294 138 275 114 301 136 281 110 307 134 286 107 313 132 292 104 318 131 297 102 322 129 302 100 325 127 308 98 329 126 313 97 331 124 318 96 334 122 323 96 336 120 327 96 339 118 332 96 341 115 337 97 343 113 341 99 346 111 346 100 349 108 351 102 352 104 355 105 356 104 359 108 360 107 364 111 364 111 368 115 368 115 372 120 373 119 368 115 369 114 364 111 365 110 360 107 361 107 356 104 356 103 353 103 352 100 355 103 347 98 355 102 342 96 355 102 338 94 354 100 333 93 353 99 328 92 352 97 322 92 350 95 317 92 347 93 312 93 343 91 307 94 339 89 301 95 334 88 295 97 327 86 290 100 320 86 284 102 311 86 278 105 302 87 272 109 292 90 266 113 281 95 260 117 270 101 254 122 248 128ZM251 133 260 131 277 154 269 130 287 157 278 129 297 159 286 128 307 161 295 128 315 163 303 128 323 165 312 128 331 166 320 129 338 167 328 130 344 168 336 132 351 168 344 133 357 169 352 136 363 169 359 138 369 169 367 142 374 168 374 145 380 168 381 149 386 168 389 153 392 167 396 158 398 167 403 163 404 165 409 168 410 167 416 174 417 173 423 180 423 180 429 187 430 186 435 194 436 193 430 186 430 186 423 180 424 179 417 173 417 173 410 167 411 167 406 163 404 161 405 162 397 156 403 160 390 151 400 158 383 146 397 155 376 142 394 153 368 138 390 150 361 135 386 147 353 132 381 144 345 130 376 142 337 127 370 139 329 126 363 136 321 124 356 134 312 123 347 131 304 123 338 129 295 122 328 128 286 122 316 127 277 123 304 126 268 124 290 126 259 125 249 127ZM249 133 256 136 263 157 262 139 270 164 269 142 277 170 276 146 283 176 282 149 289 182 289 153 295 187 295 157 301 191 301 162 306 196 307 167 312 200 313 172 317 203 319 177 322 207 325 182 328 210 331 188 333 213 337 194 338 216 342 200 343 219 348 206 349 222 353 213 354 225 359 220 359 227 364 227 365 229 369 234 370 234 374 242 375 241 379 250 380 249 384 258 384 258 389 266 390 266 384 258 385 257 380 249 380 249 375 241 376 241 370 234 371 233 366 228 366 226 365 225 361 218 363 221 355 211 361 217 350 204 359 212 345 198 356 208 339 191 353 204 334 185 349 199 328 179 346 194 322 174 342 190 316 168 337 185 310 163 332 180 304 158 327 175 298 154 321 170 291 149 314 165 285 145 306 159 278 141 298 154 272 137 290 149 265 133 280 144 258 130 251 127ZM249 127 242 130 220 144 235 133 210 149 228 137 202 154 222 141 194 159 215 145 186 165 209 149 179 170 202 154 173 175 196 158 168 180 190 163 163 185 184 168 158 190 178 174 154 194 172 179 151 199 166 185 147 204 161 191 144 208 155 198 141 212 150 204 139 217 145 211 137 221 139 218 135 225 134 226 134 228 129 233 130 234 124 241 125 241 120 249 120 249 115 257 116 258 110 266 111 266 116 258 116 258 120 249 121 250 125 241 126 242 130 234 131 234 135 229 136 227 141 227 141 220 146 225 147 213 151 222 152 206 157 219 158 200 162 216 163 194 167 213 169 188 172 210 175 182 178 207 181 177 183 203 187 172 188 200 193 167 194 196 199 162 199 191 205 157 205 187 211 153 211 182 218 149 217 176 224 146 223 170 231 142 230 164 238 139 237 157 244 136 251 133ZM247 132 250 136 250 152 252 140 252 159 255 145 254 166 257 149 256 172 260 154 258 178 262 159 260 183 264 164 262 189 267 169 264 193 269 175 266 198 271 180 268 203 274 185 271 207 276 191 273 211 278 197 275 215 280 203 278 219 282 209 280 222 284 215 283 226 286 221 285 229 288 227 288 233 290 234 291 235 292 240 293 240 294 247 295 247 296 254 297 254 298 261 298 261 299 268 301 267 298 261 299 260 297 254 297 253 295 247 296 247 293 240 294 240 292 235 292 233 293 232 291 227 293 228 289 220 292 224 287 214 292 220 285 208 291 216 283 202 291 212 281 196 290 207 279 190 289 203 277 184 287 198 275 178 286 194 273 173 284 189 271 167 282 183 269 162 280 178 267 157 278 173 264 152 275 167 262 147 272 161 260 142 268 155 258 137 264 148 255 133 253 128ZM247 128 245 133 236 148 242 137 232 155 240 142 228 161 238 147 225 167 236 152 222 173 233 157 220 178 231 162 218 183 229 167 216 189 227 173 214 194 225 178 213 198 223 184 211 203 221 190 210 207 219 196 209 212 217 202 209 216 215 208 208 220 213 214 208 224 211 220 207 228 209 227 207 232 208 233 208 235 206 240 207 240 204 247 205 247 203 253 203 254 201 260 202 261 199 267 201 268 202 261 202 261 203 254 204 254 205 247 206 247 207 240 208 240 209 235 210 234 212 233 212 227 215 229 214 221 217 226 216 215 220 222 218 209 222 219 220 203 225 215 222 197 227 211 224 191 229 207 226 185 232 203 229 180 234 198 231 175 236 193 233 169 238 189 236 164 240 183 238 159 242 178 240 154 244 172 243 149 246 166 245 145 248 159 248 140 250 152 250 136 253 132ZM241 132a10 9 0 1 0 18 0a10 9 0 1 0-18 0Z"></path></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 19h14"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5" /></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-mix" viewBox="0 0 24 24"><path d="M3 7h4l10 10h4M3 17h4l3-3m4-4 3-3h4M18 4l3 3-3 3M18 14l3 3-3 3"/></symbol>
+<symbol id="i-lyrics" viewBox="0 0 24 24"><path d="M4 6h11M4 11h16M4 16h8"/><circle cx="18" cy="17" r="2.4"/><path d="M20.4 17V9"/></symbol>
+<symbol id="i-voice" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15 14.3c2.6-.4 4.7 1.2 5.3 4.2"/></symbol>
+<symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 12h2M7 8v8M11 5v14M15 9v6M19 7v10M21 12h0"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10M9 15h6"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.6 4.2 2.8 6.4 7 7-4.2.6-6.4 2.8-7 7-.6-4.2-2.8-6.4-7-7 4.2-.6 6.4-2.8 7-7Z"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4"/></symbol>
+<symbol id="i-resume" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/><path d="M10 9.5v5l4-2.5z"/></symbol>
+<symbol id="i-car" viewBox="0 0 24 24"><path d="M5 16V12l2-5h10l2 5v4M5 16h14M5 16v2.5M19 16v2.5M4 12h16"/><circle cx="8" cy="14" r=".6"/><circle cx="16" cy="14" r=".6"/></symbol>
+<symbol id="i-disc" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.029ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.956 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.946 2.419-2.157 2.419Z"/></symbol>
+<symbol id="i-palm" viewBox="0 0 24 24"><path d="M11.5 21c.3-4.6 1-8.2 2.3-11.4M13.8 9.6C12 6.6 8.6 5.6 5 6.8c3 .1 5.4 1.2 6.9 3.1M13.8 9.6c.8-3.6 3.7-5.4 7.2-4.9-2.6.8-4.6 2.3-5.6 4.7M13.8 9.6c3.6.1 6 2.1 6.8 5.4-1.6-1.9-3.8-3.2-6.4-3.6M13.8 9.6c-3 .6-5.2 2.8-5.7 6.2 1.1-2.3 3-3.9 5.3-4.6"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="13" r="5"/><path d="M5 18h14M7 21h10M12 3v3M4.6 6.6l2 2M19.4 6.6l-2 2"/></symbol>
+<symbol id="i-gh" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .8a11.2 11.2 0 0 0-3.54 21.83c.56.1.77-.24.77-.54v-2.1c-3.15.68-3.81-1.34-3.81-1.34-.51-1.29-1.26-1.63-1.26-1.63-1.03-.7.08-.69.08-.69 1.14.08 1.74 1.17 1.74 1.17 1.01 1.73 2.66 1.23 3.3.94.1-.73.4-1.24.73-1.53-2.52-.28-5.17-1.26-5.17-5.61 0-1.24.44-2.25 1.17-3.04-.12-.28-.51-1.44.11-3 0 0 .96-.31 3.1 1.16a10.8 10.8 0 0 1 5.65 0c2.15-1.47 3.1-1.16 3.1-1.16.62 1.56.23 2.72.11 3 .73.79 1.17 1.8 1.17 3.04 0 4.36-2.66 5.33-5.19 5.6.41.35.78 1.04.78 2.1v3.12c0 .3.2.64.78.53A11.2 11.2 0 0 0 12 .8Z"/></symbol>
 </svg>
 <a class="skip-link" href="#main">Skip to content</a>
 <div aria-hidden="true" class="page-progress"></div>
-<div class="header-zone"><header class="topbar" data-liquid-glass="ui-layouts-ready" id="topbar"><a aria-label="Ketvoice home" class="brand" href="#top"><picture><source srcset="assets/ketvoice-logo-vc-96.webp" type="image/webp"/><img alt="" height="34" src="assets/ketvoice-logo-vc-96.png" width="34"/></picture><span>Ketvoice</span></a><nav aria-label="Primary" class="nav-links"><a href="#experience">The player</a><a href="#vice-city">Vice City</a><a href="#download">Download</a></nav><div class="nav-actions"><button aria-label="Ketvoice Discord" class="nav-icon discord-action" title="Discord"><svg aria-hidden="true" class="icon"><use href="#disc"></use></svg></button><button aria-label="Switch theme" class="nav-icon theme-toggle" id="theme-toggle" title="Switch between night and daylight"><svg aria-hidden="true" class="icon theme-icon" viewBox="0 0 24 24"><g class="sun"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"></path></g><path class="moon" d="M20 14.4A8.4 8.4 0 1 1 9.6 4a6.9 6.9 0 0 0 10.4 10.4Z"></path></svg></button><a class="nav-download" href="#download">Get the APK</a><button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation" class="menu-toggle" id="menu-toggle"><svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"></path></svg></button></div></header><div class="mobile-menu" id="mobile-menu"><a href="#experience">The player</a><a href="#vice-city">Vice City</a><a href="#download">Download</a><button class="discord-action">Discord</button></div></div>
+
+<div class="header-zone"><header class="topbar" id="topbar">
+<a aria-label="Ketvoice home" class="brand" href="#top"><picture><source srcset="assets/ketvoice-logo-vc-96.webp" type="image/webp"/><img alt="" height="28" src="assets/ketvoice-logo-vc-96.png" width="28"/></picture><span>Ketvoice</span></a>
+<nav aria-label="Primary" class="nav-links"><a href="#features">Features</a><a href="#screens">Screens</a><a href="#vice-city">Vice City</a><a href="#download">Download</a></nav>
+<div class="nav-actions"><a class="nav-cta" data-apk="android" href="#download"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg>Download</a><span aria-hidden="true" class="nav-sep"></span><button aria-label="Ketvoice Discord" class="nav-icon discord-action" title="Discord" type="button"><svg aria-hidden="true" class="icon"><use href="#i-disc"/></svg></button><button aria-label="Switch theme" class="nav-icon theme-toggle" id="theme-toggle" title="Switch between light and dark" type="button"><svg aria-hidden="true" class="icon theme-icon" viewBox="0 0 24 24"><g class="sun"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"></path></g><path class="moon" d="M20 14.4A8.4 8.4 0 1 1 9.6 4a6.9 6.9 0 0 0 10.4 10.4Z"></path></svg></button><button aria-controls="mobile-menu" aria-expanded="false" aria-label="Open navigation" class="menu-toggle" id="menu-toggle" type="button"><svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14"></path></svg></button></div>
+</header>
+<div class="mobile-menu" id="mobile-menu"><a href="#features">Features</a><a href="#screens">Screens</a><a href="#vice-city">Vice City</a><a href="#download">Download</a><button class="discord-action" type="button">Discord</button></div></div>
+
 <main id="main">
-
 <section aria-labelledby="hero-title" class="hero" id="top">
-<div class="hero-stage">
-<div aria-hidden="true" class="hero-scene">
-<div class="layer sky"><picture><source media="(max-aspect-ratio: 3/4)" type="image/avif" sizes="100vw" srcset="assets/hero-vi-portrait-540.avif 540w, assets/hero-vi-portrait-941.avif 941w"/><source media="(max-aspect-ratio: 3/4)" type="image/webp" sizes="100vw" srcset="assets/hero-vi-portrait-540.webp 540w, assets/hero-vi-portrait-941.webp 941w"/><source media="(max-aspect-ratio: 3/4)" sizes="100vw" srcset="assets/hero-vi-portrait-540.jpg 540w, assets/hero-vi-portrait-941.jpg 941w"/><source type="image/avif" sizes="100vw" srcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w"/><source type="image/webp" sizes="100vw" srcset="assets/hero-vi-720.webp 720w, assets/hero-vi-1117.webp 1117w"/><img alt="" decoding="async" fetchpriority="high" height="622" sizes="100vw" src="assets/hero-vi-1117.jpg" srcset="assets/hero-vi-720.jpg 720w, assets/hero-vi-1117.jpg 1117w" width="1117"/></picture></div>
-<div class="sun-glow"></div>
-<div class="layer sea"><picture><source media="(max-aspect-ratio: 3/4)" type="image/avif" sizes="100vw" srcset="assets/hero-vi-portrait-540.avif 540w, assets/hero-vi-portrait-941.avif 941w"/><source media="(max-aspect-ratio: 3/4)" type="image/webp" sizes="100vw" srcset="assets/hero-vi-portrait-540.webp 540w, assets/hero-vi-portrait-941.webp 941w"/><source media="(max-aspect-ratio: 3/4)" sizes="100vw" srcset="assets/hero-vi-portrait-540.jpg 540w, assets/hero-vi-portrait-941.jpg 941w"/><source type="image/avif" sizes="100vw" srcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w"/><source type="image/webp" sizes="100vw" srcset="assets/hero-vi-720.webp 720w, assets/hero-vi-1117.webp 1117w"/><img alt="" decoding="async" height="622" sizes="100vw" src="assets/hero-vi-1117.jpg" srcset="assets/hero-vi-720.jpg 720w, assets/hero-vi-1117.jpg 1117w" width="1117"/></picture></div>
-<div class="grade"></div>
-<svg class="frond frond-l" viewBox="40 50 340 250"><use href="#palm" width="400" height="600"></use></svg>
-<svg class="frond frond-r" viewBox="40 50 340 250"><use href="#palm" width="400" height="600"></use></svg>
-<div class="grain"></div>
-</div>
-<div class="hero-content wrap">
-<p class="hero-meta"><span>Ketvoice 6.1</span><span>Android · Meta Quest · Android Auto</span></p>
-<h1 class="kinetic" id="hero-title"><span class="row"><span class="w">Mixed</span> <span class="w">on</span> <span class="w">the</span> <span class="w">beat.</span></span> <span class="row"><span class="w">Sung</span> <span class="w">word</span> <span class="w">by</span> <span class="w">word.</span></span></h1>
-<div class="hero-foot">
-<p class="hero-lede">Ketvoice is a free music player for Android. Ketmix blends one song into the next like a DJ, a slider turns the singer’s voice down, and the lyrics follow every word — on your phone, in the car and on Meta Quest.</p>
-<div class="hero-actions"><a class="btn primary" href="#download">Download the APK <svg aria-hidden="true" class="icon"><use href="#down"></use></svg></a><a class="text-link" href="#experience">How it works</a></div>
+<canvas aria-hidden="true" class="flow flow-hero" data-flow="hero"></canvas>
+<div aria-hidden="true" class="spot"></div>
+<div class="wrap hero-head">
+<h1 class="appear" id="hero-title">Your music, mixed on the beat and sung word by word.</h1>
+<p class="hero-sub appear">Ketmix blends one song into the next like a DJ, a slider turns the singer down, and the lyrics follow every word — on your phone, in the car and on Meta Quest.</p>
+<div class="hero-actions appear">
+<div class="split" id="split"><a class="btn btn-accent split-main" data-apk="android" href="https://github.com/Tysnnn23/Ketvoice/releases/latest">Download for Android</a><button aria-controls="split-menu" aria-expanded="false" aria-haspopup="true" aria-label="Choose another edition" class="btn btn-accent split-more" id="split-more" type="button"><svg aria-hidden="true" class="icon"><use href="#i-chev"/></svg></button>
+<div class="split-menu" id="split-menu" role="menu"><a data-apk="android" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" role="menuitem">Android <small>phone &amp; tablet</small></a><a data-apk="quest" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" role="menuitem">Meta Quest <small>3 and 3S</small></a><a data-apk="lite" hidden href="https://github.com/Tysnnn23/Ketvoice/releases/latest" role="menuitem">Ketvoice Lite <small>modest phones</small></a><a data-apk="wear" hidden href="https://github.com/Tysnnn23/Ketvoice/releases/latest" role="menuitem">Wear OS <small>watch</small></a></div></div>
+<a class="btn btn-line" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="icon"><use href="#i-gh"/></svg>Releases</a>
+<button class="btn btn-line discord-action" type="button"><svg aria-hidden="true" class="icon"><use href="#i-disc"/></svg>Discord</button>
 </div>
 </div>
-<div aria-hidden="true" class="hero-phone"><img alt="" decoding="async" height="2048" loading="lazy" src="assets/player.webp" width="928"/></div>
-<p class="edition-credit"><span class="neon">Vice City</span><span class="credit-line">Limited edition · until 10 December</span><span class="credit-fine">Not affiliated with Rockstar Games.</span></p>
+<div class="wrap showcase-wrap">
+<figure class="showcase appear-late">
+<picture class="showcase-art"><source type="image/avif" sizes="(max-width: 1240px) 100vw, 1188px" srcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w"/><source type="image/webp" sizes="(max-width: 1240px) 100vw, 1188px" srcset="assets/hero-vi-720.webp 720w, assets/hero-vi-1117.webp 1117w"/><img alt="A neon VI over a sunset beach lined with palm trees" decoding="async" fetchpriority="high" height="622" sizes="(max-width: 1240px) 100vw, 1188px" src="assets/hero-vi-1117.jpg" srcset="assets/hero-vi-720.jpg 720w, assets/hero-vi-1117.jpg 1117w" width="1117"/></picture>
+<div class="showcase-phone"><img alt="The Ketvoice player: album artwork, the line being sung, the seek bar and the controls" decoding="async" height="2048" src="assets/player.webp" width="928"/></div>
+<figcaption class="showcase-bar"><span class="sb-dot" aria-hidden="true"></span><span class="sb-title">Vice City edition</span><span class="sb-meta">In the app until 10 December</span><span class="sb-fine">Not affiliated with Rockstar Games.</span></figcaption>
+</figure>
 </div>
 </section>
 
-<div aria-hidden="true" class="ticker"><div class="ticker-track"><span>Ketmix</span><span>DJ editor</span><span>Ketogether</span><span>Voice slider</span><span>Word-by-word lyrics</span><span>Lock-screen lyrics</span><span>Android Auto</span><span>Meta Quest</span><span>Weekly discoveries</span><span>Monthly Replay</span><span>Canvas</span><span>Ketmix</span><span>DJ editor</span><span>Ketogether</span><span>Voice slider</span><span>Word-by-word lyrics</span><span>Lock-screen lyrics</span><span>Android Auto</span><span>Meta Quest</span><span>Weekly discoveries</span><span>Monthly Replay</span><span>Canvas</span></div></div>
-
-<section aria-labelledby="sing-title" class="sing" id="sing">
-<div class="sing-stage">
-<div aria-hidden="true" class="sing-glow"><i></i><i></i><i></i></div>
-<div class="wrap sing-inner">
-<p class="label" id="sing-title">Word-by-word lyrics</p>
-<p aria-label="Pink sky over Ocean Drive, the radio is on and so am I — one song fades into the next, and every word lands right on time." class="sing-lines" role="img"><span aria-hidden="true"><span class="ln"><span class="wd">Pink</span> <span class="wd">sky</span> <span class="wd">over</span> <span class="wd">Ocean</span> <span class="wd">Drive,</span></span><span class="ln"><span class="wd">the</span> <span class="wd">radio</span> <span class="wd">is</span> <span class="wd">on</span> <span class="wd">and</span> <span class="wd">so</span> <span class="wd">am</span> <span class="wd">I</span> <span class="wd">—</span></span><span class="ln"><span class="wd">one</span> <span class="wd">song</span> <span class="wd">fades</span> <span class="wd">into</span> <span class="wd">the</span> <span class="wd">next,</span></span><span class="ln"><span class="wd">and</span> <span class="wd">every</span> <span class="wd">word</span> <span class="wd">lands</span> <span class="wd">right</span> <span class="wd">on</span> <span class="wd">time.</span></span></span></p>
-<div aria-hidden="true" class="sing-bar"><span class="sing-time" id="sing-time">0:00</span><span class="sing-track"><i></i></span><span>3:24</span></div>
-<p class="sing-note">Lines written for this page. In Ketvoice, the lyrics of the song you play light up like this, word by word, and a note the singer holds glows a little.</p>
+<section aria-labelledby="features-title" class="features" id="features">
+<div class="wrap">
+<header class="sec-head reveal"><p class="tag">/features</p><h2 id="features-title">Everything in time.<br/>Down to the word.</h2><p class="sec-sub">A player built around how songs actually sound: mixes on the beat, lyrics that light up as they are sung, and a slider for the singer’s voice.</p></header>
+<div class="bento">
+<article class="cell reveal">
+<div aria-hidden="true" class="widget w-mix">
+<div class="deck deck-a"><span class="cover c1"></span><span class="deck-t"><b>Ocean Drive</b><small>124 BPM · 8A</small></span></div>
+<div class="xfade"><span class="xf-label">Blend · 8 bars</span><span class="xf-track"><i></i></span><span class="xf-keys"><em>LOW</em><em>MID</em><em>HIGH</em></span></div>
+<div class="deck deck-b"><span class="cover c2"></span><span class="deck-t"><b>Neon Pier</b><small>122 → 124 BPM · 8A</small></span></div>
+</div>
+<svg aria-hidden="true" class="icon cell-icon"><use href="#i-mix"/></svg>
+<h3>Ketmix mixes like a DJ.</h3>
+<p>Tempos matched, bars lined up, bass handed over — then each song glides back to its own speed. The DJ editor lets you pick the mix points yourself.</p>
+</article>
+<article class="cell reveal">
+<div aria-hidden="true" class="widget w-lyrics">
+<p class="ly ly-past">and the radio is on</p>
+<p class="ly ly-now"><span>so</span> <span>every</span> <span>word</span> <span>lands</span> <span>on</span> <span class="held">time</span></p>
+<p class="ly ly-next">one song fades into the next</p>
+<span class="ly-chip">Word-by-word · held note</span>
+</div>
+<svg aria-hidden="true" class="icon cell-icon"><use href="#i-lyrics"/></svg>
+<h3>Lyrics that keep time.</h3>
+<p>Words light up as they are sung, backing vocals only in their turn, and a note the singer holds glows a little — now on the lock screen too.</p>
+</article>
+<article class="cell reveal">
+<div aria-hidden="true" class="widget w-voice">
+<div class="vs-row"><span>Voice level</span><span class="vs-val">Singer down</span></div>
+<div class="vs-track"><i></i><b></b></div>
+<div class="vs-row vs-sub"><span>Separated on the phone</span><span>Every song</span></div>
+</div>
+<svg aria-hidden="true" class="icon cell-icon"><use href="#i-voice"/></svg>
+<h3>Turn the singer down.</h3>
+<p>Slide the voice level and the singer steps back, so you can sing over the song. The separation happens on the phone, for the song you are playing.</p>
+</article>
+<article class="cell reveal">
+<div aria-hidden="true" class="widget w-together">
+<div class="kt-code"><span class="kt-label">Session</span><b>KV · 7Q2M</b><span class="kt-copy">Copy link</span></div>
+<div class="kt-people"><i>A</i><i>M</i><i>J</i><i>S</i><span>4 listening · in sync</span></div>
+</div>
+<svg aria-hidden="true" class="icon cell-icon"><use href="#i-people"/></svg>
+<h3>Listen together with Ketogether.</h3>
+<p>Start a session and share its code, link or QR code: everyone who joins hears the same song at the same moment.</p>
+</article>
 </div>
 </div>
 </section>
 
-<section aria-labelledby="story-title" class="story" id="experience">
-<div class="wrap story-head"><p class="label">The player</p><h2 id="story-title">What it does, screen by screen.</h2><p class="story-note">Real screenshots from earlier builds of Ketvoice 6.</p></div>
-<div class="wrap story-grid">
-<div class="story-rail" aria-hidden="true"><span></span></div>
-<ol class="story-steps">
-<li class="step is-active" data-screen="player"><span class="step-no">01</span><h3>Ketmix mixes like a DJ.</h3><p>When a song ends, Ketmix brings the next one in on the beat: it matches the tempo, lines up the bars and hands the bass over, then glides back to each song’s own speed. While two songs mix, a small sign sits under the seek bar.</p><p class="facts">Beat-matched blends · three-band mixer · echo, filter and cut transitions</p><img alt="Ketvoice player with album artwork, lyrics line and transport controls" class="step-shot" height="2048" loading="lazy" src="assets/player.webp" width="928"/></li>
-<li class="step" data-screen="lyrics"><span class="step-no">02</span><h3>Lyrics that keep time, and a slider for the singer.</h3><p>Lyrics light up word by word, backing vocals show only in their turn, and a note the singer holds glows a little. Slide the voice level down and the singer steps back — the song is separated on the phone, so you can sing over it.</p><p class="facts">Word-by-word sync · voice level on every song · lyrics videos</p><img alt="Ketvoice synchronized lyrics screen" class="step-shot" height="2048" loading="lazy" src="assets/lyrics.webp" width="928"/></li>
-<li class="step" data-screen="home"><span class="step-no">03</span><h3>Home, and the car.</h3><p>Home opens on your mixes, what you played last and new releases from your artists. In the car, Android Auto has the same library: browse four tabs, search the whole catalogue, or say “Hey Google, play … on Ketvoice”.</p><p class="facts">Android Auto · offline downloads · three minutes read ahead in the background</p><img alt="Ketvoice Listen Now home screen" class="step-shot" height="2048" loading="lazy" src="assets/home.webp" width="928"/></li>
-<li class="step" data-screen="artist"><span class="step-no">04</span><h3>Pages that take the colour of the music.</h3><p>Artist and album pages take their colour from the photo or the cover, Canvas loops play behind the player, and tablets get two panes with the lyrics beside the artwork.</p><p class="facts">Canvas · Wrapped and widgets · tablet and large-window layouts</p><img alt="Ketvoice artist page with popular songs" class="step-shot" height="2048" loading="lazy" src="assets/artist.webp" width="928"/></li>
-</ol>
-<div class="story-phone" aria-hidden="true"><div class="phone" id="story-phone"><img alt="" class="on" data-screen="player" height="2048" loading="lazy" src="assets/player.webp" width="928"/><img alt="" data-screen="lyrics" height="2048" loading="lazy" src="assets/lyrics.webp" width="928"/><img alt="" data-screen="home" height="2048" loading="lazy" src="assets/home.webp" width="928"/><img alt="" data-screen="artist" height="2048" loading="lazy" src="assets/artist.webp" width="928"/></div><p class="phone-count"><span id="story-count">01</span> / 04</p></div>
+<section aria-labelledby="new-title" class="news" id="new">
+<div class="wrap">
+<header class="sec-head reveal"><p class="tag">/new-in-6.1</p><h2 id="new-title">What 6.1 adds.</h2></header>
+<ul class="grid6">
+<li class="reveal"><svg aria-hidden="true" class="icon"><use href="#i-people"/></svg><div><h3>Ketogether</h3><p>Group listening by code, link or QR code, with everyone on the same beat.</p></div></li>
+<li class="reveal"><svg aria-hidden="true" class="icon"><use href="#i-wave"/></svg><div><h3>Ketmix DJ editor</h3><p>See both waveforms and choose where one song hands over to the next. Ketmix remembers it.</p></div></li>
+<li class="reveal"><svg aria-hidden="true" class="icon"><use href="#i-lock"/></svg><div><h3>Lyrics on the lock screen</h3><p>The line being sung, in a silent notification, with its translation in italics.</p></div></li>
+<li class="reveal"><svg aria-hidden="true" class="icon"><use href="#i-spark"/></svg><div><h3>Weekly discoveries</h3><p>A fresh set of songs every week, picked from what you play.</p></div></li>
+<li class="reveal"><svg aria-hidden="true" class="icon"><use href="#i-calendar"/></svg><div><h3>Monthly Replay</h3><p>Your month in music: the songs, the artists and the time spent listening.</p></div></li>
+<li class="reveal"><svg aria-hidden="true" class="icon"><use href="#i-resume"/></svg><div><h3>Playback that comes back</h3><p>If Android stops the music in the background, Ketvoice resumes it by itself.</p></div></li>
+</ul>
 </div>
 </section>
 
-<section aria-labelledby="new-title" class="new-in" id="new">
-<div class="wrap new-grid">
-<header class="new-head"><p class="label">New in 6.1</p><h2 id="new-title">What 6.1 adds.</h2></header>
-<dl class="new-list">
-<div><dt>Ketogether</dt><dd>Listen together. Start a session and share its code, link or QR code: everyone who joins hears the same song at the same moment.</dd></div>
-<div><dt>Ketmix DJ editor</dt><dd>Open it from the Ketmix switch or a song’s menu, see both waveforms and choose where one song hands over to the next. Ketmix remembers your mix points.</dd></div>
-<div><dt>Lyrics on the lock screen</dt><dd>The line being sung shows on the lock screen and in a silent notification, with its translation in italics.</dd></div>
-<div><dt>Weekly discoveries</dt><dd>A fresh set of songs every week, picked from what you play.</dd></div>
-<div><dt>Monthly Replay</dt><dd>Your month in music: the songs, the artists and the time you spent listening.</dd></div>
-</dl>
+<section aria-labelledby="screens-title" class="screens" id="screens">
+<div class="wrap">
+<header class="sec-head center reveal"><p class="tag">/screens</p><h2 id="screens-title">The real app, screen by screen</h2><p class="sec-sub">Screenshots from earlier builds of Ketvoice 6.</p></header>
 </div>
+<div class="strip" tabindex="0" aria-label="Ketvoice screenshots">
+<figure class="shot reveal" data-depth="1"><div class="phone"><img alt="The player with album artwork, the sung line and the controls" height="2048" loading="lazy" src="assets/player.webp" width="928"/></div><figcaption><b>Now playing</b>The artwork, the line being sung and Ketmix’s sign under the seek bar.</figcaption></figure>
+<figure class="shot reveal" data-depth="-1"><div class="phone"><img alt="Synchronized lyrics, the current line highlighted" height="2048" loading="lazy" src="assets/lyrics.webp" width="928"/></div><figcaption><b>Lyrics</b>Word by word, with backing vocals in their turn.</figcaption></figure>
+<figure class="shot reveal" data-depth="1"><div class="phone"><img alt="Home with recent songs and quick picks" height="2048" loading="lazy" src="assets/home.webp" width="928"/></div><figcaption><b>Home</b>Your mixes, what you played last and new releases.</figcaption></figure>
+<figure class="shot reveal" data-depth="-1"><div class="phone"><img alt="An artist page with popular songs" height="2048" loading="lazy" src="assets/artist.webp" width="928"/></div><figcaption><b>Artists</b>Pages that take their colour from the photo.</figcaption></figure>
+</div>
+<div class="wrap devices reveal"><span><svg aria-hidden="true" class="icon"><use href="#i-car"/></svg>Android Auto: browse, search, or ask “Hey Google, play … on Ketvoice”</span><span>Meta Quest 3 and 3S</span><span>Tablets: two panes, lyrics beside the artwork</span></div>
 </section>
 
-<section aria-labelledby="vc-title" class="vice-city" id="vice-city">
-<div class="wrap vc-grid">
-<figure class="vc-banner"><picture><source type="image/avif" sizes="(max-width: 900px) 100vw, 58vw" srcset="assets/banner-vc-720.avif 720w, assets/banner-vc-1100.avif 1100w, assets/banner-vc-1448.avif 1448w"/><source type="image/webp" sizes="(max-width: 900px) 100vw, 58vw" srcset="assets/banner-vc-720.webp 720w, assets/banner-vc-1100.webp 1100w, assets/banner-vc-1448.webp 1448w"/><img alt="Ketvoice — your music, beautifully connected on every device: the player on a phone under palm trees at sunset" decoding="async" height="1086" loading="lazy" src="assets/banner-vc-1100.png" width="1448"/></picture><figcaption>The Vice City banner, with the player from Ketvoice 6.</figcaption></figure>
-<div class="vc-text">
-<p class="label">Until 10 December</p>
-<h2 id="vc-title"><span class="neon">Vice City</span> edition</h2>
-<p>For a few weeks Ketvoice dresses for the sunset: a limited Vice City theme in the app until 10 December, and a GTA VI welcome screen to mark the game’s release on 19 November. The icon, the banner and this site wear it too.</p>
-<dl class="vc-dates"><div><dt>19 Nov</dt><dd>GTA VI comes out</dd></div><div><dt>10 Dec</dt><dd>The theme leaves the app</dd></div></dl>
-<p class="fine-print">Ketvoice is not affiliated with Rockstar Games.</p>
+<section aria-labelledby="vc-title" class="vice" id="vice-city">
+<div class="wrap">
+<header class="sec-head center reveal"><p class="tag">/vice-city</p><h2 id="vc-title">Dressed for Vice City</h2><p class="sec-sub">A limited Vice City theme in the app until 10 December, and a GTA VI welcome screen for the game’s release on 19 November.</p></header>
+<div class="vc-stage" id="vc-stage">
+<div aria-hidden="true" class="orbit">
+<span class="chip" style="--x:-330px;--y:-120px;--r:-14deg"><b>VI</b></span>
+<span class="chip" style="--x:-250px;--y:110px;--r:10deg"><svg class="icon"><use href="#i-palm"/></svg></span>
+<span class="chip" style="--x:-120px;--y:-190px;--r:-6deg"><svg class="icon"><use href="#i-sun"/></svg></span>
+<span class="chip chip-wide" style="--x:150px;--y:-185px;--r:8deg">19 Nov</span>
+<span class="chip" style="--x:300px;--y:-60px;--r:12deg"><svg class="icon"><use href="#i-mix"/></svg></span>
+<span class="chip chip-wide" style="--x:270px;--y:140px;--r:-9deg">10 Dec</span>
+<span class="chip" style="--x:30px;--y:205px;--r:5deg"><svg class="icon"><use href="#i-palm"/></svg></span>
 </div>
+<figure class="vc-card"><picture><source type="image/avif" sizes="(max-width: 700px) 86vw, 520px" srcset="assets/banner-vc-720.avif 720w, assets/banner-vc-1100.avif 1100w"/><source type="image/webp" sizes="(max-width: 700px) 86vw, 520px" srcset="assets/banner-vc-720.webp 720w, assets/banner-vc-1100.webp 1100w"/><img alt="Ketvoice — your music, beautifully connected on every device: the player on a phone under palm trees at sunset" decoding="async" height="1086" loading="lazy" src="assets/banner-vc-1100.png" width="1448"/></picture></figure>
+</div>
+<dl class="vc-dates reveal"><div><dt>19 Nov</dt><dd>GTA VI comes out; Ketvoice opens on a welcome screen</dd></div><div><dt>10 Dec</dt><dd>The Vice City theme leaves the app</dd></div></dl>
+<p class="fine-print reveal">Ketvoice is not affiliated with Rockstar Games.</p>
 </div>
 </section>
 
 <section aria-labelledby="dl-title" class="download" id="download">
-<div class="wrap dl-grid">
-<header class="dl-head">
-<p class="label" id="release-version" role="status">Latest stable release</p>
-<h2 id="dl-title">Download Ketvoice.</h2>
-<p class="dl-sub" id="download-sub">Free for Android and Meta Quest.</p>
-<dl class="live">
-<div><dt id="downloads-caption">APK downloads</dt><dd class="number" id="stat-downloads">110</dd></div>
-<div><dt>Listening now</dt><dd class="number" id="stat-listeners">—</dd><dd class="now-playing" id="now-playing" hidden><img id="np-cover" alt="" referrerpolicy="no-referrer" loading="lazy"><span class="np-meta"><span id="np-title"></span><span id="np-artist"></span></span><span class="np-live" aria-hidden="true"></span></dd></div>
-</dl>
-<p class="visually-hidden" id="listeners-caption">Live tracking not connected yet</p>
-</header>
-<div class="dl-main">
+<div class="wrap narrow">
+<header class="sec-head center reveal"><p class="tag">/download</p><h2 id="dl-title">Download Ketvoice</h2><p class="sec-sub" id="download-sub">Free for Android and Meta Quest.</p></header>
 <div class="download-list">
-<div class="download-row" id="android-row"><div><h3>Android</h3><p class="small-note">Android 12+ · phone and tablet · Android Auto included</p></div><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="android-apk">Download <svg aria-hidden="true" class="icon"><use href="#down"></use></svg></a></div>
-<div class="download-row" id="quest-row"><div><h3>Meta Quest</h3><p class="small-note">Quest 3 and 3S</p></div><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="quest-apk">Download <svg aria-hidden="true" class="icon"><use href="#down"></use></svg></a></div>
-<div class="download-row" id="lite-row" hidden><div><h3>Ketvoice Lite</h3><p class="small-note">Android · the same effects, tuned for modest phones</p></div><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="lite-apk">Download <svg aria-hidden="true" class="icon"><use href="#down"></use></svg></a></div>
-<div class="download-row" id="wear-row" hidden><div><h3>Wear OS</h3><p class="small-note">Watch app</p></div><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="wear-apk">Download <svg aria-hidden="true" class="icon"><use href="#down"></use></svg></a></div>
+<div class="download-row" id="android-row"><div class="dr-head"><h3>Android</h3><p class="small-note">Phone &amp; tablet · Android 12+</p></div><ul class="dr-list"><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Android Auto in the car</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Ketmix, voice slider and word-by-word lyrics</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Updates itself from each release</li></ul><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="android-apk"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg>Download</a></div>
+<div class="download-row" id="quest-row"><div class="dr-head"><h3>Meta Quest</h3><p class="small-note">Quest 3 and 3S</p></div><ul class="dr-list"><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>A landscape layout for the headset</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>The same library, lyrics and Ketmix</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Its own APK and its own updates</li></ul><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="quest-apk"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg>Download</a></div>
+<div class="download-row" id="lite-row" hidden><div class="dr-head"><h3>Ketvoice Lite</h3><p class="small-note">Android · modest phones</p></div><ul class="dr-list"><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>The same effects, tuned lighter</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Smaller memory and work budgets</li></ul><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="lite-apk"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg>Download</a></div>
+<div class="download-row" id="wear-row" hidden><div class="dr-head"><h3>Wear OS</h3><p class="small-note">Watch app</p></div><ul class="dr-list"><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Ketvoice on your wrist</li></ul><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="wear-apk"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg>Download</a></div>
 </div>
-<aside class="release-notes" id="release-notes" hidden><div class="rn-head"><p class="label">Release notes</p><h3 id="release-notes-title"></h3></div><ul id="release-notes-list"></ul><button aria-controls="release-notes-list" aria-expanded="false" class="text-link rn-more" hidden id="rn-more" type="button">Show every change</button></aside>
-</div>
+<table class="stats reveal">
+<caption id="release-version" role="status">Latest stable release</caption>
+<tbody>
+<tr><th id="downloads-caption" scope="row">APK downloads</th><td class="number" id="stat-downloads">110</td></tr>
+<tr><th scope="row">Listening now<span class="visually-hidden" id="listeners-caption">Live tracking not connected yet</span></th><td><span class="now-playing" id="now-playing" hidden><img id="np-cover" alt="" referrerpolicy="no-referrer" loading="lazy"><span class="np-meta"><span id="np-title"></span><span id="np-artist"></span></span><span class="np-live" aria-hidden="true"></span></span><span class="number" id="stat-listeners">—</span></td></tr>
+</tbody>
+</table>
+<aside class="release-notes" id="release-notes" hidden><div class="rn-head"><p class="tag">/release-notes</p><h3 id="release-notes-title"></h3></div><ul id="release-notes-list"></ul><button aria-controls="release-notes-list" aria-expanded="false" class="text-link rn-more" hidden id="rn-more" type="button">Show every change</button></aside>
 </div>
 <div class="container"><p class="download-footnote lead-note">Ketvoice 6.1.2 fixes the crash at launch of 6.1.0 and 6.1.1 on some phones. Ketvoice 6.1.1 adds a safe mode that shows the crash report if the app closes while starting. Ketvoice 6.1.0 lets friends listen together with Ketogether, lets you place your own mix points in the Ketmix editor, shows the sung line on the lock screen, adds weekly discoveries and a monthly Replay, resumes playback by itself if Android stops it, comes as a lighter Ketvoice Lite APK, and celebrates GTA VI with a limited Vice City theme until 10 December (Ketvoice is not affiliated with Rockstar Games). 6.0.0 Beta 5 brought Android Auto and iOS 27 sliders. Ketvoice 6.0.0 Beta 5 runs in the car with Android Auto — browse, search and play by voice — keeps the music going in the background with three minutes read ahead, makes sliders swell under your finger like iOS 27 and shows Ketmix's sign under the seek bar while two songs are mixed. Beta 4 brought beat-matched Ketmix blends that glide back to each song's tempo, an instant voice slider, gapless quality upgrades, a new glass icon, glowing lyrics, a floating search and covers that zoom into their page. Beta 2 was the redesign of Ketvoice 6: Ket 27 becomes the only interface, lyrics flow in Cascade, the glass menu unfolds from any song, and tablets and large windows get a glass sidebar, two-pane pages, a player with the lyrics beside the artwork, keyboard and mouse. On the lyrics screen, a slider turns the singer's voice down on separated downloads — on top of Ketmix's high-quality voice separation, mixes prepared from the first seconds of a song, lyrics videos, Wrapped and widgets. Screenshots depict earlier versions; see the English release notes for details. <a href="https://tysnnn23.github.io/Ketvoice/admin/ketvoice-admin.html" target="_blank" rel="noopener noreferrer">Ketvoice Studio</a> retains verified-owner publishing.</p></div>
-<div class="wrap"><p class="download-footnote dl-links"><a href="https://github.com/Tysnnn23/Ketvoice/releases/latest" rel="noopener noreferrer" target="_blank">All release notes on GitHub</a></p></div>
+<div class="wrap narrow"><p class="download-footnote dl-links"><a href="https://github.com/Tysnnn23/Ketvoice/releases/latest" rel="noopener noreferrer" target="_blank">All release notes on GitHub</a></p></div>
+</section>
+
+<section aria-labelledby="faq-title" class="faq" id="faq">
+<div class="wrap faq-grid">
+<header class="sec-head reveal"><p class="tag">/faq</p><h2 id="faq-title">Common questions</h2></header>
+<div class="qa-list">
+<div class="qa"><h3><button aria-controls="qa1" aria-expanded="false" id="qa1-b" type="button">Is Ketvoice free?<svg aria-hidden="true" class="icon"><use href="#i-chev"/></svg></button></h3><div aria-labelledby="qa1-b" class="qa-a" id="qa1" role="region"><div><p>Yes. Every version is published as APKs on GitHub, free to download, and the app updates itself from there.</p></div></div></div>
+<div class="qa"><h3><button aria-controls="qa2" aria-expanded="false" id="qa2-b" type="button">Which devices does it run on?<svg aria-hidden="true" class="icon"><use href="#i-chev"/></svg></button></h3><div aria-labelledby="qa2-b" class="qa-a" id="qa2" role="region"><div><p>Android 12 and later on phones and tablets, Android Auto in the car, and Meta Quest 3 and 3S. When a release also carries Ketvoice Lite or Wear OS, they appear in the download list.</p></div></div></div>
+<div class="qa"><h3><button aria-controls="qa3" aria-expanded="false" id="qa3-b" type="button">How does Ketogether work?<svg aria-hidden="true" class="icon"><use href="#i-chev"/></svg></button></h3><div aria-labelledby="qa3-b" class="qa-a" id="qa3" role="region"><div><p>One person starts a session and shares its code, link or QR code. Everyone who joins hears the same song at the same moment.</p></div></div></div>
+<div class="qa"><h3><button aria-controls="qa4" aria-expanded="false" id="qa4-b" type="button">Can I turn the singer down on any song?<svg aria-hidden="true" class="icon"><use href="#i-chev"/></svg></button></h3><div aria-labelledby="qa4-b" class="qa-a" id="qa4" role="region"><div><p>Yes: the voice slider works on the song you are hearing, which is separated on the phone when you touch it.</p></div></div></div>
+<div class="qa"><h3><button aria-controls="qa5" aria-expanded="false" id="qa5-b" type="button">Why is everything pink and orange?<svg aria-hidden="true" class="icon"><use href="#i-chev"/></svg></button></h3><div aria-labelledby="qa5-b" class="qa-a" id="qa5" role="region"><div><p>It is the Vice City edition, for the release of GTA VI on 19 November; the theme leaves the app on 10 December. Ketvoice is not affiliated with Rockstar Games.</p></div></div></div>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="cta-title" class="cta">
+<div aria-hidden="true" class="arcs"><i></i><i></i><i></i></div>
+<div class="wrap reveal"><h2 id="cta-title">Press play.<br/>Ketvoice keeps time.</h2><p>Free for Android and Meta Quest.</p><a class="btn btn-ink" data-apk="android" href="https://github.com/Tysnnn23/Ketvoice/releases/latest">Download for Android</a></div>
 </section>
 </main>
-<button aria-label="Back to top" class="to-top" id="to-top"><svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><path d="M12 19V5m0 0-6 6m6-6 6 6"></path></svg></button>
-<footer><div class="wrap"><p aria-hidden="true" class="wordmark">Ketvoice</p><div class="footer-main"><div class="footer-brand"><picture><source srcset="assets/ketvoice-logo-vc-96.webp" type="image/webp"/><img alt="" height="34" src="assets/ketvoice-logo-vc-96.png" width="34"/></picture><span>Independent Android music player.</span></div><nav aria-label="Footer" class="footer-links"><a href="#experience">The player</a><a href="#vice-city">Vice City</a><a href="#download">Download</a><button class="discord-action">Discord</button></nav></div><div class="footer-bottom"><span>Not affiliated with music providers.</span><span>Vice City edition · Ketvoice is not affiliated with Rockstar Games.</span></div></div></footer><div aria-live="polite" class="toast" id="toast" role="status"></div>
+
+<button aria-label="Back to top" class="to-top" id="to-top" type="button"><svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><path d="M12 19V5m0 0-6 6m6-6 6 6"></path></svg></button>
+<footer>
+<canvas aria-hidden="true" class="flow flow-foot" data-flow="foot"></canvas>
+<div class="wrap"><div class="foot-card">
+<div class="foot-top">
+<div class="foot-brand"><picture><source srcset="assets/ketvoice-logo-vc-96.webp" type="image/webp"/><img alt="" height="34" src="assets/ketvoice-logo-vc-96.png" width="34"/></picture><p>Independent Android music player with Ketmix, a voice slider and word-by-word lyrics.</p></div>
+<nav aria-label="Footer" class="foot-cols">
+<div><p class="foot-h">Product</p><a href="#features">Features</a><a href="#new">New in 6.1</a><a href="#screens">Screens</a><a href="#download">Download</a></div>
+<div><p class="foot-h">Community</p><button class="discord-action" type="button">Discord</button><a href="https://github.com/Tysnnn23/Ketvoice/releases" rel="noopener noreferrer" target="_blank">GitHub releases</a><a href="https://tysnnn23.github.io/Ketvoice/admin/ketvoice-admin.html" rel="noopener noreferrer" target="_blank">Ketvoice Studio</a></div>
+<div><p class="foot-h">Edition</p><a href="#vice-city">Vice City</a><a href="#faq">Questions</a></div>
+</nav>
+</div>
+<div class="foot-bottom"><span>Not affiliated with music providers.</span><span>Vice City edition · Ketvoice is not affiliated with Rockstar Games.</span></div>
+</div></div>
+</footer>
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
 <script src="js/main.js"></script>
-<script defer crossorigin="anonymous" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-<script defer crossorigin="anonymous" integrity="sha384-wl5TeDVvOWt30Pbf8aSo2ZrzsOjddu3avOBvHe+p+OhJt9gP6w9YXmDkN5DK2/dF" src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
-<script defer crossorigin="anonymous" integrity="sha384-R18XzqnxvVLEF+BYfhpmDx30v7eP83fAckyfoRzK7/Uf6nGqufcmsk0eAKo7S3RU" src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
-<script defer src="js/motion.js"></script>
-<script src="assets/ketvoice-glass-motion.js"></script>
-<script src="assets/ketvoice-magnet.js"></script>
+<script src="js/flow.js"></script>
+<script src="js/motion.js"></script>
 <script src="assets/ketvoice-theme.js"></script></body></html>
