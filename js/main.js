@@ -41,7 +41,7 @@
   // Mobile and Quest always show (falling back to the latest-release page); the Lite and Wear rows only
   // appear when the latest release actually carries their APK.
   function showRelease(r){const rv=$('#release-version');if(rv&&r.tag)rv.textContent='Latest release: '+r.tag;const a=$('#android-apk'),q=$('#quest-apk');if(a)a.href=r.android||LATEST_PAGE;if(q)q.href=r.quest||LATEST_PAGE;
-   for(const k of ['lite','wear']){const row=$('#'+k+'-row'),btn=$('#'+k+'-apk'),soon=$('#coming [data-edition="'+k+'"]');if(soon)soon.hidden=!!r[k];if(!row||!btn)continue;if(r[k])btn.href=r[k];row.hidden=!r[k]}
+   for(const k of ['lite','wear']){const row=$('#'+k+'-row'),btn=$('#'+k+'-apk');if(!row||!btn)continue;if(r[k])btn.href=r[k];row.hidden=!r[k]}
    const sub=$('#download-sub');if(sub)sub.textContent=r.wear?'Free for Android, Meta Quest and Wear OS.':'Free for Android and Meta Quest.'}
   // WHAT'S NEW: the download section mirrors the body of the latest GitHub
   // release, so the site stays in sync with every published version.

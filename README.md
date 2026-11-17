@@ -31,9 +31,13 @@ site beaucoup moins vibecodé tout en ayant des animations de malade »). Art di
   ticker of features drifts and skews with scroll speed, and « The player » pins a phone
   that turns to each screen as its step crosses the middle of the screen.
 - `prefers-reduced-motion`: no pinning, no movement; everything is shown in its final state.
-- Copy describes what ships in 6.0 (Ketmix, voice slider, word-by-word lyrics, Android Auto,
-  Quest, Canvas). Lite, Wear OS and Ketogether are listed as « in the works for 6.1 »; the
-  Lite/Wear mentions disappear when their APKs are in the latest release.
+- The site goes live with Ketvoice 6.1: « The player » covers Ketmix, the voice slider,
+  word-by-word lyrics, Android Auto, Quest and Canvas, and « New in 6.1 » lists Ketogether,
+  the Ketmix DJ editor, lock-screen lyrics, weekly discoveries and monthly Replay. Ketvoice
+  Lite and Wear OS are only named in their download rows, which appear when the latest
+  release carries `-Lite.apk` / `-Wear.apk`, so the page never promises a missing file.
+- Hero text contrast is measured against the rendered pixels under the glyphs (WCAG AA:
+  body ≥ 4.5:1, headline ≥ 3:1 at the 1st percentile) at 1440, 1280, 390 and 360 px.
 - « Ketvoice is not affiliated with Rockstar Games. » sits next to the VI artwork, in the
   Vice City section and in the footer. Night is the default theme; the toggle gives daylight.
 
