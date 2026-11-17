@@ -47,6 +47,9 @@ site beaucoup moins vibecodé tout en ayant des animations de malade »). Art di
 - « Ketvoice is not affiliated with Rockstar Games. » sits next to the VI artwork, in the
   Vice City section and in the footer. Night is the default theme; the toggle gives daylight.
 
+Ketvoice 6.1.2 (versionCode 131) fixes the crash at launch of 6.1.0 and 6.1.1 on some phones.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.1.2.md).
+
 Ketvoice 6.1.1 (versionCode 130) adds a safe mode with the crash report after two launches ended by a crash.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.1.1.md).
 
