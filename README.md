@@ -22,15 +22,21 @@ site beaucoup moins vibecodé tout en ayant des animations de malade »). Art di
 - Type: Big Shoulders Display (condensed, display only), Schibsted Grotesk (text), IBM Plex
   Mono (labels and metadata), from Google Fonts. One accent (sunset orange) for actions, the
   pink neon only on « Vice City », glass only on the nav bar, no badges or icon-card grids.
-- Hero: the owner's VI sunset (`assets/hero-vi-*`, portrait crop `hero-vi-portrait-*` on tall
-  screens) pinned while the page scrolls into it: the sea layer dollies in around the horizon
-  faster than the sky, the sun glow sinks, the light grades to night, foreground fronds part
-  and the player rises from the sea. `--p` comes from a CSS scroll-driven animation
-  (`animation-timeline: view(block 0px)`) or from `js/scenes.js` where that is unsupported.
-- The headline's letters thin out under the cursor (variable weight, spring-damped), a
-  ticker of features drifts and skews with scroll speed, and « The player » pins a phone
-  that turns to each screen as its step crosses the middle of the screen.
-- `prefers-reduced-motion`: no pinning, no movement; everything is shown in its final state.
+- Motion (owner, round 4: « du motion design comme sur le site de tryliner.fun ») lives in
+  `js/motion.js`, on GSAP 3.15.0 + ScrollTrigger and Lenis 1.3.27 from jsDelivr (pinned, with
+  SRI). Language: entrances rise out of a blur on an expo/quint-out curve with 60–100 ms
+  staggers, springy landings, slow idle loops, and scenes scrubbed by the scroll:
+  - hero intro (the photo un-blurs and settles, the fronds swing in and keep breathing, the
+    headline rises word by word, the neon flickers on), then the pinned sunset (`--p`): the
+    sea dollies in, the sun glow sinks, the light grades to night, the player rises;
+  - « Word-by-word lyrics »: a pinned scene where the scroll is the song — each word fills as
+    it is sung, the sung line leans forward, a held note glows (lines written for the page);
+  - « The player »: the phone turns with the scroll and each screen wipes in;
+  - blur-in headings, rules that draw, rows that land, the banner opening like a curtain,
+    dates that roll in, and a wordmark that rises then rides a wave;
+  - the headline's letters thin out under the cursor and the ticker leans into the scroll.
+  Without the CDN the page falls back to a light native version; with
+  `prefers-reduced-motion` nothing moves, nothing is pinned and every state is final.
 - The site goes live with Ketvoice 6.1: « The player » covers Ketmix, the voice slider,
   word-by-word lyrics, Android Auto, Quest and Canvas, and « New in 6.1 » lists Ketogether,
   the Ketmix DJ editor, lock-screen lyrics, weekly discoveries and monthly Replay. Ketvoice
@@ -443,7 +449,7 @@ phone/Quest validation.
 - `index.html` — main page
 - `css/style.css` — styling, night/daylight themes and the Vice City scene
 - `js/main.js` — menu, toast, release notes, download links (Mobile, Quest, Lite, Wear), live stats
-- `js/scenes.js` — scroll scenes: hero progress fallback, kinetic headline, ticker, pinned story
+- `js/motion.js` — all motion: GSAP/ScrollTrigger/Lenis choreography, native fallback, reduced motion
 - `assets/` — magnetic buttons, glass nav, theme toggle, screenshots, the Vice City logo
   (`ketvoice-logo-vc-*`), banner (`banner-vc-*`) and hero art (`hero-vi-*`)
 - `tests/release-assets.test.cjs` — release asset selection (`node tests/release-assets.test.cjs`)

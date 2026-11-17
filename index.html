@@ -17,7 +17,8 @@
 <meta property="og:image:alt" content="Ketvoice — your music, beautifully connected on every device"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png"/>
-<script>document.documentElement.classList.add('js');(function(){try{var t=localStorage.getItem('ketvoice-theme');if(t!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('dark')}})();</script>
+<script>document.documentElement.classList.add('js');(function(){var d=document.documentElement;if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');setTimeout(function(){if(!d.classList.contains('motion-ready'))d.classList.remove('motion')},3500)}})();(function(){try{var t=localStorage.getItem('ketvoice-theme');if(t!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('dark')}})();</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500..900&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Schibsted+Grotesk:wght@400..700&amp;display=swap"/>
@@ -63,6 +64,18 @@
 </section>
 
 <div aria-hidden="true" class="ticker"><div class="ticker-track"><span>Ketmix</span><span>DJ editor</span><span>Ketogether</span><span>Voice slider</span><span>Word-by-word lyrics</span><span>Lock-screen lyrics</span><span>Android Auto</span><span>Meta Quest</span><span>Weekly discoveries</span><span>Monthly Replay</span><span>Canvas</span><span>Ketmix</span><span>DJ editor</span><span>Ketogether</span><span>Voice slider</span><span>Word-by-word lyrics</span><span>Lock-screen lyrics</span><span>Android Auto</span><span>Meta Quest</span><span>Weekly discoveries</span><span>Monthly Replay</span><span>Canvas</span></div></div>
+
+<section aria-labelledby="sing-title" class="sing" id="sing">
+<div class="sing-stage">
+<div aria-hidden="true" class="sing-glow"><i></i><i></i><i></i></div>
+<div class="wrap sing-inner">
+<p class="label" id="sing-title">Word-by-word lyrics</p>
+<p aria-label="Pink sky over Ocean Drive, the radio is on and so am I — one song fades into the next, and every word lands right on time." class="sing-lines" role="img"><span aria-hidden="true"><span class="ln"><span class="wd">Pink</span> <span class="wd">sky</span> <span class="wd">over</span> <span class="wd">Ocean</span> <span class="wd">Drive,</span></span><span class="ln"><span class="wd">the</span> <span class="wd">radio</span> <span class="wd">is</span> <span class="wd">on</span> <span class="wd">and</span> <span class="wd">so</span> <span class="wd">am</span> <span class="wd">I</span> <span class="wd">—</span></span><span class="ln"><span class="wd">one</span> <span class="wd">song</span> <span class="wd">fades</span> <span class="wd">into</span> <span class="wd">the</span> <span class="wd">next,</span></span><span class="ln"><span class="wd">and</span> <span class="wd">every</span> <span class="wd">word</span> <span class="wd">lands</span> <span class="wd">right</span> <span class="wd">on</span> <span class="wd">time.</span></span></span></p>
+<div aria-hidden="true" class="sing-bar"><span class="sing-time" id="sing-time">0:00</span><span class="sing-track"><i></i></span><span>3:24</span></div>
+<p class="sing-note">Lines written for this page. In Ketvoice, the lyrics of the song you play light up like this, word by word, and a note the singer holds glows a little.</p>
+</div>
+</div>
+</section>
 
 <section aria-labelledby="story-title" class="story" id="experience">
 <div class="wrap story-head"><p class="label">The player</p><h2 id="story-title">What it does, screen by screen.</h2><p class="story-note">Real screenshots from earlier builds of Ketvoice 6.</p></div>
@@ -133,7 +146,10 @@
 <button aria-label="Back to top" class="to-top" id="to-top"><svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><path d="M12 19V5m0 0-6 6m6-6 6 6"></path></svg></button>
 <footer><div class="wrap"><p aria-hidden="true" class="wordmark">Ketvoice</p><div class="footer-main"><div class="footer-brand"><picture><source srcset="assets/ketvoice-logo-vc-96.webp" type="image/webp"/><img alt="" height="34" src="assets/ketvoice-logo-vc-96.png" width="34"/></picture><span>Independent Android music player.</span></div><nav aria-label="Footer" class="footer-links"><a href="#experience">The player</a><a href="#vice-city">Vice City</a><a href="#download">Download</a><button class="discord-action">Discord</button></nav></div><div class="footer-bottom"><span>Not affiliated with music providers.</span><span>Vice City edition · Ketvoice is not affiliated with Rockstar Games.</span></div></div></footer><div aria-live="polite" class="toast" id="toast" role="status"></div>
 <script src="js/main.js"></script>
-<script src="js/scenes.js"></script>
+<script defer crossorigin="anonymous" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script defer crossorigin="anonymous" integrity="sha384-wl5TeDVvOWt30Pbf8aSo2ZrzsOjddu3avOBvHe+p+OhJt9gP6w9YXmDkN5DK2/dF" src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script defer crossorigin="anonymous" integrity="sha384-R18XzqnxvVLEF+BYfhpmDx30v7eP83fAckyfoRzK7/Uf6nGqufcmsk0eAKo7S3RU" src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js"></script>
+<script defer src="js/motion.js"></script>
 <script src="assets/ketvoice-glass-motion.js"></script>
 <script src="assets/ketvoice-magnet.js"></script>
 <script src="assets/ketvoice-theme.js"></script></body></html>
