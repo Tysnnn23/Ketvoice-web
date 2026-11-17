@@ -72,6 +72,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 6.2.1 (versionCode 133) gives the Vice City theme a striped setting sun on Home and a sunset fill on the player's seek bar and the sliders.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.2.1.md).
+
 Ketvoice 6.2.0 (versionCode 132) adds Ketvoice accounts with a profile photo and library sync, the smart library (natural search, moods, duplicates, Spotify and Deezer import), a livelier player, a first-launch welcome and seasonal themes.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.2.0.md).
 
