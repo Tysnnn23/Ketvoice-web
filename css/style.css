@@ -421,7 +421,7 @@ html.motion .cta:has(.visible) .arcs i:nth-child(2){animation-delay:.12s}html.mo
   .arcs i:nth-child(1){width:360px;height:180px}.arcs i:nth-child(2){width:260px;height:130px}.arcs i:nth-child(3){width:160px;height:80px}
   .foot-cols{grid-template-columns:1fr 1fr}
   .stats th,.stats td{padding:10px 12px}
-  .now-playing{display:flex;margin:0 0 4px auto;justify-content:flex-end;max-width:100%}
+  .now-playing{display:flex;margin:0 0 4px auto;justify-content:flex-end;max-width:min(100%,calc(100vw - 150px))}
 }
 
 /* ---------- reduced motion ---------- */
