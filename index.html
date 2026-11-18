@@ -22,7 +22,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;family=Geist+Mono:wght@400;500&amp;display=swap"/>
 <link rel="preload" as="image" type="image/avif" imagesrcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w" imagesizes="(max-width: 1240px) 100vw, 1188px"/>
-<link rel="stylesheet" href="css/style.css?v=202611171700"/>
+<link rel="stylesheet" href="css/style.css?v=202611181200"/>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2623695974781872"
      crossorigin="anonymous"></script>
 </head>
@@ -61,22 +61,29 @@
 <section aria-labelledby="hero-title" class="hero" id="top">
 <canvas aria-hidden="true" class="flow flow-hero" data-flow="hero"></canvas>
 <div aria-hidden="true" class="spot"></div>
+<div aria-hidden="true" class="floor"><i></i></div>
 <div class="wrap hero-head">
-<h1 class="appear" id="hero-title">Your music, mixed on the beat and sung word by word.</h1>
+<h1 class="appear kinetic" data-kinetic id="hero-title">Your music, mixed on the beat and <span class="sung">sung word by word.</span></h1>
 <p class="hero-sub appear">Ketmix blends one song into the next like a DJ, a slider turns the singer down, and the lyrics follow every word — on your phone, in the car and on Meta Quest.</p>
 <div class="hero-actions appear">
-<div class="split" id="split"><a class="btn btn-accent split-main" data-apk="android" href="https://github.com/Tysnnn23/Ketvoice/releases/latest">Download for Android</a><button aria-controls="split-menu" aria-expanded="false" aria-haspopup="true" aria-label="Choose another edition" class="btn btn-accent split-more" id="split-more" type="button"><svg aria-hidden="true" class="icon"><use href="#i-chev"/></svg></button>
+<div class="split" data-magnet id="split"><a class="btn btn-accent split-main" data-apk="android" href="https://github.com/Tysnnn23/Ketvoice/releases/latest">Download for Android</a><button aria-controls="split-menu" aria-expanded="false" aria-haspopup="true" aria-label="Choose another edition" class="btn btn-accent split-more" id="split-more" type="button"><svg aria-hidden="true" class="icon"><use href="#i-chev"/></svg></button>
 <div class="split-menu" id="split-menu" role="menu"><a data-apk="android" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" role="menuitem">Android <small>phone &amp; tablet</small></a><a data-apk="quest" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" role="menuitem">Meta Quest <small>3 and 3S</small></a><a data-apk="lite" hidden href="https://github.com/Tysnnn23/Ketvoice/releases/latest" role="menuitem">Ketvoice Lite <small>modest phones</small></a><a data-apk="wear" hidden href="https://github.com/Tysnnn23/Ketvoice/releases/latest" role="menuitem">Wear OS <small>watch</small></a></div></div>
-<a class="btn btn-line" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="icon"><use href="#i-gh"/></svg>Releases</a>
-<button class="btn btn-line discord-action" type="button"><svg aria-hidden="true" class="icon"><use href="#i-disc"/></svg>Discord</button>
+<a class="btn btn-line" data-magnet href="https://github.com/Tysnnn23/Ketvoice/releases/latest" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" class="icon"><use href="#i-gh"/></svg>Releases</a>
+<button class="btn btn-line discord-action" data-magnet type="button"><svg aria-hidden="true" class="icon"><use href="#i-disc"/></svg>Discord</button>
 </div>
 </div>
 <div class="wrap showcase-wrap">
+<div aria-hidden="true" class="vc-sun"><i></i></div>
 <figure class="showcase appear-late">
 <picture class="showcase-art"><source type="image/avif" sizes="(max-width: 1240px) 100vw, 1188px" srcset="assets/hero-vi-720.avif 720w, assets/hero-vi-1117.avif 1117w"/><source type="image/webp" sizes="(max-width: 1240px) 100vw, 1188px" srcset="assets/hero-vi-720.webp 720w, assets/hero-vi-1117.webp 1117w"/><img alt="A neon VI over a sunset beach lined with palm trees" decoding="async" fetchpriority="high" height="622" sizes="(max-width: 1240px) 100vw, 1188px" src="assets/hero-vi-1117.jpg" srcset="assets/hero-vi-720.jpg 720w, assets/hero-vi-1117.jpg 1117w" width="1117"/></picture>
 <div class="showcase-phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-player-420.webp 420w, assets/app-player-640.webp 640w"/><img alt="The Ketvoice player playing Chicago by Michael Jackson: the XSCAPE artwork, the line being sung, the seek bar and the controls" decoding="async" height="2600" width="1224" src="assets/app-player-420.jpg"/></picture></div>
 <figcaption class="showcase-bar"><span class="sb-dot" aria-hidden="true"></span><span class="sb-title">Vice City edition</span><span class="sb-meta">In the app until 10 December</span><span class="sb-fine">Not affiliated with Rockstar Games.</span></figcaption>
 </figure>
+</div>
+<div class="ticker appear-late" data-live id="ticker">
+<p class="tk-label"><span class="sb-dot" aria-hidden="true"></span>On repeat in the screenshots</p>
+<div class="tk-view"><div class="tk-track"><ul aria-label="Songs on repeat in the app screenshots"><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-chicago.webp" width="120"/><span><b>Chicago</b> Michael Jackson</span></li><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-colisee.webp" width="120"/><span><b>Colisée</b> Werenoi</span></li><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-cantdie.webp" width="120"/><span><b>Can’t Die</b> Juice WRLD</span></li><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-blinding.webp" width="120"/><span><b>Blinding Lights</b> The Weeknd</span></li><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-midnight.webp" width="120"/><span><b>Midnight Sun</b> Zara Larsson</span></li></ul><ul aria-hidden="true" class="tk-dup"><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-chicago.webp" width="120"/><span><b>Chicago</b> Michael Jackson</span></li><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-colisee.webp" width="120"/><span><b>Colisée</b> Werenoi</span></li><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-cantdie.webp" width="120"/><span><b>Can’t Die</b> Juice WRLD</span></li><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-blinding.webp" width="120"/><span><b>Blinding Lights</b> The Weeknd</span></li><li><img alt="" class="cover" decoding="async" height="120" loading="lazy" src="assets/cover-midnight.webp" width="120"/><span><b>Midnight Sun</b> Zara Larsson</span></li></ul></div></div>
+<button aria-label="Pause the song ticker" aria-pressed="false" class="tk-pause" id="tk-pause" type="button"><svg aria-hidden="true" class="icon" viewBox="0 0 24 24"><path class="i-pause" d="M9 6v12M15 6v12"/><path class="i-play" d="M8 5.5v13l10.5-6.5z"/></svg></button>
 </div>
 </section>
 
@@ -146,6 +153,7 @@
 <div class="wrap">
 <header class="sec-head center reveal"><p class="tag">/screens</p><h2 id="screens-title">The real app, screen by screen</h2><p class="sec-sub">Screenshots from Ketvoice 6.1.2.</p></header>
 </div>
+<div class="scrub" data-live id="scrub">
 <div class="strip" tabindex="0" aria-label="Ketvoice screenshots">
 <figure class="shot reveal" data-depth="1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-player-420.webp 420w, assets/app-player-640.webp 640w"/><img alt="The player playing Chicago by Michael Jackson" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-player-420.jpg"/></picture></div><figcaption><b>Now playing</b>The full artwork, the line being sung and the controls.</figcaption></figure>
 <figure class="shot reveal" data-depth="-1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-lyrics-420.webp 420w, assets/app-lyrics-640.webp 640w"/><img alt="Word-by-word lyrics of Chicago, with the voice slider open" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-lyrics-420.jpg"/></picture></div><figcaption><b>Lyrics</b>Word by word, with the voice slider at hand.</figcaption></figure>
@@ -154,6 +162,7 @@
 <figure class="shot reveal" data-depth="1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-album-420.webp 420w, assets/app-album-640.webp 640w"/><img alt="The XSCAPE album page by Michael Jackson with its track list" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-album-420.jpg"/></picture></div><figcaption><b>Albums</b>The cover fills the page, the tracks follow.</figcaption></figure>
 <figure class="shot reveal" data-depth="-1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-artist-420.webp 420w, assets/app-artist-640.webp 640w"/><img alt="Michael Jackson’s artist page with popular songs" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-artist-420.jpg"/></picture></div><figcaption><b>Artists</b>Popular songs, artist radio and shuffle.</figcaption></figure>
 <figure class="shot reveal" data-depth="1"><div class="phone"><picture><source type="image/webp" sizes="(max-width: 760px) 30vw, 250px" srcset="assets/app-wrapped-420.webp 420w, assets/app-wrapped-640.webp 640w"/><img alt="Ketvoice Wrapped: your songs on repeat" decoding="async" height="2600" width="1224" loading="lazy" src="assets/app-wrapped-420.jpg"/></picture></div><figcaption><b>Wrapped</b>Your songs on repeat, ready to share.</figcaption></figure>
+</div>
 </div>
 <div class="wrap devices reveal"><span><svg aria-hidden="true" class="icon"><use href="#i-car"/></svg>Android Auto: browse, search, or ask “Hey Google, play … on Ketvoice”</span><span>Meta Quest 3 and 3S</span><span>Tablets: two panes, lyrics beside the artwork</span></div>
 </section>
@@ -181,6 +190,7 @@
 <section aria-labelledby="dl-title" class="download" id="download">
 <div class="wrap narrow">
 <header class="sec-head center reveal"><p class="tag">/download</p><h2 id="dl-title">Download Ketvoice</h2><p class="sec-sub" id="download-sub">Free for Android and Meta Quest.</p></header>
+<dl class="tally reveal" id="tally"><div><dt>releases on GitHub</dt><dd><span class="count" data-count="125" id="tally-releases">125</span></dd></div><div><dt>interface languages</dt><dd><span class="count" data-count="11">11</span></dd></div><div><dt>places to listen: phone, car, Quest</dt><dd><span class="count" data-count="3">3</span></dd></div></dl>
 <div class="download-list">
 <div class="download-row" id="android-row"><div class="dr-head"><h3>Android</h3><p class="small-note">Phone &amp; tablet · Android 12+</p></div><ul class="dr-list"><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Android Auto in the car</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Ketmix, voice slider and word-by-word lyrics</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Updates itself from each release</li></ul><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="android-apk"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg>Download</a></div>
 <div class="download-row" id="quest-row"><div class="dr-head"><h3>Meta Quest</h3><p class="small-note">Quest 3 and 3S</p></div><ul class="dr-list"><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>A landscape layout for the headset</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>The same library, lyrics and Ketmix</li><li><svg aria-hidden="true" class="icon"><use href="#i-check"/></svg>Its own APK and its own updates</li></ul><a class="row-button" href="https://github.com/Tysnnn23/Ketvoice/releases/latest" id="quest-apk"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg>Download</a></div>
@@ -215,7 +225,7 @@
 
 <section aria-labelledby="cta-title" class="cta">
 <div aria-hidden="true" class="arcs"><i></i><i></i><i></i></div>
-<div class="wrap reveal"><h2 id="cta-title">Press play.<br/>Ketvoice keeps time.</h2><p>Free for Android and Meta Quest.</p><a class="btn btn-ink" data-apk="android" href="https://github.com/Tysnnn23/Ketvoice/releases/latest">Download for Android</a></div>
+<div class="wrap reveal"><h2 id="cta-title">Press play.<br/>Ketvoice keeps time.</h2><p>Free for Android and Meta Quest.</p><a class="btn btn-ink" data-apk="android" data-magnet href="https://github.com/Tysnnn23/Ketvoice/releases/latest">Download for Android</a></div>
 </section>
 </main>
 
@@ -235,7 +245,7 @@
 </div></div>
 </footer>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
-<script src="js/main.js?v=202611171700"></script>
-<script src="js/flow.js?v=202611171700"></script>
-<script src="js/motion.js?v=202611171700"></script>
+<script src="js/main.js?v=202611181200"></script>
+<script src="js/flow.js?v=202611181200"></script>
+<script src="js/motion.js?v=202611181200"></script>
 <script src="assets/ketvoice-theme.js?v=202611171700"></script></body></html>

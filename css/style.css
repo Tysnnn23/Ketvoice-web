@@ -120,8 +120,8 @@ html.dark .theme-toggle .moon{opacity:1;transform:none}
 .split-menu a[hidden]{display:none}
 .split-menu a:hover,.split-menu a:focus-visible{background:var(--soft)}
 .split-menu small{color:var(--muted);font-size:12px}
-.showcase-wrap{margin-top:88px}
-.showcase{position:relative;border-radius:14px;box-shadow:var(--shadow)}
+.showcase-wrap{position:relative;margin-top:128px}
+.showcase{position:relative;z-index:1;border-radius:14px;box-shadow:var(--shadow)}
 .showcase-art{display:block;border-radius:14px;overflow:hidden;aspect-ratio:1117/622;background:#3a0f6e}
 .showcase-art img{display:block;width:100%;height:100%;object-fit:cover}
 .showcase-phone{--lift:0px;position:absolute;right:5.5%;bottom:-48px;width:21%;max-width:250px;aspect-ratio:1224/2600;padding:6px;border-radius:34px;background:#07030b;box-shadow:0 0 0 1px rgba(255,255,255,.14),0 30px 60px rgba(8,2,20,.5);transform:translateY(var(--lift))}
@@ -342,12 +342,12 @@ html.motion .hero-actions.appear{animation-delay:.2s}
 html.motion .appear-late{animation:kv-rise 1.5s var(--out) .25s both}
 html.motion .flow-hero{animation:kv-fade 2s var(--out) both}
 html.motion .showcase-phone{animation:kv-float 2.4s ease-in-out infinite alternate}
-html.motion .reveal{transition:opacity .9s var(--out),transform .9s var(--out),filter .9s var(--out)}
-html.motion .reveal:not(.visible){opacity:0;transform:translateY(12px);filter:blur(4px)}
+html.motion .reveal{transition:opacity .9s var(--out),transform 1.1s var(--out)}
+html.motion .reveal:not(.visible){opacity:0;transform:translateY(18px)}
 html.motion .bento .reveal:nth-child(2),html.motion .grid6 .reveal:nth-child(3n+2),html.motion .strip .reveal:nth-child(2){transition-delay:.08s}
 html.motion .grid6 .reveal:nth-child(3n),html.motion .strip .reveal:nth-child(3){transition-delay:.16s}
 html.motion .bento .reveal:nth-child(4),html.motion .strip .reveal:nth-child(4){transition-delay:.12s}
-html.motion .shot.reveal{transition:opacity .9s var(--out),filter .9s var(--out)}
+html.motion .shot.reveal{transition:opacity .9s var(--out)}
 html.motion .shot.reveal:not(.visible){transform:translateY(var(--drift))}
 /* the little product loops play once their cell is on screen */
 html.motion .visible .ly-now span{animation:kv-sing 3.6s linear infinite}
@@ -400,7 +400,7 @@ html.motion .cta:has(.visible) .arcs i:nth-child(2){animation-delay:.12s}html.mo
   .hero-actions{justify-content:flex-start;display:grid;grid-template-columns:1fr 1fr;width:100%}
   .split{grid-column:1/-1}
   .split-main{flex:1}
-  .showcase-wrap{margin-top:56px}
+  .showcase-wrap{margin-top:76px}
   .showcase-phone{width:30%;bottom:-36px;right:4%;border-radius:22px;padding:4px}
   .showcase-phone img{border-radius:18px}
   .showcase-bar{position:static;max-width:none;margin-top:12px;border-radius:10px;background:#1a0d33;-webkit-backdrop-filter:none;backdrop-filter:none;width:calc(100% - 34%)}
@@ -422,6 +422,147 @@ html.motion .cta:has(.visible) .arcs i:nth-child(2){animation-delay:.12s}html.mo
   .foot-cols{grid-template-columns:1fr 1fr}
   .stats th,.stats td{padding:10px 12px}
   .now-playing{display:flex;margin:0 0 4px auto;justify-content:flex-end;max-width:min(100%,calc(100vw - 150px))}
+}
+
+/* ---------- round 6: motion design ----------
+   Hand-tuned, transform/opacity only, still under prefers-reduced-motion.
+   Hero: a striped sun sets behind the showcase while the band darkens (js/flow.js), a neon
+   floor rolls under it, the photo drifts behind light scanlines, the title's letters settle
+   and its last words light up like a sung line. Screens: one phone, pinned, scrubbed by the
+   scroll. Plus a song ticker, word-by-word headings, counters and magnetic buttons. */
+:root{--settle:cubic-bezier(.2,.85,.25,1.12);--expo:cubic-bezier(.16,1,.3,1)}
+/* the last words of the title, in the sunset of the Vice City logo */
+.sung,.kw.lw::after{background:linear-gradient(180deg,#a8127f 8%,#d0186e 52%,#c8410c 96%);-webkit-background-clip:text;background-clip:text;color:transparent}
+html.dark .sung,html.dark .kw.lw::after{background-image:linear-gradient(180deg,#ff8fd6 8%,#ff6fae 50%,#ffb070 96%)}
+.kinetic .kt{display:inline}
+.kw{display:inline-block;white-space:nowrap}
+.kl{display:inline-block;transform-origin:50% 90%}
+.kw.lw{position:relative}
+.kw.lw .ink{color:var(--ink)}
+.kw.lw::after{content:attr(data-t);position:absolute;left:0;top:0;white-space:nowrap;filter:drop-shadow(0 0 16px rgba(255,79,154,.28))}
+html.motion .kinetic{font-kerning:none;font-variant-ligatures:none}
+/* hidden until js/motion.js has split it (before the first frames); shown anyway after 1.6 s */
+@keyframes kv-show{from{opacity:0}to{opacity:1}}
+html.motion .kinetic.appear{animation:none}
+html.motion .kinetic:not(.split){opacity:0;animation:kv-show .8s var(--out) 1.6s both}
+@keyframes kv-letter{from{opacity:0;transform:translateY(.62em) rotate(9deg) scale(.92)}45%{opacity:1}to{opacity:1;transform:none}}
+@keyframes kv-in{from{opacity:0}to{opacity:1}}
+@keyframes kv-out{from{opacity:1}to{opacity:0}}
+html.motion .kinetic.split .kl,html.motion .kinetic.split .lw{animation:kv-letter 1s var(--settle) both;animation-delay:calc(var(--i)*21ms + .08s)}
+html.motion .kinetic.split .lw::after{opacity:0;animation:kv-in .55s var(--out) both;animation-delay:calc(var(--j)*.24s + 1.2s)}
+html.motion .kinetic.split .lw .ink{animation:kv-out .55s var(--out) both;animation-delay:calc(var(--j)*.24s + 1.2s)}
+html.motion .hero-sub.appear{animation-delay:.45s}
+html.motion .hero-actions.appear{animation-delay:.6s}
+
+/* the sun: it sets behind the showcase as the hero scrolls away (--set, 0 → 1) */
+.vc-sun{--set:0;position:absolute;left:50%;top:0;z-index:0;width:clamp(210px,26vw,360px);aspect-ratio:1;margin-left:calc(clamp(210px,26vw,360px)/-2);pointer-events:none;
+  transform:translate3d(0,calc(-31% + var(--set)*37%),0)}
+.vc-sun::before{content:"";position:absolute;inset:-45%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,196,120,.6),rgba(255,110,160,.24) 55%,transparent);opacity:calc(1 - var(--set)*.7)}
+.vc-sun i{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:linear-gradient(180deg,#ffe58f 0%,#ffbe62 26%,#ff7f7a 50%,#f23d8a 76%,#c71d7e 100%);
+  -webkit-mask:linear-gradient(180deg,#000 0 17%,transparent 17% 18.6%,#000 18.6% 23%,transparent 23% 25.4%,#000 25.4% 29.5%,transparent 29.5% 32.8%,#000 32.8% 36.5%,transparent 36.5% 41%,#000 41% 44.5%,transparent 44.5% 50%,#000 50% 53.5%,transparent 53.5% 60%,#000 60% 63%,transparent 63% 71%,#000 71% 73.5%,transparent 73.5%);
+  mask:linear-gradient(180deg,#000 0 17%,transparent 17% 18.6%,#000 18.6% 23%,transparent 23% 25.4%,#000 25.4% 29.5%,transparent 29.5% 32.8%,#000 32.8% 36.5%,transparent 36.5% 41%,#000 41% 44.5%,transparent 44.5% 50%,#000 50% 53.5%,transparent 53.5% 60%,#000 60% 63%,transparent 63% 71%,#000 71% 73.5%,transparent 73.5%)}
+.vc-sun i::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#ff9a6b,#f2367f 55%,#8f1f9e);opacity:calc(var(--set)*.85)}
+/* the neon floor under the showcase */
+.floor{position:absolute;left:0;right:0;bottom:0;height:46%;z-index:-1;overflow:hidden;pointer-events:none;perspective:380px;perspective-origin:50% 0;
+  -webkit-mask:linear-gradient(180deg,transparent 0,#000 42%,rgba(0,0,0,.55) 72%,rgba(0,0,0,.12));mask:linear-gradient(180deg,transparent 0,#000 42%,rgba(0,0,0,.55) 72%,rgba(0,0,0,.12))}
+.floor i{position:absolute;left:-80%;right:-80%;top:0;height:240%;transform-origin:50% 0;transform:rotateX(66deg);
+  background:linear-gradient(90deg,rgba(255,118,190,.5) 1.5px,transparent 1.5px) 50% 0/64px 64px,linear-gradient(180deg,rgba(255,150,120,.3) 1px,transparent 1px) 0 0/64px 64px}
+@keyframes kv-floor{from{transform:rotateX(66deg) translate3d(0,-64px,0)}to{transform:rotateX(66deg) translate3d(0,0,0)}}
+html.motion .floor i{animation:kv-floor 2.4s linear infinite}
+/* the photo: a slow parallax, dusk falling over it, a light VHS texture (hero only) */
+.showcase::before{content:"";position:absolute;left:0;right:0;top:0;z-index:1;aspect-ratio:1117/622;border-radius:14px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(24,6,58,.82),rgba(24,6,58,.3) 55%,rgba(24,6,58,.1));opacity:var(--dusk,0)}
+.showcase-art{position:relative;z-index:0}
+.showcase-phone,.showcase-bar{z-index:2}
+html.motion .showcase-art img{transform:translate3d(0,var(--py,0px),0) scale(1.07)}
+.showcase-art::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background:repeating-linear-gradient(180deg,rgba(12,0,30,.2) 0 1px,transparent 1px 3px)}
+.showcase-art::before{content:"";position:absolute;left:0;right:0;top:0;height:22%;z-index:1;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,transparent,rgba(255,236,250,.07) 45%,rgba(255,255,255,.1) 50%,transparent)}
+@keyframes kv-roll{0%{transform:translate3d(0,-110%,0);opacity:0}8%{opacity:1}70%{opacity:1}100%{transform:translate3d(0,520%,0);opacity:0}}
+html.motion .showcase-art::before{animation:kv-roll 7s cubic-bezier(.45,.05,.55,.95) 2.2s infinite}
+
+/* the song ticker at the foot of the hero */
+.ticker{position:relative;z-index:2;display:grid;justify-items:center;gap:14px;margin-top:104px;color:#fff}
+.tk-label{display:inline-flex;align-items:center;gap:8px;padding:0 10px;border-radius:6px;background:rgba(14,6,30,.86);font:400 12px/26px var(--mono);color:#f1e8f7}
+.tk-view{width:100%;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.tk-track{display:flex;width:max-content}
+.ticker ul{display:flex;gap:10px;margin:0;padding:0 5px;list-style:none}
+.ticker li{display:flex;align-items:center;gap:10px;padding:6px 16px 6px 6px;border-radius:12px;background:rgba(14,6,30,.86);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);font-size:14px;line-height:20px;white-space:nowrap;color:#e9dff0}
+.ticker li b{font-weight:500;color:#fff;margin-right:4px}
+.ticker li span{color:#d6cbe4}
+.ticker .cover{width:36px;height:36px;border-radius:8px}
+.tk-pause{position:absolute;right:20px;top:0;display:grid;place-items:center;width:28px;height:28px;border-radius:14px;background:rgba(14,6,30,.7);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.tk-pause .icon{width:14px;height:14px}
+.tk-pause .i-play{display:none;fill:currentColor;stroke:none}
+.tk-pause[aria-pressed="true"] .i-play{display:inline}.tk-pause[aria-pressed="true"] .i-pause{display:none}
+.ticker .tk-dup,.tk-pause{display:none}
+html.motion .ticker .tk-dup{display:flex}
+html.motion .tk-pause{display:grid}
+html:not(.motion) .tk-track{width:auto;justify-content:center}
+html:not(.motion) .ticker ul{flex-wrap:wrap;justify-content:center;row-gap:10px}
+@keyframes kv-marquee{to{transform:translate3d(-50%,0,0)}}
+html.motion .tk-track{animation:kv-marquee 46s linear infinite}
+html.motion .ticker:hover .tk-track,html.motion .ticker.held .tk-track,html.motion .ticker:focus-within .tk-track{animation-play-state:paused}
+
+/* screens: one pinned phone scrubbed by the scroll (html.motion only; the strip otherwise) */
+html.motion .screens{overflow-x:clip}
+html.motion .scrub{position:relative;height:calc(100svh + var(--n,7)*46svh)}
+html.motion .scrub .strip{--pw:calc(min(74svh,640px)*.4708);--tilt:0deg;position:sticky;top:0;height:100svh;overflow:visible;display:grid;grid-template-columns:var(--pw) minmax(0,380px);
+  align-content:center;justify-content:center;column-gap:clamp(48px,8vw,120px);padding:0 20px;scroll-snap-type:none;isolation:isolate}
+html.motion .scrub .shot{display:contents}
+html.motion .scrub .strip::before{content:"";grid-area:1/1;align-self:center;width:var(--pw);aspect-ratio:1224/2600;border-radius:34px;background:#07030b;
+  box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 80px rgba(14,8,32,.28);transform:perspective(1400px) rotateY(var(--tilt))}
+html.motion .scrub .strip::after{content:"";grid-area:1/1;align-self:center;justify-self:center;z-index:-1;width:min(calc(var(--pw)*2.1),100vw);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(255,111,166,.34),rgba(255,170,120,.16) 50%,transparent);transform:scale(var(--glow,1))}
+html.motion .scrub .phone{grid-area:1/1;align-self:center;width:var(--pw);background:none;box-shadow:none;clip-path:inset(6px round 27px);transform:perspective(1400px) rotateY(var(--tilt))}
+html.motion .scrub .phone picture{will-change:transform,opacity}
+html.motion .scrub .phone img{border-radius:0}
+html.motion .scrub .shot:not(:first-child) .phone picture{opacity:0}
+html.motion .scrub figcaption{grid-area:1/2;align-self:center;max-width:380px;font-size:16px;line-height:26px;opacity:0;transform:translate3d(0,16px,0);transition:opacity .4s var(--out),transform .7s var(--expo)}
+html.motion .scrub figcaption b{font-size:32px;line-height:40px;letter-spacing:-.01em;margin-bottom:10px}
+html.motion .scrub .shot.on figcaption,html.motion .scrub:not(.ready) .shot:first-child figcaption{opacity:1;transform:none;transition-delay:.06s}
+.scrub-meta{display:none}
+html.motion .scrub .scrub-meta{grid-area:1/2;align-self:center;display:flex;align-items:center;gap:12px;margin-top:-190px;font:400 13px/20px var(--mono);color:var(--muted)}
+.scrub-meta b{font-weight:500;color:var(--ink)}
+.sm-bar{position:relative;width:120px;height:2px;border-radius:1px;background:var(--line);overflow:hidden}
+.sm-bar i{position:absolute;inset:0;background:linear-gradient(90deg,#ff7a59,#ff4f9a 50%,#7a35d6);transform-origin:left;transform:scaleX(var(--p,0))}
+
+/* word-by-word headings */
+.ww{display:inline-block;clip-path:inset(-.3em -.2em -.16em -.2em)}
+.ww>span{display:inline-block}
+html.motion .reveal .ww>span{transform:translate3d(0,108%,0);transition:transform 1.05s var(--expo);transition-delay:calc(var(--w)*55ms + .04s)}
+html.motion .reveal.visible .ww>span{transform:none}
+
+/* counters */
+.tally{display:grid;grid-template-columns:repeat(3,1fr);margin:0 0 40px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.tally div{display:flex;flex-direction:column-reverse;justify-content:flex-end;gap:2px;padding:22px 20px}
+.tally div+div{border-left:1px solid var(--line)}
+.tally dd{margin:0;font-size:44px;line-height:52px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.tally dt{color:var(--muted);font-size:14px;line-height:22px}
+.count{display:inline-block;min-width:calc(var(--d,1)*1ch)}
+
+/* magnetic buttons (fine pointers only; js/motion.js writes --mx/--my) */
+html.motion [data-magnet]{transform:translate3d(var(--mx,0px),var(--my,0px),0);transition:transform .7s var(--spring),background-color .15s,box-shadow .15s,color .15s}
+html.motion [data-magnet].pull{transition:transform .18s var(--out),background-color .15s,box-shadow .15s,color .15s}
+
+/* offscreen loops wait (js/motion.js toggles .paused) */
+html.motion .paused,html.motion .paused *,html.motion .paused::before,html.motion .paused::after,html.motion .paused *::before,html.motion .paused *::after{animation-play-state:paused!important}
+
+@media (max-width:760px){
+  .vc-sun{width:clamp(200px,58vw,300px);margin-left:calc(clamp(200px,58vw,300px)/-2)}
+  .floor{height:36%}
+  .ticker{margin-top:72px}
+  .tk-pause{right:12px}
+  html.motion .scrub{height:calc(100svh + var(--n,7)*40svh)}
+  html.motion .scrub .strip{--pw:min(calc(min(56svh,520px)*.4708),58vw);grid-template-columns:var(--pw);grid-template-rows:auto auto auto;justify-items:center;row-gap:16px;text-align:center;padding:56px 20px 0}
+  html.motion .scrub figcaption{grid-area:3/1;font-size:14px;line-height:22px;min-height:66px;max-width:300px}
+  html.motion .scrub figcaption b{font-size:22px;line-height:28px;margin-bottom:4px}
+  html.motion .scrub .scrub-meta{grid-area:2/1;margin-top:0}
+  .tally{grid-template-columns:1fr}
+  .tally div{flex-direction:row-reverse;justify-content:space-between;align-items:baseline;padding:14px 0}
+  .tally div+div{border-left:0;border-top:1px solid var(--line)}
+  .tally dd{font-size:32px;line-height:40px}
 }
 
 /* ---------- reduced motion ---------- */

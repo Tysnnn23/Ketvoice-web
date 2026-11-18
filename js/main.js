@@ -88,8 +88,10 @@
    }
     renderWhatsNew(r.tag,r.body);showRelease(r)
     } finally {releaseBusy=false}}
-  async function updateStats(){let s=store.get('kv-stats',180000);if(!s){const releases=[];for(let p=1;p<=5;p++){const r=await api('/releases?per_page=100&page='+p);releases.push(...r);if(r.length<100)break}let count=0;for(const rel of releases)for(const a of rel.assets||[])if(/\.apk$/i.test(a.name||''))count+=Number(a.download_count||0);s={count,releases:releases.length};store.set('kv-stats',s)}animateNumber($('#stat-downloads'),s.count);$('#downloads-caption').textContent='APK downloads · '+s.releases+' releases'}
-   async function updateGitHub(force=false){const cached=store.get('kv-stats',180000);if(cached){animateNumber($('#stat-downloads'),cached.count);$('#downloads-caption').textContent='APK downloads · '+cached.releases+' releases'}try{await updateLatest(force)}catch(e){showRelease({});console.info('GitHub releases unavailable; download buttons use the latest-release page.')}try{await updateStats()}catch(e){console.info('GitHub download statistics unavailable.')}}
+  // The releases counter (js/motion.js counts it up once seen) follows the live total.
+  function tallyReleases(n){const t=$('#tally-releases');if(!t||!n)return;t.dataset.count=n;if(reduce||t.dataset.counted)animateNumber(t,n)}
+  async function updateStats(){let s=store.get('kv-stats',180000);if(!s){const releases=[];for(let p=1;p<=5;p++){const r=await api('/releases?per_page=100&page='+p);releases.push(...r);if(r.length<100)break}let count=0;for(const rel of releases)for(const a of rel.assets||[])if(/\.apk$/i.test(a.name||''))count+=Number(a.download_count||0);s={count,releases:releases.length};store.set('kv-stats',s)}animateNumber($('#stat-downloads'),s.count);$('#downloads-caption').textContent='APK downloads · '+s.releases+' releases';tallyReleases(s.releases)}
+   async function updateGitHub(force=false){const cached=store.get('kv-stats',180000);if(cached){animateNumber($('#stat-downloads'),cached.count);$('#downloads-caption').textContent='APK downloads · '+cached.releases+' releases';tallyReleases(cached.releases)}try{await updateLatest(force)}catch(e){showRelease({});console.info('GitHub releases unavailable; download buttons use the latest-release page.')}try{await updateStats()}catch(e){console.info('GitHub download statistics unavailable.')}}
  async function updateListeners(){
    if(!CONFIG.activeListenersEndpoint||listenersBusy)return;listenersBusy=true;
    try{
