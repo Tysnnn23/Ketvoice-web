@@ -193,6 +193,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 6.4.0 (versionCode 135) adds the friends feed, redone widgets with live lyrics, Ketmix and Replay widgets, smart offline downloads, cleaned-up local music and the Vice City neon night with Vice FM.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.4.0.md).
+
 Ketvoice 6.3.0 (versionCode 134) adds shared playlists, a public profile, Air Ket (a phone-to-phone transfer over Wi-Fi), Canvas kept on the phone, new-release notifications and a faster start.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.3.0.md).
 
