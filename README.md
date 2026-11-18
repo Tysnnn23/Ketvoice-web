@@ -253,6 +253,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 6.8.0 (versionCode 139) lets Ketmix download a small AI model (Beat This!) that finds beats and bars.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.8.0.md).
+
 Ketvoice 6.7.0 (versionCode 138) fits each Ketmix blend to its two songs, makes Ketvoice Lite start faster and brings back the GTA VI welcome screen.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.7.0.md).
 
