@@ -63,6 +63,30 @@ recreated with original code, copy and art:
   screenshots drift; menus and the FAQ open in .16–.25 s with a slight overshoot; the bento
   widgets loop (words light up, the voice slider glides, the blend bar fills). With
   `prefers-reduced-motion` nothing moves; menus and the FAQ still work.
+- Motion design, round 6 (owner, 2026-11-18: « continue d'améliorer … le site internet avec du
+  motion design »), still vanilla (about 9.6 KB of added JS), transforms and opacity only, one
+  `requestAnimationFrame` per scroll with passive listeners, offscreen scenes skipped and their
+  loops paused (`.paused`, IntersectionObserver):
+  - the hero title's letters rise and settle once (split into `aria-hidden` spans, the whole
+    title kept as the `aria-label`), then « sung word by word. » lights up word after word in the
+    sunset gradient of the logo (static gradient without motion);
+  - a striped sun sits on the showcase's top edge and sets behind it as the hero scrolls away,
+    while the WebGL band rises and deepens (`window.KV_SKY`, read by `js/flow.js`), dusk falls
+    over the photo, the photo drifts inside its frame and a light scanline texture rolls over it;
+    a neon perspective floor rolls under the showcase;
+  - a ticker of the songs seen in the screenshots (Chicago, Colisée, Can't Die, Blinding Lights,
+    Midnight Sun, with their covers) loops at the foot of the hero; it stops on hover, on focus
+    and with its pause button;
+  - `/screens` pins one phone (CSS `position: sticky`, no wheel hijacking) and the scroll scrubs
+    through the seven screenshots: each screen rests, then the next one slides in over it while
+    the phone leans a little; a counter and a bar follow, the caption changes with the screen.
+    Without motion it is the horizontal strip;
+  - section headings rise word by word; `/download` opens on three counters (releases on GitHub,
+    kept live by `js/main.js`, interface languages, places to listen) that count up once seen;
+  - on fine pointers the download buttons lean toward a cursor that comes near and the hero
+    spotlight trails it.
+  Measured: CLS ≈ 0.001 at load (font swap only), no horizontal overflow at 1440/1280/390/360,
+  no console errors, text contrast AA on rendered pixels (light and dark) over the moving hero.
 - Copy describes Ketvoice 6.1 as shipped (Ketogether, the Ketmix DJ editor, lock-screen lyrics,
   weekly discoveries, monthly Replay, automatic resume). Ketvoice Lite and Wear OS are named
   only in their download card and in the split menu, which appear when the latest release
@@ -493,8 +517,8 @@ phone/Quest validation.
 - `index.html` — main page
 - `css/style.css` — styling, light and dark themes, motion states
 - `js/main.js` — menu, toast, release notes, download links (Mobile, Quest, Lite, Wear), live stats
-- `js/motion.js` — motion and small interactions (split menu, FAQ, nav pill, scroll scenes)
-- `js/flow.js` — the WebGL sunset band behind the showcase and the footer
+- `js/motion.js` — motion and small interactions (split menu, FAQ, nav pill, kinetic title, sunset, pinned screens, word-by-word headings, counters, magnetic buttons, ticker pause)
+- `js/flow.js` — the WebGL sunset band behind the showcase and the footer (the hero's darkens as the sun sets)
 - `assets/` — theme toggle, app screenshots from 6.1.2 (`app-*`, owner tools and account name blurred), song covers (`cover-*`), the Vice City logo (`ketvoice-logo-vc-*`), banner
   (`banner-vc-*`) and hero art (`hero-vi-*`)
 - `tests/release-assets.test.cjs` — release asset selection (`node tests/release-assets.test.cjs`)
