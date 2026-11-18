@@ -16,6 +16,8 @@
 
   var ROOT = 'https://xodklrunqlzyeiqtovgx.supabase.co';
   var API = ROOT + '/functions/v1/ketvoice-api';
+  // The YouTube Music catalogue is its own function (ketvoice-catalog), apart from the app's ketvoice-api.
+  var CATALOG = ROOT + '/functions/v1/ketvoice-catalog';
   var CONTENT = ROOT + '/functions/v1/ketvoice-content';
   /** A resolved address stays valid for minutes (StreamResolver.prefetchedFresh, files: 240 s). */
   var STREAM_FRESH_MS = 240000;
@@ -267,7 +269,7 @@
       if (state.catalog === 'on' || (state.catalog === 'off' && now() - state.probedAt < 10 * 60000)) return Promise.resolve(state.catalog === 'on');
       if (state.pending) return state.pending;
       state.probedAt = now();
-      state.pending = get(API, '/catalog/search?q=', 10000).then(function (r) {
+      state.pending = get(CATALOG, '/catalog/search?q=', 10000).then(function (r) {
         return !!(r.json && r.json.catalog === true && (r.ok || r.status === 429));
       }, function () { return false; }).then(function (on) { state.catalog = on ? 'on' : 'off'; state.pending = null; return on; });
       return state.pending;
@@ -276,7 +278,7 @@
     function catalogGet(path, parse, signal) {
       var hit = pages.get(path);
       if (hit && now() - hit.at < 10 * 60000) return Promise.resolve(hit.value);
-      return get(API, path, 20000, signal).then(function (r) {
+      return get(CATALOG, path, 20000, signal).then(function (r) {
         if (r.status === 404 && !(r.json && r.json.catalog)) { state.catalog = 'off'; state.probedAt = now(); return null; }
         if (!r.ok) return null;
         var value = parse(r.json);

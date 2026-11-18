@@ -646,3 +646,6 @@ The active-listeners endpoint (optional) should return `{ "activeListeners": <nu
 ## Deploy
 
 Designed for Netlify, Vercel, Cloudflare Pages, or any static host.
+
+
+Catalogue browsing (artists, albums, radio) is served by the Supabase Edge Function `ketvoice-catalog` (deployed 2026-11-18, source in Ketvoice `supabase/functions/ketvoice-catalog/index.ts`), kept apart from the app's `ketvoice-api` so nothing there can affect the app's search, streaming or Canvas.

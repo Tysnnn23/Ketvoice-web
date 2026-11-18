@@ -145,7 +145,7 @@ test('the catalogue is used only when the function has its routes (404 « Not fo
   assert.equal(off.c.catalogOn, false);
   assert.equal(await off.c.search('daft punk'), null);
   assert.equal(await off.c.artist('UCkvTestDaftPunk000000aa'), null);
-  assert.deepEqual(off.fetch.calls, ['/ketvoice-api/catalog/search?q='], 'nothing else asked');
+  assert.deepEqual(off.fetch.calls, ['/ketvoice-catalog/catalog/search?q='], 'nothing else asked');
   assert.equal(await off.c.probe(), false);
   assert.equal(off.fetch.calls.length, 1, 'not asked again within 10 minutes');
   off.tick(10 * 60000 + 1);
