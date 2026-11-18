@@ -1,0 +1,533 @@
+{
+ "user": "0b5c6a1e-2f3d-4c5b-8a9e-7d6c5b4a3f2e",
+ "rows": [
+  {
+   "kind": "favorites",
+   "doc": {
+    "v": 1,
+    "items": {
+     "yt:kvTestChi01": {
+      "t": 1795000000000,
+      "v": {
+       "id": "yt:kvTestChi01",
+       "title": "Chicago",
+       "artist": "Michael Jackson",
+       "album": "XSCAPE",
+       "durationMs": 245000,
+       "lyricsProvider": "LRCLIB",
+       "explicit": false,
+       "youtubeCatalogVerified": true,
+       "coverUrl": "https://lh3.googleusercontent.com/kv-test/chicago",
+       "videoId": "kvTestChi01",
+       "artistId": "UCkvTestMJ0000000000000",
+       "albumId": "MPREkvTestXscape"
+      }
+     },
+     "yt:kvTestBli01": {
+      "t": 1795000060000,
+      "v": {
+       "id": "yt:kvTestBli01",
+       "title": "Blinding Lights",
+       "artist": "The Weeknd",
+       "album": "After Hours",
+       "durationMs": 200000,
+       "lyricsProvider": "LRCLIB",
+       "explicit": false,
+       "youtubeCatalogVerified": true,
+       "coverUrl": "https://lh3.googleusercontent.com/kv-test/blinding",
+       "videoId": "kvTestBli01"
+      }
+     },
+     "yt:kvTestCol01": {
+      "t": 1795000120000,
+      "v": {
+       "id": "yt:kvTestCol01",
+       "title": "Colisée",
+       "artist": "Werenoi",
+       "album": "Colisée",
+       "durationMs": 187000,
+       "lyricsProvider": "LRCLIB",
+       "explicit": true,
+       "youtubeCatalogVerified": true,
+       "coverUrl": "https://lh3.googleusercontent.com/kv-test/colisee",
+       "videoId": "kvTestCol01"
+      }
+     },
+     "yt:kvTestCan01": {
+      "t": 1795000180000,
+      "v": {
+       "id": "yt:kvTestCan01",
+       "title": "Can't Die",
+       "artist": "Juice WRLD",
+       "album": "The Party Never Ends",
+       "durationMs": 213000,
+       "lyricsProvider": "LRCLIB",
+       "explicit": true,
+       "youtubeCatalogVerified": true,
+       "coverUrl": "https://lh3.googleusercontent.com/kv-test/cantdie",
+       "videoId": "kvTestCan01"
+      }
+     },
+     "yt:kvTestMid01": {
+      "t": 1795000240000,
+      "v": {
+       "id": "yt:kvTestMid01",
+       "title": "Midnight Sun",
+       "artist": "Zara Larsson",
+       "album": "Midnight Sun",
+       "durationMs": 196000,
+       "lyricsProvider": "LRCLIB",
+       "explicit": false,
+       "youtubeCatalogVerified": true,
+       "coverUrl": "https://lh3.googleusercontent.com/kv-test/midnight",
+       "videoId": "kvTestMid01"
+      }
+     },
+     "yt:kvDemoSun01": {
+      "t": 1795000300000,
+      "v": {
+       "id": "yt:kvDemoSun01",
+       "title": "Sunset on Ocean Drive",
+       "artist": "Vice FM",
+       "album": "Neon Nights",
+       "durationMs": 214000,
+       "lyricsProvider": "LRCLIB",
+       "explicit": false,
+       "youtubeCatalogVerified": true,
+       "coverUrl": "https://lh3.googleusercontent.com/kv-test/demo-sun",
+       "videoId": "kvDemoSun01",
+       "artistId": "UCkvTestViceFM00000000",
+       "albumId": "MPREkvTestNeon"
+      }
+     },
+     "kv:um:774411": {
+      "t": 1795000360000,
+      "v": {
+       "id": "kv:um:774411",
+       "title": "Petunias",
+       "artist": "Werenoi",
+       "album": "Pétunias",
+       "durationMs": 172000,
+       "lyricsProvider": "LRCLIB",
+       "explicit": true,
+       "youtubeCatalogVerified": false,
+       "addon": "um",
+       "addonId": "774411"
+      }
+     },
+     "kv:upload:3f1c2d4e-1111-4a2b-9c3d-5e6f7a8b9c0d": {
+      "t": 1795000420000,
+      "v": {
+       "id": "kv:upload:3f1c2d4e-1111-4a2b-9c3d-5e6f7a8b9c0d",
+       "title": "Ketvoice Theme",
+       "artist": "Ketvoice",
+       "album": "Studio",
+       "durationMs": 95000,
+       "lyricsProvider": "Ketvoice API",
+       "explicit": false,
+       "youtubeCatalogVerified": false,
+       "addon": "upload",
+       "addonId": "3f1c2d4e-1111-4a2b-9c3d-5e6f7a8b9c0d"
+      }
+     },
+     "yt:kvTestGone1": {
+      "t": 1794913600000,
+      "d": true
+     },
+     "yt:kvTestBare1": {
+      "t": 1794996400000,
+      "v": {
+       "id": "yt:kvTestBare1"
+      }
+     }
+    }
+   },
+   "revision": 7,
+   "device_id": "6f0d1c3e-8a7b-4c2d-9e1f-0a1b2c3d4e5f",
+   "updated_at": "2026-11-18T10:00:00.000000+00:00"
+  },
+  {
+   "kind": "playlists",
+   "doc": {
+    "v": 1,
+    "items": {
+     "pl:night": {
+      "t": 1795000000000,
+      "v": {
+       "name": "Night drive",
+       "createdAt": 1794999100000,
+       "pinned": false,
+       "spotifyUrl": null,
+       "coverUrl": null,
+       "entries": [
+        {
+         "id": "yt:kvDemoSun01",
+         "title": "Sunset on Ocean Drive",
+         "artist": "Vice FM",
+         "spotifyId": null,
+         "track": {
+          "id": "yt:kvDemoSun01",
+          "title": "Sunset on Ocean Drive",
+          "artist": "Vice FM",
+          "album": "Neon Nights",
+          "durationMs": 214000,
+          "lyricsProvider": "LRCLIB",
+          "explicit": false,
+          "youtubeCatalogVerified": true,
+          "coverUrl": "https://lh3.googleusercontent.com/kv-test/demo-sun",
+          "videoId": "kvDemoSun01",
+          "artistId": "UCkvTestViceFM00000000",
+          "albumId": "MPREkvTestNeon"
+         }
+        },
+        {
+         "id": "yt:kvTestBli01",
+         "title": "Blinding Lights",
+         "artist": "The Weeknd",
+         "spotifyId": null,
+         "track": {
+          "id": "yt:kvTestBli01",
+          "title": "Blinding Lights",
+          "artist": "The Weeknd",
+          "album": "After Hours",
+          "durationMs": 200000,
+          "lyricsProvider": "LRCLIB",
+          "explicit": false,
+          "youtubeCatalogVerified": true,
+          "coverUrl": "https://lh3.googleusercontent.com/kv-test/blinding",
+          "videoId": "kvTestBli01"
+         }
+        },
+        {
+         "id": "yt:kvTestMid01",
+         "title": "Midnight Sun",
+         "artist": "Zara Larsson",
+         "spotifyId": null,
+         "track": {
+          "id": "yt:kvTestMid01",
+          "title": "Midnight Sun",
+          "artist": "Zara Larsson",
+          "album": "Midnight Sun",
+          "durationMs": 196000,
+          "lyricsProvider": "LRCLIB",
+          "explicit": false,
+          "youtubeCatalogVerified": true,
+          "coverUrl": "https://lh3.googleusercontent.com/kv-test/midnight",
+          "videoId": "kvTestMid01"
+         }
+        },
+        {
+         "id": "yt:kvTestChi01",
+         "title": "Chicago",
+         "artist": "Michael Jackson",
+         "spotifyId": null,
+         "track": {
+          "id": "yt:kvTestChi01",
+          "title": "Chicago",
+          "artist": "Michael Jackson",
+          "album": "XSCAPE",
+          "durationMs": 245000,
+          "lyricsProvider": "LRCLIB",
+          "explicit": false,
+          "youtubeCatalogVerified": true,
+          "coverUrl": "https://lh3.googleusercontent.com/kv-test/chicago",
+          "videoId": "kvTestChi01",
+          "artistId": "UCkvTestMJ0000000000000",
+          "albumId": "MPREkvTestXscape"
+         }
+        },
+        {
+         "id": "yt:kvTestNoT01",
+         "title": "Ocean Drive",
+         "artist": "Duke Dumont",
+         "spotifyId": null,
+         "track": null
+        }
+       ]
+      }
+     },
+     "pl:vice": {
+      "t": 1795000000000,
+      "v": {
+       "name": "Vice City FM",
+       "createdAt": 1794999900000,
+       "pinned": true,
+       "spotifyUrl": null,
+       "coverUrl": null,
+       "entries": [
+        {
+         "id": "yt:kvTestCol01",
+         "title": "Colisée",
+         "artist": "Werenoi",
+         "spotifyId": null,
+         "track": {
+          "id": "yt:kvTestCol01",
+          "title": "Colisée",
+          "artist": "Werenoi",
+          "album": "Colisée",
+          "durationMs": 187000,
+          "lyricsProvider": "LRCLIB",
+          "explicit": true,
+          "youtubeCatalogVerified": true,
+          "coverUrl": "https://lh3.googleusercontent.com/kv-test/colisee",
+          "videoId": "kvTestCol01"
+         }
+        },
+        {
+         "id": "yt:kvTestCan01",
+         "title": "Can't Die",
+         "artist": "Juice WRLD",
+         "spotifyId": null,
+         "track": {
+          "id": "yt:kvTestCan01",
+          "title": "Can't Die",
+          "artist": "Juice WRLD",
+          "album": "The Party Never Ends",
+          "durationMs": 213000,
+          "lyricsProvider": "LRCLIB",
+          "explicit": true,
+          "youtubeCatalogVerified": true,
+          "coverUrl": "https://lh3.googleusercontent.com/kv-test/cantdie",
+          "videoId": "kvTestCan01"
+         }
+        },
+        {
+         "id": "kv:um:774411",
+         "title": "Petunias",
+         "artist": "Werenoi",
+         "spotifyId": null,
+         "track": {
+          "id": "kv:um:774411",
+          "title": "Petunias",
+          "artist": "Werenoi",
+          "album": "Pétunias",
+          "durationMs": 172000,
+          "lyricsProvider": "LRCLIB",
+          "explicit": true,
+          "youtubeCatalogVerified": false,
+          "addon": "um",
+          "addonId": "774411"
+         }
+        }
+       ]
+      }
+     },
+     "order": {
+      "t": 1795000000000,
+      "v": [
+       "vice",
+       "night"
+      ]
+     },
+     "pl:old": {
+      "t": 1794999999000,
+      "d": true
+     }
+    }
+   },
+   "revision": 3,
+   "device_id": "6f0d1c3e-8a7b-4c2d-9e1f-0a1b2c3d4e5f",
+   "updated_at": "2026-11-18T10:00:00.000000+00:00"
+  },
+  {
+   "kind": "artists",
+   "doc": {
+    "v": 1,
+    "items": {
+     "fav:michael jackson": {
+      "t": 1795000000000,
+      "v": {
+       "name": "Michael Jackson",
+       "id": "UCkvTestMJ0000000000000",
+       "photo": "https://lh3.googleusercontent.com/kv-test/mj"
+      }
+     },
+     "fav:the weeknd": {
+      "t": 1795000000000,
+      "v": {
+       "name": "The Weeknd",
+       "id": "UCkvTestWeeknd000000000",
+       "photo": "https://lh3.googleusercontent.com/kv-test/weeknd"
+      }
+     },
+     "fav:vice fm": {
+      "t": 1795000000000,
+      "v": {
+       "name": "Vice FM",
+       "id": "UCkvTestViceFM00000000",
+       "photo": ""
+      }
+     },
+     "block:nobody": {
+      "t": 1795000000000,
+      "v": {
+       "name": "Nobody",
+       "id": "",
+       "photo": ""
+      }
+     }
+    }
+   },
+   "revision": 2,
+   "device_id": "6f0d1c3e-8a7b-4c2d-9e1f-0a1b2c3d4e5f",
+   "updated_at": "2026-11-18T10:00:00.000000+00:00"
+  },
+  {
+   "kind": "now_playing",
+   "doc": {
+    "device_id": "6f0d1c3e-8a7b-4c2d-9e1f-0a1b2c3d4e5f",
+    "device_name": "Pixel 9",
+    "playing": true,
+    "position_ms": 62000,
+    "at": 1795000300000,
+    "index": 1,
+    "queue": [
+     {
+      "id": "yt:kvTestChi01",
+      "title": "Chicago",
+      "artist": "Michael Jackson",
+      "album": "XSCAPE",
+      "durationMs": 245000,
+      "lyricsProvider": "LRCLIB",
+      "explicit": false,
+      "youtubeCatalogVerified": true,
+      "coverUrl": "https://lh3.googleusercontent.com/kv-test/chicago",
+      "videoId": "kvTestChi01",
+      "artistId": "UCkvTestMJ0000000000000",
+      "albumId": "MPREkvTestXscape"
+     },
+     {
+      "id": "yt:kvDemoSun01",
+      "title": "Sunset on Ocean Drive",
+      "artist": "Vice FM",
+      "album": "Neon Nights",
+      "durationMs": 214000,
+      "lyricsProvider": "LRCLIB",
+      "explicit": false,
+      "youtubeCatalogVerified": true,
+      "coverUrl": "https://lh3.googleusercontent.com/kv-test/demo-sun",
+      "videoId": "kvDemoSun01",
+      "artistId": "UCkvTestViceFM00000000",
+      "albumId": "MPREkvTestNeon"
+     },
+     {
+      "id": "yt:kvTestBli01",
+      "title": "Blinding Lights",
+      "artist": "The Weeknd",
+      "album": "After Hours",
+      "durationMs": 200000,
+      "lyricsProvider": "LRCLIB",
+      "explicit": false,
+      "youtubeCatalogVerified": true,
+      "coverUrl": "https://lh3.googleusercontent.com/kv-test/blinding",
+      "videoId": "kvTestBli01"
+     },
+     {
+      "id": "yt:kvTestMid01",
+      "title": "Midnight Sun",
+      "artist": "Zara Larsson",
+      "album": "Midnight Sun",
+      "durationMs": 196000,
+      "lyricsProvider": "LRCLIB",
+      "explicit": false,
+      "youtubeCatalogVerified": true,
+      "coverUrl": "https://lh3.googleusercontent.com/kv-test/midnight",
+      "videoId": "kvTestMid01"
+     }
+    ]
+   },
+   "revision": 40,
+   "device_id": "6f0d1c3e-8a7b-4c2d-9e1f-0a1b2c3d4e5f",
+   "updated_at": "2026-11-18T10:05:00.000000+00:00"
+  }
+ ],
+ "sharedLists": [
+  {
+   "id": "5a6b7c8d-1111-4222-8333-944455556666",
+   "name": "Soirée de vendredi",
+   "owner_id": "9d8c7b6a-5f4e-4d3c-8b2a-1f0e9d8c7b6a"
+  }
+ ],
+ "sharedTracks": [
+  {
+   "id": "aa000000-0000-4000-8000-000000000001",
+   "track_id": "yt:kvTestBli01",
+   "title": "Blinding Lights",
+   "artist": "The Weeknd",
+   "album": "After Hours",
+   "cover_url": "https://lh3.googleusercontent.com/kv-test/blinding",
+   "duration_ms": 200000,
+   "extra": {
+    "videoId": "kvTestBli01",
+    "youtubeCatalogVerified": true,
+    "lyricsProvider": "LRCLIB",
+    "explicit": false
+   },
+   "added_by": "0b5c6a1e-2f3d-4c5b-8a9e-7d6c5b4a3f2e",
+   "added_at": "2026-11-18T09:00:00+00:00",
+   "pos": 2
+  },
+  {
+   "id": "aa000000-0000-4000-8000-000000000002",
+   "track_id": "yt:kvTestCol01",
+   "title": "Colisée",
+   "artist": "Werenoi",
+   "album": "Colisée",
+   "cover_url": "https://lh3.googleusercontent.com/kv-test/colisee",
+   "duration_ms": 187000,
+   "extra": {
+    "videoId": "kvTestCol01",
+    "explicit": true
+   },
+   "added_by": null,
+   "added_at": "2026-11-18T09:01:00+00:00",
+   "pos": 1
+  }
+ ],
+ "profile": [
+  {
+   "display_name": "Tysn",
+   "handle": "tysn",
+   "avatar_url": null
+  }
+ ],
+ "content": {
+  "tracks": [
+   {
+    "id": "kv:upload:3f1c2d4e-1111-4a2b-9c3d-5e6f7a8b9c0d",
+    "addonId": "3f1c2d4e-1111-4a2b-9c3d-5e6f7a8b9c0d",
+    "source": "upload",
+    "title": "Ketvoice Theme",
+    "artist": "Ketvoice",
+    "album": "Studio",
+    "durationMs": 95000,
+    "artworkURL": null,
+    "streamURL": "https://xodklrunqlzyeiqtovgx.supabase.co/storage/v1/object/public/ketvoice-public-media/tracks/theme.mp3",
+    "format": "mp3",
+    "canvasURL": null
+   }
+  ]
+ },
+ "lrclib": [
+  {
+   "id": 1,
+   "trackName": "Sunset on Ocean Drive",
+   "artistName": "Vice FM",
+   "albumName": "Neon Nights",
+   "duration": 214.0,
+   "instrumental": false,
+   "plainLyrics": "Neon on the water",
+   "syncedLyrics": "[00:00.50]♪\n[00:04.20]Neon on the water, the night is coming in\n[00:09.80]Palm trees in the rear-view, the radio begins\n[00:15.10]Sunset on Ocean Drive\n[00:19.60]We keep the windows down and we come alive\n[00:25.30]Pink sky, purple light\n[00:30.00]Every song is ours tonight\n[00:35.40]Sunset on Ocean Drive\n[00:40.90]Paroles : Vice FM\n[00:41.20]Hold the note a little longer\n[00:47.00]Till the city lights go higher\n[00:52.80]Sunset on Ocean Drive"
+  },
+  {
+   "id": 2,
+   "trackName": "Sunset on Ocean Drive (Live)",
+   "artistName": "Vice FM",
+   "albumName": "Live",
+   "duration": 260.0,
+   "instrumental": false,
+   "plainLyrics": "x",
+   "syncedLyrics": "[00:01.00]live"
+  }
+ ]
+}
