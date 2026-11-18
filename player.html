@@ -6,7 +6,7 @@
 <meta content="dark light" name="color-scheme"/>
 <meta content="#0b0714" name="theme-color"/>
 <title>Ketvoice — web player</title>
-<meta content="Listen to Ketvoice in the browser, on iPhone or a computer, with your Ketvoice account and your synced library." name="description"/>
+<meta content="Listen to Ketvoice in the browser, on iPhone or a computer: its catalogue, artists, albums and radio, with your Ketvoice account and your synced library." name="description"/>
 <link rel="canonical" href="https://ketvoice-web.vercel.app/player"/>
 <link rel="icon" href="favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="preconnect" href="https://xodklrunqlzyeiqtovgx.supabase.co" crossorigin/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;family=Geist+Mono:wght@400;500&amp;display=swap"/>
-<link rel="stylesheet" href="css/player.css?v=202611181500"/>
+<link rel="stylesheet" href="css/player.css?v=202611182100"/>
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
@@ -49,6 +49,7 @@
 <symbol id="i-mic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 20c1.2-3.5 3.8-5.5 7-5.5s5.8 2 7 5.5"/></symbol>
 <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></symbol>
 <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1v-8.5Z"/></symbol>
+<symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.2"/><path d="M8.2 15.8a5.4 5.4 0 0 1 0-7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.4 18.6a9.3 9.3 0 0 1 0-13.2M18.6 5.4a9.3 9.3 0 0 1 0 13.2"/></symbol>
 <symbol id="i-disc" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.029ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.956 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.946 2.419-2.157 2.419Z"/></symbol>
 </svg>
 <a class="skip-link" href="#main" data-t="skip">Skip to content</a>
@@ -78,7 +79,7 @@
 <div class="app" hidden id="app">
 <aside class="side" id="side">
 <a class="brand" href="./"><img alt="" height="28" src="assets/ketvoice-logo-vc-96.png" width="28"/><span>Ketvoice</span><small class="brand-tag">/player</small></a>
-<form class="search" role="search" id="search-side"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.ph" enterkeyhint="search" id="q" placeholder="Search your library" type="search"/></form>
+<form class="search" role="search" id="search-side"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-controls="results" aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.ph" enterkeyhint="search" id="q" placeholder="Titles, artists, albums" type="search"/></form>
 <nav aria-label="Library" class="lib-nav" data-t-label="nav.label" id="lib-nav"></nav>
 <div class="me" id="me"></div>
 </aside>
@@ -105,13 +106,14 @@
 </div>
 <div class="stage" id="stage">
 <img alt="" aria-hidden="true" class="stage-glow" decoding="async" id="stage-glow" referrerpolicy="no-referrer"/>
-<div class="stage-art"><img alt="" class="stage-cover" decoding="async" id="stage-cover" referrerpolicy="no-referrer"/><div aria-hidden="true" class="stage-empty"><img alt="" height="72" src="assets/ketvoice-logo-vc-96.png" width="72"/></div></div>
+<div class="stage-art"><video aria-hidden="true" class="stage-canvas" disablepictureinpicture disableremoteplayback id="stage-canvas" loop muted playsinline preload="none" tabindex="-1"></video><img alt="" class="stage-cover" decoding="async" id="stage-cover" referrerpolicy="no-referrer"/><div aria-hidden="true" class="stage-empty"><img alt="" height="72" src="assets/ketvoice-logo-vc-96.png" width="72"/></div></div>
 <div aria-hidden="true" class="slot slot-stage" id="slot-stage"></div>
 <div aria-hidden="true" class="slot slot-pip" id="slot-pip"></div>
 </div>
 <p class="tap-hint" data-t="tap" hidden>Tap the video to start the sound.</p>
 <div class="np-meta">
-<div class="np-text"><p class="np-title" data-bind="title"></p><p class="np-artist" data-bind="artist"></p></div>
+<div class="np-text"><p class="np-title" data-bind="title"></p><p class="np-artist" id="np-artist"></p><p class="np-via" id="np-via"></p></div>
+<button class="chip radio-chip" data-act="radio" data-t-label="radio.start" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-radio"/></svg><span data-t="radio">Radio</span></button>
 <button aria-pressed="false" class="chip video-toggle" data-act="video" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-video"/></svg><span data-t="video">Video</span></button>
 <button aria-pressed="false" class="icon-btn like" data-act="like" type="button"><svg aria-hidden="true" class="icon"><use href="#i-heart"/></svg></button>
 </div>
@@ -131,7 +133,7 @@
 </div>
 <div class="volume"><button aria-label="Mute" class="icon-btn" data-act="mute" data-t-label="c.mute" type="button"><svg aria-hidden="true" class="icon i-vol"><use href="#i-volume"/></svg><svg aria-hidden="true" class="icon i-mute"><use href="#i-mute"/></svg></button><input aria-label="Volume" class="range vol-range" max="100" min="0" step="1" type="range" value="100"/></div>
 </div>
-<p class="ios-note" data-t="ios.note" hidden>On iPhone, Safari stops a YouTube video embedded in a page when it goes to the background or the screen locks: keep Safari open while you listen. Titles published on Ketvoice keep playing.</p>
+<p class="ios-note" data-t="ios.note" hidden>On iPhone, Safari stops a YouTube video embedded in a page when it goes to the background or the screen locks: keep Safari open while this title plays. The other titles keep playing in the background.</p>
 </section>
 
 <footer class="bar" id="bar">
@@ -152,6 +154,7 @@
 <div class="seek"><span class="t-now" data-bind="now">0:00</span><input aria-label="Position" class="range seek-range" data-t-label="seek" max="1000" min="0" step="1" type="range" value="0"/><span class="t-dur" data-bind="dur">0:00</span></div>
 </div>
 <div class="bar-end">
+<button class="icon-btn" data-act="radio" data-t-label="radio.start" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-radio"/></svg></button>
 <button aria-pressed="false" class="icon-btn" data-act="video" data-t-label="video" type="button"><svg aria-hidden="true" class="icon"><use href="#i-video"/></svg></button>
 <button aria-pressed="false" class="icon-btn" data-act="tab-lyrics" data-t-label="tab.lyrics" type="button"><svg aria-hidden="true" class="icon"><use href="#i-lyrics"/></svg></button>
 <button aria-pressed="false" class="icon-btn" data-act="tab-queue" data-t-label="tab.queue" type="button"><svg aria-hidden="true" class="icon"><use href="#i-queue"/></svg></button>
@@ -166,10 +169,12 @@
 
 <div class="yt-dock off" id="yt-dock"><div id="yt-host"></div></div>
 <audio id="audio" playsinline preload="metadata"></audio>
+<audio id="audio2" playsinline preload="metadata"></audio>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
-<script src="js/player/core.js?v=202611181500"></script>
-<script src="js/player/api.js?v=202611181500"></script>
-<script src="js/player/engine.js?v=202611181500"></script>
-<script src="js/player/app.js?v=202611181500"></script>
+<script src="js/player/core.js?v=202611182100"></script>
+<script src="js/player/api.js?v=202611182100"></script>
+<script src="js/player/catalog.js?v=202611182100"></script>
+<script src="js/player/engine.js?v=202611182100"></script>
+<script src="js/player/app.js?v=202611182100"></script>
 </body>
 </html>

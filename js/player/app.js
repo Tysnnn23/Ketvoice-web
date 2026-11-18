@@ -1,10 +1,12 @@
 /* Ketvoice web player — the page: sign-in, the library (favourites, playlists, shared playlists, followed
- * artists), search, the player (stage with the YouTube player kept visible, lyrics, queue, transport), the
- * desktop and iPhone layouts, « Reprendre » from another device, and what this browser writes back
- * (favourites, now playing). Uses window.KVCore, window.KVApi and window.KVEngine. */
+ * artists), the search (library, published titles, the Ketvoice API's catalogue and, when ketvoice-api has
+ * its /catalog/* routes, YouTube Music's artists and albums), artist and album pages, radio, the player
+ * (stage with Canvas and the YouTube player kept visible, lyrics, queue, transport), the desktop and iPhone
+ * layouts, « Reprendre » from another device, and what this browser writes back (favourites, now playing).
+ * Uses window.KVCore, window.KVApi, window.KVCatalog and window.KVEngine. */
 (function () {
   'use strict';
-  var core = window.KVCore, KVApi = window.KVApi;
+  var core = window.KVCore, KVApi = window.KVApi, KVCatalog = window.KVCatalog;
   var root = document.documentElement;
   var $ = function (sel, el) { return (el || document).querySelector(sel); };
   var $$ = function (sel, el) { return Array.prototype.slice.call((el || document).querySelectorAll(sel)); };
@@ -17,12 +19,12 @@
       skip: 'Skip to content', 'auth.title': 'Listen on the web', 'auth.sub': 'Your Ketvoice account, your favourites and your playlists, in sync with the app.',
       'auth.discord': 'Continue with Discord', 'auth.or': 'or', 'auth.email': 'E-mail', 'auth.password': 'Password', 'auth.signin': 'Sign in',
       'auth.noaccount': 'No account yet? Create one in the Ketvoice app (Settings → Account), then sign in here.', 'auth.site': 'Ketvoice website',
-      'auth.wait': 'Signing in…', 'search.label': 'Search', 'search.ph': 'Search your library', 'search.short': 'Search', 'nav.label': 'Library',
+      'auth.wait': 'Signing in…', 'search.label': 'Search', 'search.ph': 'Titles, artists, albums', 'search.short': 'Search', 'nav.label': 'Library',
       'me.label': 'Account', 'np.label': 'Now playing', 'np.close': 'Close the player', 'np.open': 'Open the player', 'tab.cover': 'Artwork',
       'tab.lyrics': 'Lyrics', 'tab.queue': 'Queue', video: 'Video', seek: 'Position', 'c.shuffle': 'Shuffle', 'c.prev': 'Previous', 'c.next': 'Next',
       'c.repeat': 'Repeat', 'c.repeat.all': 'Repeat the queue', 'c.repeat.one': 'Repeat this title', 'c.mute': 'Mute', 'c.unmute': 'Unmute',
       'c.play': 'Play', 'c.pause': 'Pause',
-      'ios.note': 'On iPhone, Safari stops a YouTube video embedded in a page when it goes to the background or the screen locks: keep Safari open while you listen. Titles published on Ketvoice keep playing.',
+      'ios.note': 'On iPhone, Safari stops a YouTube video embedded in a page when it goes to the background or the screen locks: keep Safari open while this title plays. The other titles keep playing in the background.',
       tap: 'Tap the video to start the sound.',
       'err.invalid_credentials': 'Wrong e-mail or password.', 'err.email_not_confirmed': 'This account is waiting for an e-mail confirmation.',
       'err.provider_disabled': 'This way of signing in is not available yet.', 'err.rate_limited': 'Too many attempts. Try again in a few minutes.',
@@ -43,7 +45,14 @@
       'lyrics.loading': 'Looking for the lyrics…', 'lyrics.none': 'No synced lyrics found for this title.', 'lyrics.plain': 'These lyrics are not synced.',
       'lyrics.source': 'Lyrics: LRCLIB', 'np.empty': 'Pick a title to start listening.', 'queue.now': 'Now playing', 'queue.next': 'Up next',
       'queue.empty': 'The queue is empty.', 'search.lib': 'In your library', 'search.pub': 'Published on Ketvoice', 'search.none': 'No results.',
-      'search.note': 'The YouTube Music catalogue search is in the app only: a browser cannot reach it. Here you search your library and the titles published on Ketvoice.',
+      'search.note': 'Titles from your library, from Ketvoice and from its catalogue, played right here in the browser.',
+      'search.titles': 'Titles', 'search.artists': 'Artists', 'search.albums': 'Albums', 'search.keys': 'Arrow keys move through the results.',
+      'src.api': 'API', 'src.yt': 'YouTube', 'src.kv': 'Ketvoice', 'via.um': 'Ketvoice API', 'via.last': 'Ketvoice API · lossless', 'via.upload': 'Published on Ketvoice',
+      'via.youtube': 'YouTube', radio: 'Radio', 'radio.start': 'Start a radio from this title', 'radio.none': 'No radio for this title yet.',
+      'radio.on': 'Radio · {t}', 'radio.started': 'Radio from « {t} »', nofade: 'No crossfade', 'nofade.tip': 'Titles follow each other with a 2 s crossfade unless this is on',
+      'artist.top': 'Popular titles', 'artist.albums': 'Albums', 'artist.singles': 'Singles and EPs', 'artist.related': 'Fans also like', 'artist.about': 'About',
+      'artist.open': 'Artist page', 'artist.error': 'This page could not be opened. Try again in a moment.', 'tag.album': 'album', 'tag.artist': 'artist',
+      'n.listeners': '{n}', more: 'Show more', less: 'Show less', 'album.by': 'by {a}',
       'search.start': 'Type at least two letters.', 'error.app_only': 'Only the Ketvoice app can play this title.',
       'error.embed_blocked': 'This video cannot be played outside YouTube. Next title…', 'error.unavailable': 'This title is unavailable. Next title…',
       'error.youtube_api': 'The YouTube player could not load. Check your network or content blockers.',
@@ -54,12 +63,12 @@
       skip: 'Aller au contenu', 'auth.title': 'Écouter sur le web', 'auth.sub': 'Votre compte Ketvoice, vos favoris et vos playlists, synchronisés avec l’app.',
       'auth.discord': 'Continuer avec Discord', 'auth.or': 'ou', 'auth.email': 'E-mail', 'auth.password': 'Mot de passe', 'auth.signin': 'Se connecter',
       'auth.noaccount': 'Pas encore de compte ? Créez-le dans l’app Ketvoice (Réglages → Compte), puis connectez-vous ici.', 'auth.site': 'Site de Ketvoice',
-      'auth.wait': 'Connexion…', 'search.label': 'Rechercher', 'search.ph': 'Rechercher un titre', 'search.short': 'Rechercher', 'nav.label': 'Bibliothèque',
+      'auth.wait': 'Connexion…', 'search.label': 'Rechercher', 'search.ph': 'Titres, artistes, albums', 'search.short': 'Rechercher', 'nav.label': 'Bibliothèque',
       'me.label': 'Compte', 'np.label': 'Lecture en cours', 'np.close': 'Fermer le lecteur', 'np.open': 'Ouvrir le lecteur', 'tab.cover': 'Pochette',
       'tab.lyrics': 'Paroles', 'tab.queue': 'File d’attente', video: 'Vidéo', seek: 'Position', 'c.shuffle': 'Aléatoire', 'c.prev': 'Précédent', 'c.next': 'Suivant',
       'c.repeat': 'Répéter', 'c.repeat.all': 'Répéter la file', 'c.repeat.one': 'Répéter ce titre', 'c.mute': 'Couper le son', 'c.unmute': 'Remettre le son',
       'c.play': 'Lire', 'c.pause': 'Pause',
-      'ios.note': 'Sur iPhone, Safari arrête une vidéo YouTube intégrée à une page quand il passe en arrière-plan ou que l’écran se verrouille : gardez Safari ouvert pendant l’écoute. Les titres publiés sur Ketvoice continuent.',
+      'ios.note': 'Sur iPhone, Safari arrête une vidéo YouTube intégrée à une page quand il passe en arrière-plan ou que l’écran se verrouille : gardez Safari ouvert pendant ce titre. Les autres titres continuent en arrière-plan.',
       tap: 'Touchez la vidéo pour lancer le son.',
       'err.invalid_credentials': 'E-mail ou mot de passe incorrect.', 'err.email_not_confirmed': 'Ce compte attend une confirmation par e-mail.',
       'err.provider_disabled': 'Cette méthode de connexion n’est pas encore disponible.', 'err.rate_limited': 'Trop de tentatives. Réessayez dans quelques minutes.',
@@ -80,7 +89,14 @@
       'lyrics.loading': 'Recherche des paroles…', 'lyrics.none': 'Pas de paroles synchronisées pour ce titre.', 'lyrics.plain': 'Ces paroles ne sont pas synchronisées.',
       'lyrics.source': 'Paroles : LRCLIB', 'np.empty': 'Choisissez un titre pour commencer.', 'queue.now': 'En cours', 'queue.next': 'À suivre',
       'queue.empty': 'La file d’attente est vide.', 'search.lib': 'Dans votre bibliothèque', 'search.pub': 'Publiés sur Ketvoice', 'search.none': 'Aucun résultat.',
-      'search.note': 'La recherche dans le catalogue YouTube Music se fait dans l’app : un navigateur ne peut pas l’atteindre. Ici, vous cherchez dans votre bibliothèque et parmi les titres publiés sur Ketvoice.',
+      'search.note': 'Des titres de votre bibliothèque, de Ketvoice et de son catalogue, lus ici même dans le navigateur.',
+      'search.titles': 'Titres', 'search.artists': 'Artistes', 'search.albums': 'Albums', 'search.keys': 'Les flèches parcourent les résultats.',
+      'src.api': 'API', 'src.yt': 'YouTube', 'src.kv': 'Ketvoice', 'via.um': 'Ketvoice API', 'via.last': 'Ketvoice API · sans perte', 'via.upload': 'Publié sur Ketvoice',
+      'via.youtube': 'YouTube', radio: 'Radio', 'radio.start': 'Lancer une radio depuis ce titre', 'radio.none': 'Pas encore de radio pour ce titre.',
+      'radio.on': 'Radio · {t}', 'radio.started': 'Radio depuis « {t} »', nofade: 'Sans fondu', 'nofade.tip': 'Les titres s’enchaînent avec un fondu de 2 s, sauf si ceci est activé',
+      'artist.top': 'Titres populaires', 'artist.albums': 'Albums', 'artist.singles': 'Singles et EP', 'artist.related': 'Les fans aiment aussi', 'artist.about': 'À propos',
+      'artist.open': 'Page de l’artiste', 'artist.error': 'Cette page n’a pas pu s’ouvrir. Réessayez dans un instant.', 'tag.album': 'album', 'tag.artist': 'artiste',
+      'n.listeners': '{n}', more: 'Afficher plus', less: 'Afficher moins', 'album.by': 'de {a}',
       'search.start': 'Tapez au moins deux lettres.', 'error.app_only': 'Seule l’app Ketvoice peut lire ce titre.',
       'error.embed_blocked': 'Cette vidéo ne peut pas être lue hors de YouTube. Titre suivant…', 'error.unavailable': 'Ce titre est indisponible. Titre suivant…',
       'error.youtube_api': 'Le lecteur YouTube n’a pas pu se charger. Vérifiez votre réseau ou vos bloqueurs.',
@@ -99,8 +115,9 @@
     $$('[data-t]').forEach(function (el) { el.textContent = t(el.getAttribute('data-t')); });
     $$('[data-t-label]').forEach(function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-t-label'))); if (el.classList.contains('icon-btn')) el.title = t(el.getAttribute('data-t-label')); });
     $$('[data-t-ph]').forEach(function (el) { el.placeholder = t(el.getAttribute('data-t-ph')); });
-    document.title = lang === 'fr' ? 'Ketvoice — lecteur web' : 'Ketvoice — web player';
+    applyTitle();
   }
+  function applyTitle() { document.title = lang === 'fr' ? 'Ketvoice — lecteur web' : 'Ketvoice — web player'; }
 
   // ------------------------------------------------------------ environment
 
@@ -136,7 +153,11 @@
     locks: navigator.locks || null, random: function (b) { crypto.getRandomValues(b); }, subtle: crypto.subtle
   });
 
-  var engine = window.KVEngine.createEngine({ core: core, api: api, audio: $('#audio'), hostId: 'yt-host', onChange: onEngine });
+  var catalog = KVCatalog.createCatalog({ fetch: function (u, o) { return window.fetch(u, o); }, anonKey: KVApi.ANON_KEY, now: Date.now });
+  var noFade = store.getItem('kv-player-nofade') === '1';
+  var engine = window.KVEngine.createEngine({ core: core, api: api, catalog: catalog, audio: $('#audio'), audio2: $('#audio2'), hostId: 'yt-host',
+    onChange: onEngine, fadeOn: function () { return !noFade; } });
+  var playable = function (tr) { return engine.playable(tr); };
 
   // ------------------------------------------------------------ state
 
@@ -211,6 +232,8 @@
     renderMe(); renderNav(); route(); renderNow(); renderLyrics(); renderQueue(); measureBar();
     loadLibrary();
     engine.preload();
+    catalog.loadProviders();
+    catalog.probe().then(function (on) { root.classList.toggle('has-catalog', on); renderCatalogUi(); renderArtistLink(engine.current()); repaint(); });
     if (!started) {
       started = true;
       setInterval(publishTick, 1000);
@@ -405,6 +428,8 @@
     if ((m = /^\/playlist\/(.+)$/.exec(h))) return { name: 'playlist', id: m[1] };
     if ((m = /^\/shared\/(.+)$/.exec(h))) return { name: 'shared', id: m[1] };
     if ((m = /^\/artist\/(.+)$/.exec(h))) return { name: 'artist', id: m[1] };
+    if ((m = /^\/a\/(UC[A-Za-z0-9_-]{10,40})$/.exec(h))) return { name: 'a', id: m[1] };
+    if ((m = /^\/album\/(MPRE[A-Za-z0-9_-]{5,80})$/.exec(h))) return { name: 'album', id: m[1] };
     if ((m = /^\/search\/?(.*)$/.exec(h))) return { name: 'search', q: m[1] || '' };
     return { name: 'home' };
   }
@@ -416,17 +441,22 @@
     lastRouteKey = key;
     ui.route = r;
     var view = $('#view');
+    if (changedRoute) { ui.expanded = false; if (r.name !== 'a' && r.name !== 'album') applyTitle(); }
     var html = r.name === 'favorites' ? viewFavorites() : r.name === 'playlist' ? viewPlaylist(r.id) : r.name === 'shared' ? viewShared(r.id)
-      : r.name === 'artist' ? viewArtist(r.id) : r.name === 'search' ? viewSearch(r.q) : viewHome();
+      : r.name === 'artist' ? viewArtist(r.id) : r.name === 'a' ? viewCatalogArtist(r.id, key) : r.name === 'album' ? viewAlbum(r.id, key)
+      : r.name === 'search' ? viewSearch(r.q) : viewHome();
     view.innerHTML = html;
     view.classList.toggle('enter', changedRoute);
     if (changedRoute) { $('#main').scrollTop = 0; window.scrollTo(0, 0); }
     $$('#lib-nav a').forEach(function (a) { a.toggleAttribute('aria-current', a.getAttribute('href') === '#' + routeHref(r)); if (a.hasAttribute('aria-current')) a.setAttribute('aria-current', 'page'); });
     $$('#q, #q2').forEach(function (q) { if (r.name !== 'search' && document.activeElement !== q) q.value = ''; });
     $('#resume').classList.toggle('on-home', r.name === 'home');
-    if (r.name === 'search') runSearch(r.q);
+    if (r.name === 'search') runSearch(r.q, !changedRoute);
     if (r.name === 'artist') runArtist(r.id);
+    if ((r.name === 'a' || r.name === 'album') && !(ui.page && ui.page.key === key)) runPage(r, key);
   }
+  /** Paints the current page again with what is known now (no entrance animation, no new request). */
+  function repaint() { var r = parseRoute(); if (ui.route && JSON.stringify(r) === lastRouteKey) route(); }
   function routeHref(r) { return r.name === 'home' ? '/' : r.name === 'favorites' ? '/favorites' : '/' + r.name + '/' + (r.id || r.q || ''); }
   window.addEventListener('hashchange', route);
 
@@ -466,32 +496,45 @@
 
   // ------------------------------------------------------------ views
 
-  /** The rows of a list of titles; [splitAt]/[splitLabel] put a heading before one row (the list stays one queue). */
-  function trackRows(list, splitAt, splitLabel) {
+  /** Where a title plays from, as the app's search shows it (SearchGroups.sourceName). */
+  function sourceTag(tr) {
+    if (core.uploadId(tr)) return t('src.kv');
+    if (tr.addon === 'um' || tr.addon === 'last') return t('src.api');
+    if (core.youtubeId(tr)) return t('src.yt');
+    return '';
+  }
+
+  /**
+   * The rows of a list of titles; [o.splitAt]/[o.splitLabel] put a heading before one row (the list stays one
+   * queue), [o.sources] shows where each title comes from, [o.numbers] numbers them as an album does.
+   */
+  function trackRows(list, o) {
+    o = o || {};
     ui.list = list;
     var cur = engine.current();
     return '<ol class="tracks">' + list.map(function (tr, i) {
-      var kind = core.playable(tr), on = cur && cur.id === tr.id;
+      var kind = playable(tr), on = cur && cur.id === tr.id;
       var title = tr.title || t('row.youtube');
-      var sub = [tr.artist, tr.album].filter(function (x) { return x && String(x).trim(); }).join(' · ');
+      var sub = [tr.artist, o.noAlbum ? '' : tr.album].filter(function (x) { return x && String(x).trim(); }).join(' · ');
+      var src = o.sources ? sourceTag(tr) : '';
       var like = core.syncable(tr.id) && (tr.title || isFav(tr.id)) ?'<button aria-pressed="' + isFav(tr.id) + '" aria-label="' + esc(t(isFav(tr.id) ? 'like.remove' : 'like.add')) + '" class="icon-btn like" data-like="' + i + '" title="' + esc(t(isFav(tr.id) ? 'like.remove' : 'like.add')) + '" type="button"><svg aria-hidden="true" class="icon"><use href="#i-heart"/></svg></button>' : '<span class="like-gap"></span>';
-      return (i === splitAt ? '<li class="tr-h"><h2 class="h-sec">' + esc(splitLabel) + '</h2></li>' : '') +
+      return (i === o.splitAt ? '<li class="tr-h"><h2 class="h-sec">' + esc(o.splitLabel) + '</h2></li>' : '') +
         '<li class="tr' + (on ? ' on' : '') + (kind ? '' : ' off') + '" style="--i:' + Math.min(i, 16) + '">' +
-        '<button class="tr-main" data-play="' + i + '" type="button"' + (kind ? '' : ' aria-disabled="true" title="' + esc(t('row.apptip')) + '"') + ' aria-label="' + esc(t('row.play', { t: title + (tr.artist ? ', ' + tr.artist : '') })) + '">' +
-        '<span aria-hidden="true" class="tr-n"><span class="n">' + (i + 1) + '</span><span class="eq"><i></i><i></i><i></i></span></span>' + art(tr, 'tr-art', 96) +
-        '<span class="tr-text"><b>' + esc(title) + '</b><small>' + esc(sub) + '</small></span>' +
-        (kind ? '' : '<span class="tr-badge">' + esc(t('row.app')) + '</span>') +
+        '<button class="tr-main" data-nav="" data-play="' + i + '" type="button"' + (kind ? '' : ' aria-disabled="true" title="' + esc(t('row.apptip')) + '"') + ' aria-label="' + esc(t('row.play', { t: title + (tr.artist ? ', ' + tr.artist : '') })) + '">' +
+        '<span aria-hidden="true" class="tr-n"><span class="n">' + (i + 1) + '</span><span class="eq"><i></i><i></i><i></i></span></span>' + (o.noArt ? '' : art(tr, 'tr-art', 96)) +
+        '<span class="tr-text"><b>' + esc(title) + (tr.explicit ? ' <i class="tr-e" aria-label="explicit" title="explicit">E</i>' : '') + '</b><small>' + esc(sub) + '</small></span>' +
+        (kind ? (src ? '<span class="tr-src">' + esc(src) + '</span>' : '') : '<span class="tr-badge">' + esc(t('row.app')) + '</span>') +
         '<span class="tr-dur">' + (tr.durationMs ? core.clock(tr.durationMs) : '') + '</span></button>' + like + '</li>';
     }).join('') + '</ol>';
   }
 
-  function head(tag, name, tracks, artHtml, extra) {
+  function head(tag, name, tracks, artHtml, extra, more) {
     var total = tracks.reduce(function (a, tr) { return a + (tr.durationMs || 0); }, 0);
-    var playable = tracks.some(function (tr) { return core.playable(tr); });
+    var any = tracks.some(function (tr) { return playable(tr); });
     return '<header class="v-head">' + artHtml + '<div class="v-info"><p class="tag">/' + esc(tag) + '</p><h1>' + esc(name) + '</h1>' +
-      '<p class="v-meta">' + esc(count(tracks.length)) + (total > 60000 ? ' · ' + esc(core.clock(total)) : '') + (extra ? ' · ' + extra : '') + '</p>' +
-      (tracks.length ? '<div class="v-actions"><button class="btn btn-accent" data-act="play-all" type="button"' + (playable ? '' : ' disabled') + '><svg aria-hidden="true" class="icon"><use href="#i-play"/></svg>' + esc(t('btn.play')) + '</button>' +
-      '<button class="btn btn-line" data-act="shuffle-all" type="button"' + (playable ? '' : ' disabled') + '><svg aria-hidden="true" class="icon"><use href="#i-shuffle"/></svg>' + esc(t('btn.shuffle')) + '</button></div>' : '') +
+      '<p class="v-meta">' + (tracks.length ? esc(count(tracks.length)) : '') + (total > 60000 ? ' · ' + esc(core.clock(total)) : '') + (extra ? '<span>' + (tracks.length ? ' · ' : '') + extra + '</span>' : '') + '</p>' +
+      (tracks.length ? '<div class="v-actions"><button class="btn btn-accent" data-act="play-all" type="button"' + (any ? '' : ' disabled') + '><svg aria-hidden="true" class="icon"><use href="#i-play"/></svg>' + esc(t('btn.play')) + '</button>' +
+      '<button class="btn btn-line" data-act="shuffle-all" type="button"' + (any ? '' : ' disabled') + '><svg aria-hidden="true" class="icon"><use href="#i-shuffle"/></svg>' + esc(t('btn.shuffle')) + '</button>' + (more || '') + '</div>' : '') +
       '</div></header>';
   }
 
@@ -499,6 +542,7 @@
     if (lib.error) return '<div class="state"><p>' + esc(t('lib.error')) + '</p><button class="btn btn-line" data-act="retry" type="button">' + esc(t('lib.retry')) + '</button></div>';
     return '<div class="state"><span class="spinner" aria-hidden="true"></span><p>' + esc(t('lib.loading')) + '</p></div>';
   }
+  function spinner() { return '<div class="state"><span class="spinner" aria-hidden="true"></span></div>'; }
 
   function back() { return '<a class="back" href="#/"><svg aria-hidden="true" class="icon"><use href="#i-back"/></svg>' + esc(t('back')) + '</a>'; }
 
@@ -534,29 +578,51 @@
     return out;
   }
 
+  function libraryOf(name) {
+    var want = core.fold(name);
+    return want ? allLibraryTracks().filter(function (tr) { return core.fold(tr.artist).indexOf(want) >= 0; }) : [];
+  }
+
   function viewArtist(key) {
     if (!lib.loaded) return back() + loading();
     var a = lib.artists.find(function (x) { return x.key === key; });
     if (!a) return back() + '<p class="empty">' + esc(t('lib.empty')) + '</p>';
-    var want = core.fold(a.name);
-    var mine = allLibraryTracks().filter(function (tr) { return core.fold(tr.artist).indexOf(want) >= 0; });
+    var mine = libraryOf(a.name);
     var photo = '<span class="art v-art round" data-letter="' + esc(a.name.charAt(0).toUpperCase()) + '">' + (a.photo ? '<img alt="" referrerpolicy="no-referrer" src="' + esc(a.photo) + '"/>' : '') + '</span>';
     ui.artistMine = mine;
-    return back() + head(lang === 'fr' ? 'artiste' : 'artist', a.name, mine, photo) +
+    return back() + head(lang === 'fr' ? 'artiste' : 'artist', a.name, mine, photo, '', '<span id="artist-open"></span>') +
       '<h2 class="h-sec">' + esc(t('artist.lib')) + '</h2><div id="artist-list">' + (mine.length ? trackRows(mine) : '<p class="empty">' + esc(t('artist.none')) + '</p>') + '</div>';
   }
 
+  /** A followed artist: their titles published on Ketvoice, and their catalogue page when there is one. */
   function runArtist(key) {
     var a = lib.artists.find(function (x) { return x.key === key; });
     if (!a) return;
+    var here = function () { return ui.route && ui.route.name === 'artist' && ui.route.id === key; };
     api.contentSearch(a.name).then(function (rows) {
       var want = core.fold(a.name), mine = ui.artistMine || [];
       var ids = new Set(mine.map(function (tr) { return tr.id; }));
       rows = rows.filter(function (tr) { return core.fold(tr.artist).indexOf(want) >= 0 && !ids.has(tr.id); });
       var box = $('#artist-list');
-      if (!rows.length || !box || !ui.route || ui.route.name !== 'artist' || ui.route.id !== key) return;
-      box.innerHTML = trackRows(mine.concat(rows), mine.length, t('search.pub'));
+      if (!rows.length || !box || !here()) return;
+      box.innerHTML = trackRows(mine.concat(rows), { splitAt: mine.length, splitLabel: t('search.pub') });
     }, function () {});
+    findCatalogArtist(a.name, a.id).then(function (id) {
+      var slot = $('#artist-open');
+      if (id && slot && here()) slot.outerHTML = '<a class="btn btn-line" href="#/a/' + esc(id) + '"><svg aria-hidden="true" class="icon"><use href="#i-mic"/></svg>' + esc(t('artist.open')) + '</a>';
+    });
+  }
+
+  /** The catalogue page of an artist known by name (a followed artist, the title playing). */
+  function findCatalogArtist(name, id) {
+    if (/^UC[A-Za-z0-9_-]{10,40}$/.test(id || '')) return Promise.resolve(catalog.catalogOn ? id : null);
+    var main = String(name || '').split(',')[0].trim();
+    if (!catalog.catalogOn || main.length < 2) return Promise.resolve(null);
+    return catalog.search(main).then(function (res) {
+      var want = core.fold(main);
+      var hit = res && res.artists.find(function (x) { return core.fold(x.name) === want; });
+      return hit ? hit.id : null;
+    });
   }
 
   function viewHome() {
@@ -587,33 +653,156 @@
     return html;
   }
 
-  var searchToken = 0;
-  function viewSearch(q) {
-    return '<header class="hello"><p class="tag">/search</p><h1>' + esc(q ? '« ' + q + ' »' : t('search.label')) + '</h1></header><div id="results">' +
-      (q.trim().length < 2 ? '<p class="empty">' + esc(t('search.start')) + '</p>' : '<div class="state"><span class="spinner" aria-hidden="true"></span></div>') +
-      '</div><p class="note">' + esc(t('search.note')) + '</p>';
+  // ------------------------------------------------------------ catalogue pages (artists, albums)
+
+  function circle(a, cls) {
+    return '<span class="art round ' + (cls || '') + '" data-letter="' + esc(a.name.charAt(0).toUpperCase()) + '">' +
+      (a.photo ? '<img alt="" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="' + esc(KVCatalog.bigImage(a.photo, 240)) + '"/>' : '') + '</span>';
+  }
+  function artistLinks(list) {
+    return '<div class="artists" data-row="">' + list.map(function (a) {
+      return '<a class="artist" data-nav="" href="#/a/' + esc(a.id) + '">' + circle(a) + '<span>' + esc(a.name) + '</span></a>';
+    }).join('') + '</div>';
+  }
+  function releaseTiles(list, withArtist) {
+    return '<div class="tiles" data-row="">' + list.map(function (al) {
+      var sub = [al.type === 'Album' ? '' : al.type, al.year, withArtist ? al.artist : ''].filter(Boolean).join(' · ');
+      return '<a class="tile" data-nav="" href="#/album/' + esc(al.id) + '"><span class="art tile-art" data-letter="' + esc(al.title.charAt(0).toUpperCase()) + '">' +
+        (al.cover ? '<img alt="" decoding="async" loading="lazy" referrerpolicy="no-referrer" src="' + esc(KVCatalog.bigImage(al.cover, 360)) + '"/>' : '') +
+        '</span><b>' + esc(al.title) + '</b><small>' + esc(sub || t('tag.album')) + '</small></a>';
+    }).join('') + '</div>';
   }
 
-  function runSearch(q) {
+  function pageState(key) {
+    if (ui.page && ui.page.key === key) return ui.page;
+    return null;
+  }
+
+  function viewCatalogArtist(id, key) {
+    var page = pageState(key);
+    if (!page || page.loading) return back() + spinner();
+    if (!page.data) return back() + '<p class="empty">' + esc(t('artist.error')) + '</p>';
+    var d = page.data, a = d.artist;
+    var top = d.tracks, shown = ui.expanded ? top : top.slice(0, 5);
+    var mine = libraryOf(a.name).filter(function (tr) { return !top.some(function (x) { return x.id === tr.id; }); });
+    var photo = '<span class="art v-art round hero-art" data-letter="' + esc(a.name.charAt(0).toUpperCase()) + '">' +
+      (a.photo ? '<img alt="" decoding="async" referrerpolicy="no-referrer" src="' + esc(KVCatalog.bigImage(a.photo, 544)) + '"/>' : '') + '</span>';
+    var radio = top.length ? '<button class="btn btn-line" data-act="radio-artist" type="button"><svg aria-hidden="true" class="icon"><use href="#i-radio"/></svg>' + esc(t('radio')) + '</button>' : '';
+    var html = back() + head(t('tag.artist'), a.name, top, photo, a.listeners ? esc(a.listeners) : '', radio);
+    if (top.length) {
+      html += '<h2 class="h-sec">' + esc(t('artist.top')) + '</h2>' + trackRows(shown.concat(ui.expanded ? mine : []), { sources: false, splitAt: ui.expanded && mine.length ? shown.length : -1, splitLabel: t('artist.lib') });
+      if (top.length > 5 || mine.length) html += '<button class="btn btn-line more" data-act="more" type="button" aria-expanded="' + !!ui.expanded + '">' + esc(t(ui.expanded ? 'less' : 'more')) + '</button>';
+    } else if (mine.length) html += '<h2 class="h-sec">' + esc(t('artist.lib')) + '</h2>' + trackRows(mine);
+    if (d.albums.length) html += '<h2 class="h-sec">' + esc(t('artist.albums')) + '</h2>' + releaseTiles(d.albums);
+    if (d.singles.length) html += '<h2 class="h-sec">' + esc(t('artist.singles')) + '</h2>' + releaseTiles(d.singles);
+    if (d.related.length) html += '<h2 class="h-sec">' + esc(t('artist.related')) + '</h2>' + artistLinks(d.related);
+    if (d.description) html += '<h2 class="h-sec">' + esc(t('artist.about')) + '</h2><p class="about">' + esc(d.description) + '</p>';
+    return html;
+  }
+
+  function viewAlbum(id, key) {
+    var page = pageState(key);
+    if (!page || page.loading) return back() + spinner();
+    if (!page.data) return back() + '<p class="empty">' + esc(t('artist.error')) + '</p>';
+    var al = page.data.album, tracks = page.data.tracks;
+    var cover = '<span class="art v-art" data-letter="' + esc(al.title.charAt(0).toUpperCase()) + '">' +
+      (al.cover ? '<img alt="" decoding="async" referrerpolicy="no-referrer" src="' + esc(KVCatalog.bigImage(al.cover, 544)) + '"/>' : '') + '</span>';
+    var by = al.artist ? (al.artistId ? '<a class="link" href="#/a/' + esc(al.artistId) + '">' + esc(al.artist) + '</a>' : esc(al.artist)) : '';
+    var extra = [by, al.year ? esc(al.year) : ''].filter(Boolean).join(' · ');
+    return back() + head((al.type === 'Album' ? t('tag.album') : al.type.toLowerCase()), al.title, tracks, cover, extra) +
+      trackRows(tracks, { noArt: true, noAlbum: true });
+  }
+
+  /** Loads an artist or album page; the page paints again when it arrives (or says it could not). */
+  function runPage(r, key) {
+    ui.page = { key: key, loading: true };
+    var load = function () { return r.name === 'a' ? catalog.artist(r.id) : catalog.album(r.id); };
+    catalog.probe().then(function (on) { return on ? load() : null; }).then(function (data) {
+      if (!ui.page || ui.page.key !== key) return;
+      ui.page = { key: key, data: data };
+      repaint();
+      if (data && r.name === 'a') document.title = data.artist.name + ' · Ketvoice';
+      if (data && r.name === 'album') document.title = data.album.title + ' · Ketvoice';
+    });
+  }
+
+  // ------------------------------------------------------------ search (library, Ketvoice, its catalogue)
+
+  var searchToken = 0, searchAbort = null;
+  function viewSearch(q) {
+    return '<header class="hello"><p class="tag">/search</p><h1>' + esc(q ? '« ' + q + ' »' : t('search.label')) + '</h1></header><div aria-live="polite" class="results" id="results">' +
+      (q.trim().length < 2 ? '<p class="empty">' + esc(t('search.start')) + '</p>' : spinner()) +
+      '</div><p class="note">' + esc(t('search.note')) + ' <span class="kbd-note">' + esc(t('search.keys')) + '</span></p>';
+  }
+
+  /**
+   * The app's search: the listener's library first, then the titles published on Ketvoice, the Ketvoice
+   * API's catalogue and YouTube Music's songs, one list without repeats (the same ISRC, or the same title
+   * and artist within 3 s); artists and albums beside it when the catalogue answers. Painted as each answers.
+   */
+  function runSearch(q, again) {
     q = q.trim();
     $$('#q, #q2').forEach(function (el) { if (document.activeElement !== el) el.value = q; });
     if (q.length < 2) return;
+    if (again && ui.search && ui.search.q === q) { drawSearch(); return; }
     var my = ++searchToken;
-    var mine = allLibraryTracks().filter(function (tr) { return core.matches(tr, q); }).slice(0, 50);
-    var draw = function (pub) {
-      if (my !== searchToken) return;
-      var ids = new Set(mine.map(function (tr) { return tr.id; }));
-      var extra = (pub || []).filter(function (tr) { return !ids.has(tr.id); });
-      var list = mine.concat(extra), html = '';
-      if (list.length) html = (mine.length ? '<h2 class="h-sec">' + esc(t('search.lib')) + '</h2>' : '') + trackRows(list, mine.length && extra.length ? mine.length : extra.length ? 0 : -1, t('search.pub'));
-      else if (pub) html = '<p class="empty">' + esc(t('search.none')) + '</p>';
-      if (!pub) html += '<div class="state"><span class="spinner" aria-hidden="true"></span></div>';
-      var box = $('#results');
-      if (box) box.innerHTML = html;
-    };
-    draw(null);
-    api.contentSearch(q).then(draw, function () { draw([]); });
+    if (searchAbort) searchAbort.abort();
+    searchAbort = typeof AbortController === 'function' ? new AbortController() : null;
+    var signal = searchAbort ? searchAbort.signal : undefined;
+    var S = ui.search = { q: q, my: my, mine: allLibraryTracks().filter(function (tr) { return core.matches(tr, q); }).slice(0, 50), pub: null, addon: null, cat: null, pending: 3 };
+    drawSearch();
+    var done = function (field) { return function (v) { if (ui.search !== S) return; S[field] = v || (field === 'cat' ? null : []); S.pending--; drawSearch(); }; };
+    api.contentSearch(q).then(done('pub'), function () { done('pub')([]); });
+    catalog.addonSearch(q, signal).then(done('addon'), function () { done('addon')([]); });
+    catalog.probe().then(function (on) { return on ? catalog.search(q, signal) : null; }).then(done('cat'), function () { done('cat')(null); });
   }
+
+  function drawSearch() {
+    var S = ui.search, box = $('#results');
+    if (!S || !box || !ui.route || ui.route.name !== 'search' || ui.route.q.trim() !== S.q) return;
+    var cat = S.cat || { tracks: [], artists: [], albums: [] };
+    var list = KVCatalog.mergeTracks([S.mine, S.pub || [], S.addon || [], cat.tracks]).slice(0, 40);
+    var focused = document.activeElement && box.contains(document.activeElement) ? navIndex(document.activeElement) : -1;
+    var html = '';
+    if (cat.artists.length) html += '<h2 class="h-sec">' + esc(t('search.artists')) + '</h2>' + artistLinks(cat.artists);
+    if (list.length) html += '<h2 class="h-sec">' + esc(t('search.titles')) + '</h2>' + trackRows(list, { sources: true });
+    if (cat.albums.length) html += '<h2 class="h-sec">' + esc(t('search.albums')) + '</h2>' + releaseTiles(cat.albums, true);
+    if (!html && !S.pending) html = '<p class="empty">' + esc(t('search.none')) + '</p>';
+    if (S.pending) html += spinner();
+    box.innerHTML = html;
+    if (focused >= 0) { var items = navItems(); (items[Math.min(focused, items.length - 1)] || $('#q')).focus({ preventScroll: true }); }
+  }
+
+  // Arrow keys: from the search field into the results, and through them (rows down, artists and albums across).
+  function navItems() { return $$('#results [data-nav]').filter(function (x) { return x.offsetParent !== null; }); }
+  function navIndex(el) { return navItems().indexOf(el.closest('[data-nav]')); }
+  function searchField() { return desktopMq.matches ? $('#q') : $('#q2'); }
+  document.addEventListener('keydown', function (e) {
+    if (!ui.route || ui.route.name !== 'search' || e.altKey || e.ctrlKey || e.metaKey) return;
+    var inField = e.target === $('#q') || e.target === $('#q2');
+    var items = navItems();
+    if (!items.length) return;
+    if (inField && e.key === 'ArrowDown') { e.preventDefault(); items[0].focus(); return; }
+    var i = items.indexOf(e.target);
+    if (i < 0) return;
+    var row = e.target.closest('[data-row]');
+    var k = e.key;
+    if (k === 'ArrowDown' || k === 'ArrowUp') {
+      e.preventDefault();
+      if (row) {
+        // Out of a row of artists or albums: to the first item after it, or the last before it.
+        var inRow = $$('[data-nav]', row);
+        var j = k === 'ArrowDown' ? items.indexOf(inRow[inRow.length - 1]) + 1 : items.indexOf(inRow[0]) - 1;
+        if (j < 0) searchField().focus(); else if (items[j]) items[j].focus();
+      } else if (k === 'ArrowUp' && i === 0) searchField().focus();
+      else { var n = items[i + (k === 'ArrowDown' ? 1 : -1)]; if (n) n.focus(); }
+    } else if (row && (k === 'ArrowRight' || k === 'ArrowLeft')) {
+      e.preventDefault(); e.stopPropagation();
+      var m = items[i + (k === 'ArrowRight' ? 1 : -1)];
+      if (m && m.closest('[data-row]') === row) m.focus();
+    } else if (k === 'Escape') { e.preventDefault(); searchField().focus(); }
+    else if (k === 'Home' || k === 'End') { e.preventDefault(); items[k === 'Home' ? 0 : items.length - 1].focus(); }
+  }, true);
 
   var searchTimer = 0;
   function onSearchInput(e) {
@@ -622,7 +811,7 @@
     searchTimer = setTimeout(function () {
       var target = q.trim() ? '#/search/' + encodeURIComponent(q.trim()) : '#/';
       if (location.hash !== target) history.replaceState(null, '', target), route();
-    }, 280);
+    }, 300);
   }
   $$('#q, #q2').forEach(function (el) {
     el.addEventListener('input', onSearchInput);
@@ -635,7 +824,7 @@
   function playFrom(list, i, shuffle) {
     if (!list.length) return;
     var tr = list[i];
-    if (tr && !core.playable(tr)) { toast(t('error.app_only')); return; }
+    if (tr && !playable(tr)) { toast(t('error.app_only')); return; }
     engine.playQueue(list, i, 0);
     if (shuffle && !engine.state.shuffle) engine.toggleShuffle();
     if (!shuffle && engine.state.shuffle) engine.toggleShuffle();
@@ -650,8 +839,8 @@
     }
     if (el.hasAttribute('data-play')) {
       var i = Number(el.getAttribute('data-play')), list = ui.list.slice();
-      if (!core.playable(list[i])) { toast(t('error.app_only')); return; }
-      var playableFirst = list.findIndex(function (x) { return core.playable(x); });
+      if (!playable(list[i])) { toast(t('error.app_only')); return; }
+      var playableFirst = list.findIndex(function (x) { return playable(x); });
       playFrom(list, i >= 0 ? i : playableFirst, false);
       return;
     }
@@ -672,13 +861,17 @@
       case 'tab-queue': setTab(ui.tab === 'queue' && desktopMq.matches ? 'lyrics' : 'queue'); if (!desktopMq.matches) openSheet(); break;
       case 'sheet-open': openSheet(); break;
       case 'sheet-close': closeSheet(); break;
-      case 'play-all': { var l1 = ui.list.slice(); playFrom(l1, Math.max(0, l1.findIndex(function (x) { return core.playable(x); })), false); break; }
-      case 'shuffle-all': { var l2 = ui.list.slice(); var ok = l2.map(function (x, k) { return core.playable(x) ? k : -1; }).filter(function (k) { return k >= 0; }); if (ok.length) playFrom(l2, ok[Math.floor(Math.random() * ok.length)], true); break; }
+      case 'play-all': { var l1 = ui.list.slice(); playFrom(l1, Math.max(0, l1.findIndex(function (x) { return playable(x); })), false); break; }
+      case 'shuffle-all': { var l2 = ui.list.slice(); var ok = l2.map(function (x, k) { return playable(x) ? k : -1; }).filter(function (k) { return k >= 0; }); if (ok.length) playFrom(l2, ok[Math.floor(Math.random() * ok.length)], true); break; }
       case 'resume': resume(); break;
       case 'resume-x': if (lib.remote) { ui.dismissedAt = lib.remote.at; try { sessionStorage.setItem('kv-player-dismissed', String(lib.remote.at)); } catch (x) { /* storage blocked */ } } renderResume(); break;
       case 'retry': lib.error = null; route(); loadLibrary(); break;
       case 'theme': setTheme(!root.classList.contains('light')); break;
       case 'signout': api.signOut(); break;
+      case 'radio': radioFrom(engine.current()); break;
+      case 'radio-artist': { var pg = ui.page && ui.page.data; if (pg && pg.tracks && pg.tracks[0]) radioFrom(pg.tracks[0], true); break; }
+      case 'more': ui.expanded = !ui.expanded; repaint(); break;
+      case 'nofade': noFade = !noFade; try { store.setItem('kv-player-nofade', noFade ? '1' : '0'); } catch (x) { /* private mode */ } renderQueue(); break;
     }
   });
 
@@ -833,7 +1026,8 @@
 
   function onEngine(what, s) {
     if (what === 'time') { renderTime(); return; }
-    if (what === 'track') { renderNow(); loadLyrics(); renderQueue(); markRows(); renderResume(); followDock(300); return; }
+    if (what === 'track') { renderNow(); loadLyrics(); renderQueue(); markRows(); renderResume(); loadCanvas(); followDock(300); return; }
+    if (what === 'source') { renderStage(); renderVia(); renderState(); renderCanvas(); followDock(300); return; }
     if (what === 'queue') { renderQueue(); renderState(); return; }
     if (what === 'volume') { renderVolume(); return; }
     if (what === 'error' && s.error) {
@@ -846,6 +1040,9 @@
     var cur = engine.current();
     $$('[data-bind="title"]').forEach(function (el) { el.textContent = cur ? (cur.title || t('row.youtube')) : t('np.empty'); });
     $$('[data-bind="artist"]').forEach(function (el) { el.textContent = cur ? cur.artist || '' : ''; });
+    renderArtistLink(cur);
+    renderVia();
+    renderCatalogUi();
     var url = cur ? coverUrl(cur, true) : '';
     $$('[data-bind="cover"]').forEach(function (img) { if (url) img.src = url; else img.removeAttribute('src'); img.hidden = !url; });
     var cover = $('#stage-cover'), glow = $('#stage-glow');
@@ -866,6 +1063,7 @@
     stage.classList.toggle('video', yt && ui.video);
     $$('[data-act="video"]').forEach(function (b) { b.hidden = !yt; b.setAttribute('aria-pressed', String(ui.video)); });
     placeDock();
+    renderCanvas();
   }
 
   function renderState() {
@@ -885,6 +1083,7 @@
     hint.hidden = !s.needsTap;
     if (s.needsTap && !hint.dataset.shown) { hint.dataset.shown = '1'; toast(t('tap'), true); }
     if (!s.needsTap) delete hint.dataset.shown;
+    // Only a title YouTube plays stops in the background on iPhone; the others play from an <audio> element.
     $('.ios-note').hidden = !(IOS && s.source === 'youtube');
     markRows();
     renderResume();
@@ -933,12 +1132,20 @@
 
   // ------------------------------------------------------------ queue
 
+  /** The top of the queue: the radio it follows, and « Sans fondu » where the page can fade (not on iPhone). */
+  function queueTop() {
+    var s = engine.state;
+    var radio = s.radio ? '<p class="q-radio"><svg aria-hidden="true" class="icon"><use href="#i-radio"/></svg><span>' + esc(t('radio.on', { t: s.radio.title })) + '</span></p>' : '<span></span>';
+    var fade = engine.volumeWorks ? '<button aria-pressed="' + noFade + '" class="chip q-fade" data-act="nofade" title="' + esc(t('nofade.tip')) + '" type="button">' + esc(t('nofade')) + '</button>' : '';
+    return '<div class="q-top">' + radio + fade + '</div>';
+  }
+
   function renderQueue() {
     var s = engine.state, el = $('#queue');
-    if (!s.queue.length) { el.innerHTML = '<p class="ly-empty">' + esc(t('queue.empty')) + '</p>'; return; }
-    el.innerHTML = '<ol class="q-list">' + s.queue.map(function (tr, i) {
+    if (!s.queue.length) { el.innerHTML = queueTop() + '<p class="ly-empty">' + esc(t('queue.empty')) + '</p>'; return; }
+    el.innerHTML = queueTop() + '<ol class="q-list">' + s.queue.map(function (tr, i) {
       var head = i === s.index ? '<li class="q-h">' + esc(t('queue.now')) + '</li>' : i === s.index + 1 ? '<li class="q-h">' + esc(t('queue.next')) + '</li>' : '';
-      return head + '<li class="q-row' + (core.playable(tr) ? '' : ' off') + '"><button data-qi="' + i + '" type="button"' + (core.playable(tr) ? '' : ' disabled') + '>' + art(tr, 'q-art', 96) +
+      return head + '<li class="q-row' + (playable(tr) ? '' : ' off') + '"><button data-qi="' + i + '" type="button"' + (playable(tr) ? '' : ' disabled') + '>' + art(tr, 'q-art', 96) +
         '<span class="tr-text"><b>' + esc(tr.title || t('row.youtube')) + '</b><small>' + esc(tr.artist) + '</small></span><span class="tr-dur">' + (tr.durationMs ? core.clock(tr.durationMs) : '') + '</span></button></li>';
     }).join('') + '</ol>';
     renderQueueMarks();
@@ -952,6 +1159,73 @@
     var el = $('#queue'), on = $('#queue .q-row.on');
     if (on && !el.hidden) el.scrollTop = Math.max(0, on.offsetTop - 60);
   }
+
+  // ------------------------------------------------------------ the title playing: its artist, its source, radio
+
+  /** The artist under the title: a link to their page when the catalogue knows them. */
+  var artistLinkToken = 0;
+  function renderArtistLink(cur) {
+    var el = $('#np-artist'), my = ++artistLinkToken;
+    el.textContent = cur ? cur.artist || '' : '';
+    if (!cur || !cur.artist || !catalog.catalogOn) return;
+    findCatalogArtist(cur.artist, cur.artistId).then(function (id) {
+      if (my !== artistLinkToken || !id || engine.current() !== cur) return;
+      el.innerHTML = '<a class="link" href="#/a/' + esc(id) + '">' + esc(cur.artist) + '</a>';
+    });
+  }
+
+  /** Where the sound comes from (« Ketvoice API · 128kbps », « YouTube »), the app's quality line. */
+  function renderVia() {
+    var s = engine.state, el = $('#np-via');
+    var via = s.via ? t('via.' + s.via) : '';
+    el.textContent = via ? via + (s.quality ? ' · ' + s.quality : '') : '';
+    el.hidden = !via;
+  }
+
+  function renderCatalogUi() {
+    var on = catalog.catalogOn && !!engine.current();
+    $$('[data-act="radio"]').forEach(function (b) { b.hidden = !on; });
+  }
+
+  function radioFrom(seed, fromPage) {
+    if (!seed) return;
+    engine.startRadio(seed).then(function (ok) {
+      toast(ok ? t('radio.started', { t: seed.title }) : t('radio.none'));
+      if (ok && !fromPage && !desktopMq.matches && ui.sheet) setTab('queue');
+    });
+  }
+
+  // ------------------------------------------------------------ Canvas (a short looping video behind the artwork)
+
+  var canvasToken = 0, canvasTimer = 0;
+  function loadCanvas() {
+    var cur = engine.current(), video = $('#stage-canvas'), my = ++canvasToken;
+    clearTimeout(canvasTimer);
+    $('#stage').classList.remove('canvas-on');
+    video.pause(); video.removeAttribute('src'); video.load();
+    if (!cur || !cur.title || !cur.artist) return;
+    // Asked once the title has been there a moment: skipping through the queue costs nothing.
+    canvasTimer = setTimeout(function () {
+      catalog.canvas(cur).then(function (url) {
+        if (my !== canvasToken || !url || engine.current() !== cur) return;
+        video.src = url;
+        renderCanvas();
+      });
+    }, 1200);
+  }
+
+  /** Plays while it can be seen: not with reduced motion, not in a hidden tab, not under the YouTube video. */
+  function renderCanvas() {
+    var video = $('#stage-canvas'), stage = $('#stage');
+    if (!video.getAttribute('src')) { stage.classList.remove('canvas-on'); return; }
+    var show = !reduceMq.matches && !document.hidden && !(engine.state.source === 'youtube' && ui.video);
+    if (show) { var p = video.play(); if (p && p.catch) p.catch(function () { stage.classList.remove('canvas-on'); }); }
+    else { video.pause(); stage.classList.remove('canvas-on'); }
+  }
+  $('#stage-canvas').addEventListener('playing', function () { if (!reduceMq.matches && !document.hidden) $('#stage').classList.add('canvas-on'); });
+  $('#stage-canvas').addEventListener('error', function () { $('#stage').classList.remove('canvas-on'); });
+  document.addEventListener('visibilitychange', renderCanvas);
+  reduceMq.addEventListener('change', renderCanvas);
 
   // ------------------------------------------------------------ lyrics (line by line, no blur)
 

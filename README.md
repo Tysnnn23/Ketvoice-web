@@ -64,21 +64,51 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
   (`on_conflict=user_id,kind`) every 15 s while playing, on each title or play/pause change and when the tab hides,
   with the app's document (`device_id` `web-<uuid>`, `device_name` « Web · Safari · iPhone », a window of 50 titles).
   Playlists and settings are not written from the web.
-- Search: the app's catalogue search is YouTube Music's InnerTube API, which a browser cannot call (no CORS); the web
-  player searches the listener's library and the titles published on Ketvoice (`ketvoice-content/search`, public,
-  CORS `*`), and says so under the results.
-- Playback: a title whose id is `yt:<11 characters>` (or with a `videoId`) plays in the official YouTube IFrame Player
-  API (`youtube-nocookie.com`, YouTube's own controls on), which always stays visible at 200 × 200 px or more: over
-  the artwork (« Video » on), in a corner of the artwork (« Video » off), in a band above the iPhone mini-player or
-  above the lyrics in the sheet — one fixed element moved over the slot of the current layout, never hidden off
-  screen. `kv:upload:` titles play their public file in an `<audio>` element (`ketvoice-content/track`). Other
-  titles (addon sources) are marked « App » and skipped. Queue, next/previous (previous restarts after 3 s), shuffle
-  (reorders the queue, as in the app), repeat off/all/one, seek, volume (not on iOS, where the hardware buttons set
-  it), Media Session (lock screen, media keys), keyboard (Space/K, ←/→ ±5 s, Shift+←/→ or P/N, M, L, `/`, Esc).
-  An embedding refusal (YouTube errors 101/150) is said and the next title plays. A browser that blocks the first
-  sound asks to tap the video.
-- iPhone: Safari stops an embedded YouTube video when it goes to the background or the screen locks; the sheet says
-  so (only on iOS) instead of promising background playback. Published Ketvoice titles keep playing.
+- Search (owner, 2026-11-18: « pour le site trouve un système pour avoir le catalogue etc. tout de Ketvoice et le
+  streaming »), the app's: the listener's library, the titles published on Ketvoice (`ketvoice-content/search`), the
+  Ketvoice API's catalogue (`ketvoice-api/search`, KetvoiceApi.search) and YouTube Music's songs, artists and albums
+  (`ketvoice-api/catalog/search`), as one list of titles without repeats (the same ISRC, or the same normalised title and
+  artist with durations within 3 s; the copies stay on the first one as `alts`, so its sources can be used), grouped
+  Artistes / Titres / Albums, each row marked with where it plays from (Ketvoice, API, YouTube), painted as each source
+  answers, typed with a 300 ms pause and the earlier requests cancelled. Keyboard: ↓ from the field into the results,
+  ↑/↓ between rows (and out of a row of artists or albums), ←/→ along those rows, Home/End, Esc back to the field.
+  `js/player/catalog.js` holds this client (pure parts tested in `tests/player-catalog.test.cjs`).
+- Catalogue pages (`#/a/<UC…>`, `#/album/<MPRE…>`): an artist's photo, monthly listeners, popular titles (five, then
+  « Afficher plus » with their titles in the library), albums, singles and EPs, close artists, « À propos »; an album's
+  cover, artist link, year, titles, Play / Shuffle. A followed artist's page offers « Page de l'artiste » when the
+  catalogue finds that name; the artist under the title playing links to their page. Radio: from the title playing
+  (`#np` chip, bar button) or an artist page, YouTube Music's radio of the title (`/catalog/radio`; a title without a
+  video first finds its video by name, MusicApi.bestMatch), and more joins when three titles are left. The browser
+  cannot call InnerTube (no CORS), so these go through four read-only routes added to the owner's `ketvoice-api` Edge
+  Function (Ketvoice repository, `supabase/functions/ketvoice-api/index.ts`): the app's own client and context
+  (`WEB_REMIX` 1.20241014.01.00, fr/FR, never a cookie), validated ids, 8 s and 6 MB per call, the existing rate limiter,
+  answers cached in memory and in `ketvoice_search_cache` (keys `C|…`). Until it is deployed those routes answer the
+  function's generic 404: the player asks `/catalog/search?q=` once (again after 10 minutes) and, without its
+  `catalog: true`, shows no artist or album browsing and no radio — search and streaming work all the same.
+- Playback, the app's order of sources (StreamResolver / SourcePriority) as far as a browser follows it: a title published
+  on Ketvoice plays its public file; any other title asks `ketvoice-api/stream` — with its own id when it comes from the
+  API's catalogue (or has a copy that does), by title and artist otherwise; the lossless source too for its own titles
+  when this browser plays FLAC — and plays the address in an `<audio>` element (the audio is never proxied by the site);
+  then YouTube's IFrame player with the title's video (or the catalogue's match by name). The public provider switches
+  (`ketvoice-content/providers`, ProviderConfig) are read every 5 minutes; a 429 pauses the API for a minute
+  (KetvoiceApi.retryAt); an address that fails in the player moves to the next source. The source and quality show
+  under the artist (« Ketvoice API · 128kbps »). Two `<audio>` decks: 20 s before the end the next title's address is
+  asked and loaded in the other deck, so it starts at once, with a 2 s crossfade unless « Sans fondu » is on (in the
+  queue; `kv-player-nofade`; not offered where a page cannot set the volume, as on iPhone, where titles follow without a
+  gap). Both decks play a silence on the first tap so iPhone lets them start later on their own. The YouTube player
+  stays visible at 200 × 200 px or more: over the artwork (« Video » on), in a corner of the artwork (« Video » off), in
+  a band above the iPhone mini-player or above the lyrics in the sheet — never hidden off screen. Titles only the app
+  can play (a file on the phone) are marked « App » and skipped. Queue, next/previous (previous restarts after 3 s),
+  shuffle (reorders the queue, as in the app), repeat off/all/one, seek, volume (not on iOS, where the hardware buttons
+  set it), Media Session (title, artist, album, artwork at 512 px, play/pause, next/previous, seek, lock screen and
+  media keys), keyboard (Space/K, ←/→ ±5 s, Shift+←/→ or P/N, M, L, `/`, Esc). An embedding refusal (YouTube errors
+  101/150) is said and the next title plays. A browser that blocks the first sound asks to tap.
+- Canvas: `ketvoice-api/canvas` (asked once per title, 1.2 s after it starts) — a muted looping video in the artwork's
+  place, the cover fading out once it plays; paused with reduced motion (the cover stays), in a hidden tab and under
+  the YouTube video.
+- iPhone: titles played from `<audio>` keep playing in the background and on the lock screen (Media Session). Safari
+  stops an embedded YouTube video when it goes to the background or the screen locks; the sheet says so only while a
+  title plays through YouTube.
 - Lyrics: LRCLIB the app's way (up to three searches, the closest synced answer, credits dropped), highlighted line by
   line by colour only — no blur, no glow — kept in view unless the listener scrolls; a line seeks when clicked; one
   tab stop (the sung line), arrows move between lines.
@@ -89,12 +119,21 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
   queue), transport bar. Below: a mini-player and a full-screen sheet (Artwork / Lyrics / Queue, swipe down or Esc to
   close, focus kept inside). French or English from the browser's language.
 - Tests: `node tests/player-sync.test.cjs` (document format, merge, favourites, playlists, artists, shared rows, now
-  playing, LRC, PKCE) and `node tests/player-api.test.cjs` (a fake Supabase with recorded shapes: sign-in, refresh,
-  revision races, upsert, Discord, content, lyrics). Rendered with Playwright at 1440, 1024, 390 and 360 px, signed in
-  with mocked Supabase/YouTube/LRCLIB answers, with and without reduced motion: no horizontal overflow, no console
-  errors, text contrast measured on rendered pixels (lyrics lines are large text, ≥ 3:1 when not sung).
-- Not verified here: a real sign-in, a real Discord round trip and real YouTube playback (no credentials or network
-  for them in the test runs); on Supabase, `https://ketvoice-web.vercel.app/player` must be in Auth → URL
+  playing, LRC, PKCE), `node tests/player-api.test.cjs` (a fake Supabase with recorded shapes: sign-in, refresh,
+  revision races, upsert, Discord, content, lyrics), `node tests/player-catalog.test.cjs` (search rows, catalogue
+  answers checked, the merge, the order of sources, provider switches, 429, the 404 detection, Canvas) and
+  `node tests/catalog-mapping.test.cjs` (the Edge Function's InnerTube mapping, read from the Ketvoice repository's
+  `index.ts` between its `>>> catalog mapping` markers, types stripped by Node, run on the hand-written answers of
+  `tests/fixtures/innertube.cjs`; set `KETVOICE_API_TS` when the repositories are not side by side, skipped otherwise).
+  Rendered with Playwright at 1440 and 390 px, signed in with mocked Supabase, ketvoice-api (its /catalog answers made by
+  that same mapping) and audio files: no horizontal overflow, no script errors, text contrast measured on rendered
+  pixels; the crossfade sampled on both decks; the catalogue off as today.
+- Checked live once (2026-11-18, muted): the real `ketvoice-api/search` and `/stream` from the page — « One More Time »
+  played from the address /stream gave. Not verified here: a real sign-in, a real Discord round trip, real YouTube
+  playback, the `/catalog/*` routes deployed (their InnerTube answers are hand-written fixtures; from this machine's
+  network YouTube Music served artist pages with videos only — the mapping falls back to them — so the deployed
+  function's network may see less than a phone does), iPhone background playback and gapless follow-up on a real
+  device; on Supabase, `https://ketvoice-web.vercel.app/player` must be in Auth → URL
   Configuration → Redirect URLs for Discord to come back to the player.
 
 ## Vice City edition (until 10 December 2026)
