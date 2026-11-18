@@ -253,6 +253,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 6.7.0 (versionCode 138) fits each Ketmix blend to its two songs, makes Ketvoice Lite start faster and brings back the GTA VI welcome screen.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.7.0.md).
+
 Ketvoice 6.6.0 (versionCode 137) makes the app smoother, redoes Playlists and Downloads in the style of Apple Music, lays out tablets better and gives the Vice City theme a quieter look.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.6.0.md).
 
