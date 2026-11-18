@@ -357,20 +357,49 @@
     return Number(m[1]) * 60000 + Number(m[2]) * 1000 + frac;
   }
 
-  /** MusicApi.parseLrc: timed lines (word tags dropped from the text), credits left out, sorted, no duplicates. */
-  function parseLrc(lrc) {
-    var out = [], seen = new Set();
+  function isCredit(text) { return CREDIT.test(text) || CREDIT_FR.test(text); }
+
+  /** MusicApi.parseLrc: timed lines (word tags dropped from the text), credits left out, sorted, no duplicates.
+   * With [rich], the word tags of an enhanced LRC (`<mm:ss.xx>word`) become the line's words, and a time with no
+   * text after it ends the line before it (an instrumental passage follows). */
+  function parseLrc(lrc, rich) {
+    var out = [], seen = new Set(), ends = [];
     String(lrc || '').replace(/\r/g, '').split('\n').forEach(function (raw) {
       var m = LINE.exec(raw.trim());
       if (!m) return;
-      var text = m[4].replace(WORD_TAG, '').trim();
-      if (!text || CREDIT.test(text) || CREDIT_FR.test(text)) return;
-      var time = lrcTime(m), key = time + '\u0000' + text;
+      var body = m[4], time = lrcTime(m), words = null;
+      if (rich) {
+        var tags = [], tm;
+        WORD_TAG.lastIndex = 0;
+        while ((tm = WORD_TAG.exec(body))) tags.push({ at: tm.index, end: WORD_TAG.lastIndex, ms: lrcTime(tm) });
+        if (tags.length && !body.slice(0, tags[0].at).trim()) {
+          words = [];
+          tags.forEach(function (tag, k) {
+            var next = tags[k + 1], w = body.slice(tag.end, next ? next.at : body.length);
+            if (!w.trim()) { if (words.length) words[words.length - 1].text += w; return; }
+            words.push({ startMs: tag.ms, endMs: next ? next.ms : -1, text: w });
+          });
+        }
+      }
+      var text = (words && words.length ? words.map(function (w) { return w.text; }).join('') : body.replace(WORD_TAG, '')).trim();
+      if (!text) { if (rich) ends.push(time); return; }
+      if (isCredit(text)) return;
+      var key = time + '\u0000' + text;
       if (seen.has(key)) return;
       seen.add(key);
-      out.push({ timeMs: time, text: text });
+      var line = { timeMs: time, text: text };
+      if (words && words.length) line.words = words;
+      out.push(line);
     });
-    return out.sort(function (a, b) { return a.timeMs - b.timeMs; });
+    out.sort(function (a, b) { return a.timeMs - b.timeMs; });
+    if (ends.length) {
+      ends.sort(function (a, b) { return a - b; });
+      out.forEach(function (l, i) {
+        var next = out[i + 1] ? out[i + 1].timeMs : Infinity;
+        for (var k = 0; k < ends.length; k++) if (ends[k] > l.timeMs && ends[k] <= next) { l.endMs = ends[k]; break; }
+      });
+    }
+    return out;
   }
 
   /** The line being sung at [ms] (-1 before the first). */
@@ -419,7 +448,7 @@
       if (score < bestScore) { bestScore = score; best = o; }
     });
     if (!best) return null;
-    if (best.syncedLyrics) return { synced: true, lines: parseLrc(best.syncedLyrics) };
+    if (best.syncedLyrics) return { synced: true, lines: parseLrc(best.syncedLyrics, true) };
     return { synced: false, lines: String(best.plainLyrics || '').split('\n').filter(function (l) { return l.trim() && l !== 'null'; })
       .map(function (l) { return { timeMs: -1, text: l }; }) };
   }
@@ -479,7 +508,7 @@
     youtubeId: youtubeId, uploadId: uploadId, playable: playable, syncable: syncable, setFavorite: setFavorite,
     favorites: favorites, decodePlaylist: decodePlaylist, playlists: playlists, artists: artists, sharedRow: sharedRow,
     sharedRows: sharedRows, nowWindow: nowWindow, encodeNowPlaying: encodeNowPlaying, decodeNowPlaying: decodeNowPlaying,
-    positionAt: positionAt, isLive: isLive, offer: offer, deviceName: deviceName, parseLrc: parseLrc, activeLine: activeLine,
+    positionAt: positionAt, isLive: isLive, offer: offer, deviceName: deviceName, parseLrc: parseLrc, isCredit: isCredit, activeLine: activeLine,
     normTitle: normTitle, lyricQueries: lyricQueries, pickLyrics: pickLyrics, jwtClaims: jwtClaims, base64url: base64url,
     pkceChallenge: pkceChallenge, newVerifier: newVerifier, fold: fold, matches: matches, clock: clock
   };

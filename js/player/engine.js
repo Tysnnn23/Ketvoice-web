@@ -229,6 +229,14 @@
 
     // ------------------------------------------------------------ time
 
+    /** The position at this instant, read from the player itself: the lyrics fill on every frame, between two ticks. */
+    function nowMs() {
+      if (pendingSeek) return pendingSeek;
+      if (s.source === 'audio') return (deck().currentTime || 0) * 1000;
+      if (s.source === 'youtube' && yt && yt.getCurrentTime) return (yt.getCurrentTime() || 0) * 1000;
+      return s.positionMs;
+    }
+
     function tick() {
       var pos = 0, dur = 0, el = deck();
       if (s.source === 'youtube' && yt && yt.getCurrentTime) { pos = (yt.getCurrentTime() || 0) * 1000; dur = (yt.getDuration() || 0) * 1000; }
@@ -571,7 +579,7 @@
     }
 
     return {
-      state: s, current: current, playQueue: playQueue, play: play, pause: pause, toggle: toggle, next: next, prev: prev,
+      state: s, current: current, nowMs: nowMs, playQueue: playQueue, play: play, pause: pause, toggle: toggle, next: next, prev: prev,
       playAt: playAt, seek: seek, setVolume: setVolume, toggleMute: toggleMute, toggleShuffle: toggleShuffle, cycleRepeat: cycleRepeat,
       startRadio: startRadio, playable: playable, volumeWorks: volumeWorks,
       preload: function () { return loadYouTubeApi().catch(function () { return null; }); },

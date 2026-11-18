@@ -43,7 +43,7 @@ previews would need server rendering.
 
 Owner, 2026-11-18, chosen: « Lecteur web (iPhone/PC) : écouter Ketvoice dans le navigateur depuis le site, avec ton
 compte et ta bibliothèque synchronisée ». `player.html` (served at `/player` by the `vercel.json` rewrite),
-`css/player.css`, `js/player/{core,api,engine,app}.js`; linked as « Listen on the web » from the nav, the mobile menu,
+`css/player.css`, `js/player/{core,api,catalog,lyrics,engine,app}.js`; linked as « Listen on the web » from the nav, the mobile menu,
 the footer and a card under the downloads (the nav pill is 920 px wide since, so six links fit on one line).
 - Account: the app's Supabase Auth over REST with the publishable (anon) key only — e-mail and password
   (`/auth/v1/token?grant_type=password`), or « Continue with Discord » through `/auth/v1/authorize` with PKCE back to
@@ -109,9 +109,27 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
 - iPhone: titles played from `<audio>` keep playing in the background and on the lock screen (Media Session). Safari
   stops an embedded YouTube video when it goes to the background or the screen locks; the sheet says so only while a
   title plays through YouTube.
-- Lyrics: LRCLIB the app's way (up to three searches, the closest synced answer, credits dropped), highlighted line by
-  line by colour only — no blur, no glow — kept in view unless the listener scrolls; a line seeks when clicked; one
-  tab stop (the sung line), arrows move between lines.
+- Lyrics (owner, 2026-11-18: « le site web doit avoir les paroles en syllabes etc. »), sung word by word and syllable
+  by syllable as in the app (`js/player/lyrics.js`; LyricsRepo, ExtraLyricsProviders, LyricsFormats, LyricsView). Every
+  source is asked at once and the best timing wins (syllables, then words, then lines, then plain text; the app's order
+  among equals), each better answer replacing the one shown. From the browser: Ketvoice's published lyrics
+  (`ketvoice-content/lyrics`, TTML or LRC), LiriQo (Apple-style TTML; guessed word timings refused, another title's
+  answer refused), lrc.red when the title carries its ISRC, LRCLIB (up to three searches, the closest synced answer,
+  credits dropped; enhanced LRC `<mm:ss.xx>` read). BetterLyrics, NetEase's word-timed YRC and Deezer's ISRC lookup do
+  not answer a browser: the route for them is written in `tools/proposed-ketvoice-catalog-lyrics.ts` (validated
+  input, rate limit, cache, four hosts only), **not deployed**; the player asks `ketvoice-catalog/catalog/lyrics`,
+  recognises a function without it (no `lyrics: true`) and does not ask again for ten minutes. The public provider
+  switches apply (`liriqo`, `lrc-red`, `lrclib`). TTML is read without a DOM parser: a document type or an entity
+  declaration is refused, 1 MB at most. Drawing (Cascade, no blur): on the line being sung each word is a gradient
+  clipped to its letters whose position alone moves with the audio clock, on every frame (`engine.nowMs`), from the
+  right for right-to-left words; plain inline spans, so Arabic keeps its joins; a note held 0.9 s or more glows a
+  little (its text once more as a shadow, opacity only); background vocals (`ttm:role="x-bg"`, or between brackets)
+  smaller under the lead; three dots fill with the music before the first line and through a silence of 5 s or more,
+  then swell and vanish; lines sung stay lit. Per frame: one binary search, then a background position or an opacity
+  written only when it changed, on the one line being sung; nothing is measured. The frames stop when the title
+  pauses, the tab hides or the lyrics are not shown; with reduced motion a word is sung or not, four times a second.
+  Kept in view (upper third) unless the listener scrolls; a line seeks when clicked; one tab stop (the sung line),
+  arrows move between lines. Line-timed and plain lyrics as before.
 - Design (owner, 2026-11-18: « il faut 1:1 l'interface mobile sur le site, mais un peu style Apple Music macOS pour
   ceux qui sont sur PC »): Ket 27, the app's interface, read from its code (`theme/Ket27.kt`, `ui/chrome/Chrome.kt`,
   `ui/home`, `ui/library`, `ui/explorer`, `ui/overlay/SearchScreen.kt`, `ui/player/{FullPlayerScreen,PlayerControls,
@@ -153,7 +171,11 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
 - Tests: `node tests/player-sync.test.cjs` (document format, merge, favourites, playlists, artists, shared rows, now
   playing, LRC, PKCE), `node tests/player-api.test.cjs` (a fake Supabase with recorded shapes: sign-in, refresh,
   revision races, upsert, Discord, content, lyrics), `node tests/player-catalog.test.cjs` (search rows, catalogue
-  answers checked, the merge, the order of sources, provider switches, 429, the 404 detection, Canvas) and
+  answers checked, the merge, the order of sources, provider switches, 429, the 404 detection, Canvas),
+  `node tests/player-lyrics.test.cjs` (TTML, enhanced LRC, YRC, LiriQo, alignment, passages, fill and glow, the choice
+  between sources, the missing route), `node tools/player-lyrics-check.cjs` (Playwright: a fixture title played in
+  the real page at 390 and 1440 px — a half-sung word, background vocals, the dots, Arabic, Chinese, a tap on a
+  line, reduced motion — with screenshots) and
   `node tests/catalog-mapping.test.cjs` (the Edge Function's InnerTube mapping, read from the Ketvoice repository's
   `index.ts` between its `>>> catalog mapping` markers, types stripped by Node, run on the hand-written answers of
   `tests/fixtures/innertube.cjs`; set `KETVOICE_API_TS` when the repositories are not side by side, skipped otherwise).
