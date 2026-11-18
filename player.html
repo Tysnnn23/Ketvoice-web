@@ -18,7 +18,7 @@
 <script>(function(){var d=document.documentElement,t=null,v=null;d.classList.add('js');try{t=localStorage.getItem('ketvoice-player-theme');v=localStorage.getItem('kv-player-vc')}catch(e){}var dark=t?t!=='light':!matchMedia('(prefers-color-scheme: light)').matches;d.classList.add(dark?'dark':'light');if(v==='1')d.classList.add('vc');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion');if(/^fr\b/i.test(navigator.language||''))d.lang='fr'})();</script>
 <link rel="preconnect" href="https://xodklrunqlzyeiqtovgx.supabase.co" crossorigin/>
 <link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin/>
-<link rel="stylesheet" href="css/player.css?v=202611190100"/>
+<link rel="stylesheet" href="css/player.css?v=202611190300"/>
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
@@ -217,10 +217,11 @@
 <audio id="audio" playsinline preload="metadata"></audio>
 <audio id="audio2" playsinline preload="metadata"></audio>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
-<script src="js/player/core.js?v=202611182100"></script>
+<script src="js/player/core.js?v=202611190300"></script>
 <script src="js/player/api.js?v=202611182100"></script>
 <script src="js/player/catalog.js?v=202611182230"></script>
-<script src="js/player/engine.js?v=202611190100"></script>
-<script src="js/player/app.js?v=202611190100"></script>
+<script src="js/player/lyrics.js?v=202611190300"></script>
+<script src="js/player/engine.js?v=202611190300"></script>
+<script src="js/player/app.js?v=202611190300"></script>
 </body>
 </html>

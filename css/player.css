@@ -634,22 +634,44 @@ html.vc .tp-play { box-shadow: 0 0 0 1.5px rgba(255, 95, 168, .8), 0 0 18px rgba
 .ly-box::-webkit-scrollbar { display: none; }
 html.motion .ly-box { -webkit-mask-image: linear-gradient(transparent, #000 9%, #000 84%, transparent); mask-image: linear-gradient(transparent, #000 9%, #000 84%, transparent); }
 .ly { display: flex; flex-direction: column; gap: 25px; padding: 22px 0 110px; }
+/* Room under the last lines, so that the line being sung stays in the upper third to the end; the first line starts
+ * below the fade at the top of the box. */
+.ly.synced { padding-top: 8vh; padding-bottom: 55vh; }
 .ly li { position: relative; transform-origin: 0 50%; }
 .ly li > button, .ly li > span { display: block; width: 100%; text-align: left; font-size: 33px; line-height: 41px; font-weight: 900; letter-spacing: -.3px; color: #fff; border-radius: 14px; overflow-wrap: anywhere; position: relative; }
 .ly.synced li { opacity: .46; transform: scale(.955); }
 html.light .panel .ly.synced li { opacity: .52; }
+html.light .panel .ly.synced li.past, html.light .panel .ly.synced li.now { opacity: 1; }
 .ly.synced li.past, .ly.synced li.now { opacity: 1; }
 .ly.synced li.now { transform: none; }
 .motion .ly.synced li { transition: opacity .32s, transform .56s var(--spring-sheet); }
 .ly li > button::after { content: attr(data-text); position: absolute; inset: 0; color: transparent; text-shadow: 0 0 14px rgba(255, 255, 255, .42); opacity: var(--glow, 0); pointer-events: none; }
 html.vc .ly li > button::after { text-shadow: 0 0 14px rgba(255, 95, 168, .6); }
 .ly li > button:hover { background: rgba(255, 255, 255, .06); }
-.ly-intro { display: flex; gap: 8px; height: 36px; align-items: center; }
-.ly-intro i { width: 10px; height: 10px; border-radius: 50%; background: #fff; opacity: .3; }
-.motion .ly-intro i { animation: dots 1.4s ease-in-out infinite; }
-.ly-intro i:nth-child(2) { animation-delay: .2s; }
-.ly-intro i:nth-child(3) { animation-delay: .4s; }
-@keyframes dots { 50% { opacity: 1; transform: scale(1.15); } }
+/* Word by word and syllable by syllable (KaraokeLine): on the line being sung, each word is painted by a gradient
+ * clipped to its letters, sung on one side, waiting on the other, a soft edge between, and only its position moves,
+ * with the audio clock (app.js, paintLyric). Right-to-left words fill from the right. Plain inline spans, so that
+ * Arabic keeps its joins and a line breaks where it would without them. */
+.ly-box { --ly-on: #fff; --ly-off: rgba(255, 255, 255, .4); --ly-glow: rgba(255, 255, 255, .42); }
+html.vc .ly-box { --ly-glow: rgba(255, 95, 168, .6); }
+.ly li.kara .w { color: transparent; -webkit-text-fill-color: transparent; -webkit-background-clip: text; background-clip: text; background-repeat: no-repeat; background-size: 220% 100%;
+  background-image: linear-gradient(90deg, var(--ly-on) 0, var(--ly-on) 45.45%, var(--ly-off) 54.55%, var(--ly-off) 100%); background-position: 100% 0; }
+.ly li.kara .w.rtl { background-image: linear-gradient(270deg, var(--ly-on) 0, var(--ly-on) 45.45%, var(--ly-off) 54.55%, var(--ly-off) 100%); background-position: 0 0; }
+/* A held note glows a little while it is sung (LyricsWords.glow): its text once more, as a shadow whose opacity alone changes. */
+.ly li.kara .w.held { position: relative; }
+.ly li.kara .w.held::after { content: attr(data-t); position: absolute; inset-inline-start: 0; top: 0; white-space: pre; color: transparent; -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 14px var(--ly-glow); opacity: var(--g, 0); pointer-events: none; }
+/* Background vocals: smaller, under the lead (BackingVocal). */
+.ly .ly-bg { display: block; font-size: .73em; line-height: 1.3; font-weight: 700; opacity: .86; }
+.ly .ly-lead + .ly-bg { margin-top: 4px; }
+/* An instrumental passage: three dots that fill one after the other with the music, breathe while they wait, then
+ * swell and vanish as the line arrives (IntroDots). */
+.ly.synced li.ly-gap, html.light .panel .ly.synced li.ly-gap { opacity: 1; transform: none; }
+.ly li > .ly-intro { display: inline-flex; width: auto; gap: 8px; height: 36px; align-items: center; padding: 0 6px; transform-origin: 50% 50%; }
+.ly-intro i { width: 10px; height: 10px; border-radius: 50%; background: var(--ly-on); opacity: .3; }
+.motion .ly-intro { animation: ly-breathe 2.4s ease-in-out infinite; transition: opacity .45s, scale .45s var(--spring-sheet); }
+.ly-gap.out .ly-intro { opacity: 0; scale: 1.35; }
+@keyframes ly-breathe { 50% { transform: scale(1.12); } }
 .ly-note, .ly-empty, .ly-src { color: rgba(255, 255, 255, .6); font-size: 15px; line-height: 20px; }
 .ly-empty { padding: 40px 0; text-align: center; }
 .ly-note { padding-top: 16px; }
@@ -1003,6 +1025,7 @@ html.has-yt .np .ly-box, html.has-yt .np .q-box { top: 212px; }
   .panel .ly li > button, .panel .ly li > span { font-size: 24px; line-height: 31px; font-weight: 800; color: var(--ink); }
   .panel .ly { gap: 18px; }
   .panel .ly li > button::after { text-shadow: 0 0 12px rgba(var(--ink-rgb), .35); }
+  .panel .ly-box { --ly-on: var(--ink); --ly-off: rgba(var(--ink-rgb), .38); --ly-glow: rgba(var(--ink-rgb), .35); }
   .panel .ly li > button:hover { background: rgba(var(--ink-rgb), .05); }
   .panel .ly-note, .panel .ly-empty, .panel .ly-src { color: var(--sec); }
   .panel .ly-wait i { background: var(--skeleton); }

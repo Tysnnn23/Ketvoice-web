@@ -5,7 +5,7 @@
  * menus, keyboard shortcuts, the full-window player). Underneath, what the player always did: sign-in, the synced
  * library and what this browser writes back (favourites, now playing), « Reprendre » from another device, the search
  * (library, published titles, the Ketvoice API's catalogue, YouTube Music), the catalogue pages, radio, Canvas, the
- * YouTube player kept visible, LRCLIB lyrics. Uses window.KVCore, window.KVApi, window.KVCatalog, window.KVEngine. */
+ * YouTube player kept visible, lyrics sung word by word. Uses window.KVCore, window.KVApi, window.KVCatalog, window.KVLyrics, window.KVEngine. */
 (function () {
   'use strict';
   var core = window.KVCore, KVApi = window.KVApi, KVCatalog = window.KVCatalog;
@@ -51,7 +51,7 @@
       'resume.live': 'Playing on {d}', 'resume.ago': 'Played on {d} · {ago}', 'resume.btn': 'Resume', 'resume.dismiss': 'Dismiss',
       'ago.now': 'just now', 'ago.min': '{n} min ago', 'ago.h': '{n} h ago',
       'lyrics.loading': 'Looking for the lyrics…', 'lyrics.none': 'No synced lyrics found for this title.', 'lyrics.plain': 'These lyrics are not synced.',
-      'lyrics.source': 'Lyrics: LRCLIB', 'lyrics.line': 'LRCLIB · line by line', 'lyrics.unsynced': 'LRCLIB · not synced', 'lyrics.off': 'Lyrics not available',
+      'lyrics.source': 'Lyrics: {s}', 'lyrics.syllable': '{s} · syllable by syllable', 'lyrics.word': '{s} · word by word', 'lyrics.line': '{s} · line by line', 'lyrics.plain_src': '{s} · not synced', 'lyrics.off': 'Lyrics not available',
       'np.empty': 'Pick a title to start listening.', 'np.from': 'Playing from {a}', 'np.device': 'This browser',
       'queue.title': 'Queue', 'queue.now': 'Now playing', 'queue.next': 'Up next', 'queue.from': 'Up next from: {a}', 'queue.clear': 'Clear',
       'queue.empty': 'The queue is empty.', 'queue.remove': 'Remove {t}', 'queue.move': 'Move {t}', 'queue.cleared': 'Up next cleared',
@@ -111,7 +111,7 @@
       'resume.live': 'En cours sur {d}', 'resume.ago': 'Écouté sur {d} · {ago}', 'resume.btn': 'Reprendre', 'resume.dismiss': 'Masquer',
       'ago.now': 'à l’instant', 'ago.min': 'il y a {n} min', 'ago.h': 'il y a {n} h',
       'lyrics.loading': 'Recherche des paroles…', 'lyrics.none': 'Pas de paroles synchronisées pour ce titre.', 'lyrics.plain': 'Ces paroles ne sont pas synchronisées.',
-      'lyrics.source': 'Paroles : LRCLIB', 'lyrics.line': 'LRCLIB · ligne par ligne', 'lyrics.unsynced': 'LRCLIB · non synchronisées', 'lyrics.off': 'Paroles non disponibles',
+      'lyrics.source': 'Paroles : {s}', 'lyrics.syllable': '{s} · syllabe par syllabe', 'lyrics.word': '{s} · mot par mot', 'lyrics.line': '{s} · ligne par ligne', 'lyrics.plain_src': '{s} · non synchronisées', 'lyrics.off': 'Paroles non disponibles',
       'np.empty': 'Choisissez un titre pour commencer.', 'np.from': 'Lecture depuis {a}', 'np.device': 'Ce navigateur',
       'queue.title': 'File d’attente', 'queue.now': 'Lecture en cours', 'queue.next': 'À suivre', 'queue.from': 'À suivre depuis : {a}', 'queue.clear': 'Effacer',
       'queue.empty': 'La file d’attente est vide.', 'queue.remove': 'Retirer {t}', 'queue.move': 'Déplacer {t}', 'queue.cleared': 'File d’attente effacée',
@@ -204,6 +204,8 @@
   });
 
   var catalog = KVCatalog.createCatalog({ fetch: function (u, o) { return window.fetch(u, o); }, anonKey: KVApi.ANON_KEY, now: Date.now });
+  var lyricsApi = KVLyrics.createLyrics({ fetch: function (u, o) { return window.fetch(u, o); }, anonKey: KVApi.ANON_KEY, now: Date.now,
+    lrclib: api.lyrics, enabled: catalog.enabled });
   var noFade = store.getItem('kv-player-nofade') === '1';
   var engine = window.KVEngine.createEngine({ core: core, api: api, catalog: catalog, audio: $('#audio'), audio2: $('#audio2'), hostId: 'yt-host',
     onChange: onEngine, fadeOn: function () { return !noFade; } });
@@ -218,7 +220,7 @@
     lists: {}, route: null, tab: 'home', npOpen: false, npPage: 'artwork',
     panel: (function () { var p = store.getItem('kv-player-panel'); return p === 'queue' || p === 'lyrics' ? p : p === 'none' ? null : 'lyrics'; })(),
     video: store.getItem('kv-player-video') === '1', segment: 'all', searching: false, collapsed: false, stack: [],
-    lyrics: { id: null, lines: [], synced: false, state: 'idle', active: -1, holdUntil: 0 },
+    lyrics: { id: null, lines: [], synced: false, level: 'plain', source: '', gaps: [], state: 'idle', active: -1, gap: -1, sets: [], shown: 0, holdUntil: 0 },
     dismissedAt: Number(sessionGet('kv-player-dismissed')) || 0, published: { at: 0, key: '' }, expanded: false
   };
   function sessionGet(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
@@ -1702,7 +1704,7 @@
   /** The line above the seek bar: the lyric being sung (LyricsPreviewLine), or where the lyrics come from. */
   function renderNpLine() {
     var el = $('#np-line'), L = ui.lyrics;
-    if (ui.npPage === 'lyrics') { el.innerHTML = '<span class="np-line-src">' + esc(L.state === 'loading' ? t('lyrics.loading') : L.lines.length ? t(L.synced ? 'lyrics.line' : 'lyrics.unsynced') : t('lyrics.off')) + '</span>'; return; }
+    if (ui.npPage === 'lyrics') { el.innerHTML = '<span class="np-line-src">' + esc(L.state === 'loading' ? t('lyrics.loading') : L.lines.length ? t('lyrics.' + (L.level === 'plain' ? 'plain_src' : L.level), { s: L.source }) : t('lyrics.off')) + '</span>'; return; }
     if (ui.npPage === 'queue') { var s = engine.state; el.innerHTML = s.radio ? '<span class="q-radio">' + ic('radio') + esc(t('radio.on', { t: s.radio.title })) + '</span>' : ''; return; }
     var text = L.synced && L.lines.length && L.active >= 0 ? L.lines[L.active].text : '';
     var dim = !text;
@@ -1945,7 +1947,7 @@
     }
     var bar = $('.mini-progress i');
     if (bar) bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-    updateLyric(pos);
+    followLyric(pos);
   }
 
   function renderVolume() {
@@ -2102,37 +2104,67 @@
   document.addEventListener('visibilitychange', renderCanvas);
   reduceMq.addEventListener('change', function () { root.classList.toggle('motion', !reduceMq.matches); renderCanvas(); });
 
-  // ------------------------------------------------------------ lyrics (Cascade: line by line, no blur)
+  // ------------------------------------------------------------ lyrics (Cascade: word by word, no blur)
 
   var lyricToken = 0;
   function loadLyrics() {
     var cur = engine.current(), L = ui.lyrics;
-    if (!cur) { L.id = null; L.lines = []; L.state = 'idle'; renderLyrics(); return; }
+    if (!cur) { L.id = null; L.lines = []; L.gaps = []; L.state = 'idle'; renderLyrics(); return; }
     if (L.id === cur.id) return;
     var my = ++lyricToken;
-    L.id = cur.id; L.lines = []; L.synced = false; L.state = cur.title ? 'loading' : 'none'; L.active = -1;
+    L.id = cur.id; L.lines = []; L.gaps = []; L.synced = false; L.level = 'plain'; L.source = ''; L.state = cur.title ? 'loading' : 'none';
     renderLyrics();
     if (!cur.title) return;
-    api.lyrics(cur).then(function (found) {
-      if (my !== lyricToken) return;
-      L.lines = found ? found.lines : []; L.synced = !!(found && found.synced); L.state = L.lines.length ? 'ready' : 'none';
+    // Each better answer replaces the one shown (LyricsRepo.load): lines first, words and syllables when they come.
+    function show(found) {
+      if (my !== lyricToken || !found) return;
+      L.lines = found.lines; L.synced = found.synced; L.level = found.level; L.source = found.source;
+      L.gaps = found.synced ? KVLyrics.interludes(found.lines) : []; L.state = 'ready';
       renderLyrics();
       updateLyric(engine.state.positionMs, true);
       armIdle();
+    }
+    lyricsApi.find(cur, show).then(function (found) {
+      if (my !== lyricToken || found) return;
+      L.state = 'none';
+      renderLyrics();
     });
   }
 
+  /** One timed piece of a line: a word, or a syllable of it. Only held notes carry their text twice, for the glow. */
+  function wordHtml(w, k) {
+    var held = w.endMs - w.startMs >= KVLyrics.GLOW_FROM_MS;
+    return '<span class="w' + (KVLyrics.isRtl(w.text) ? ' rtl' : '') + (held ? ' held" data-t="' + esc(w.text.trim()) : '') + '" data-w="' + k + '">' + esc(w.text) + '</span>';
+  }
+
+  /** A line: its words when they are timed, the background vocals smaller under the lead (LyricVoices). */
+  function lineHtml(l, i, synced) {
+    if (!synced) return '<li data-li="' + i + '"><span dir="auto">' + esc(l.text) + '</span></li>';
+    var inner = esc(l.text), words = l.words || [];
+    if (words.length) {
+      var lead = '', back = '';
+      words.forEach(function (w, k) { if (w.bg) back += wordHtml(w, k); else lead += wordHtml(w, k); });
+      inner = (lead ? '<span class="ly-lead">' + lead + '</span>' : '') + (back ? '<span class="ly-bg">' + back + '</span>' : '');
+    }
+    return '<li data-li="' + i + '"' + (words.length ? ' class="timed"' : '') + '><button data-ms="' + l.timeMs + '"' + (words.length ? '' : ' data-text="' + esc(l.text) + '"') +
+      ' dir="auto" tabindex="-1" type="button">' + inner + '</button></li>';
+  }
+
+  function gapHtml(k) { return '<li class="ly-gap" data-gap="' + k + '" aria-hidden="true" hidden><span class="ly-intro"><i></i><i></i><i></i></span></li>'; }
+
   function renderLyrics() {
     var L = ui.lyrics, cur = engine.current(), html;
+    L.sets = []; L.active = -1; L.gap = -1;
     if (!cur) html = '';
     else if (L.state === 'loading') html = '<div class="ly-wait" aria-busy="true"><span class="sr">' + esc(t('lyrics.loading')) + '</span><i></i><i></i><i></i><i></i></div>';
     else if (!L.lines.length) html = '<p class="ly-empty">' + esc(t('lyrics.none')) + '</p>';
     else {
-      var first = L.synced && L.lines[0].timeMs > 1500;
+      var gapAfter = {};
+      L.gaps.forEach(function (g, k) { gapAfter[g.after] = k; });
       html = (L.synced ? '' : '<p class="ly-note">' + esc(t('lyrics.plain')) + '</p>') + '<ol class="ly' + (L.synced ? ' synced' : '') + '">' +
-        (first ? '<li class="ly-intro-li past" aria-hidden="true"><span class="ly-intro"><i></i><i></i><i></i></span></li>' : '') + L.lines.map(function (l, i) {
-          return '<li data-li="' + i + '">' + (L.synced ? '<button data-ms="' + l.timeMs + '" data-text="' + esc(l.text) + '" tabindex="-1" type="button">' + esc(l.text) + '</button>' : '<span>' + esc(l.text) + '</span>') + '</li>';
-        }).join('') + '</ol><p class="ly-src">' + esc(t('lyrics.source')) + '</p>';
+        (gapAfter[-1] !== undefined ? gapHtml(gapAfter[-1]) : '') + L.lines.map(function (l, i) {
+          return lineHtml(l, i, L.synced) + (gapAfter[i] !== undefined ? gapHtml(gapAfter[i]) : '');
+        }).join('') + '</ol><p class="ly-src">' + esc(t('lyrics.source', { s: L.source })) + '</p>';
     }
     $$('[data-lyrics]').forEach(function (el) { el.innerHTML = html; el.scrollTop = 0; });
     renderNpLine();
@@ -2140,23 +2172,32 @@
 
   function lyricBoxes() { return $$('[data-lyrics]').filter(function (b) { return !b.hidden && b.offsetParent !== null && (b.getAttribute('data-lyrics') !== 'np' || ui.npOpen); }); }
 
+  /** The line and the passage at [ms]: classes, the scroll and the elements the frames will paint. Only when one of them changes. */
   function updateLyric(ms, force) {
     var L = ui.lyrics;
     if (!L.synced || !L.lines.length) return;
-    var i = core.activeLine(L.lines, ms + 200);
-    if (i !== L.active || force) {
-      var prev = L.active;
-      L.active = i;
+    var i = core.activeLine(L.lines, ms + 200), gap = KVLyrics.interludeAt(L.gaps, ms);
+    if (i !== L.active || gap !== L.gap || force) {
+      var prev = L.active, moved = i !== prev || force;
+      L.active = i; L.gap = gap; L.glow = -1;
       $$('[data-lyrics] .ly li[data-li]').forEach(function (li) {
-        var k = Number(li.getAttribute('data-li'));
-        li.classList.toggle('now', k === i); li.classList.toggle('past', k < i);
+        var k = Number(li.getAttribute('data-li')), now = k === i && gap < 0;
+        li.classList.toggle('now', now); li.classList.toggle('past', k < i || (k === i && gap >= 0));
+        li.classList.toggle('kara', now && li.classList.contains('timed'));
         // One tab stop in the lyrics: the line being sung (the arrows move between lines).
         var b = li.firstChild;
         if (b && b.tagName === 'BUTTON' && b !== document.activeElement) b.tabIndex = k === Math.max(0, i) ? 0 : -1;
         if (k !== i && b) b.style.removeProperty('--glow');
       });
-      $$('[data-lyrics] .ly-intro-li').forEach(function (li) { li.hidden = i >= 0; });
+      $$('[data-lyrics] .ly-gap').forEach(function (li) { li.hidden = Number(li.getAttribute('data-gap')) !== gap; li.classList.remove('out'); });
       var boxes = lyricBoxes();
+      L.shown = boxes.length;
+      L.sets = [];
+      boxes.forEach(function (box) {
+        var host = gap >= 0 ? $('.ly-gap[data-gap="' + gap + '"]', box) : $('li.kara[data-li="' + i + '"]', box);
+        if (!host) return;
+        L.sets.push(gap >= 0 ? { host: host, dots: $$('i', host), last: -1 } : { host: host, spans: $$('.w', host).map(function (el) { return { el: el, w: L.lines[i].words[Number(el.getAttribute('data-w'))], rtl: el.classList.contains('rtl'), p: -1, g: 0 }; }) });
+      });
       // The lines below catch up in a wave, each a few milliseconds after the one above (LyricsCascade).
       if (motion() && !force && prev >= 0 && i === prev + 1) boxes.forEach(function (box) {
         for (var d = 1; d <= 5; d++) {
@@ -2165,20 +2206,86 @@
         }
       });
       if (performance.now() >= L.holdUntil) boxes.forEach(function (box) {
-        var li = $('li[data-li="' + Math.max(0, i) + '"]', box);
+        var li = gap >= 0 ? $('.ly-gap[data-gap="' + gap + '"]', box) : $('li[data-li="' + Math.max(0, i) + '"]', box);
         if (!li) return;
         var top = li.offsetTop - box.clientHeight * (box.getAttribute('data-lyrics') === 'panel' ? .3 : .22);
         box.scrollTo({ top: Math.max(0, top), behavior: !motion() || force ? 'auto' : 'smooth' });
       });
-      if (ui.npPage === 'artwork') renderNpLine();
+      if (moved && ui.npPage === 'artwork') renderNpLine();
     }
     // A held line glows a little, strongest in its middle (LyricsWords.glow): a long line, nothing for short ones.
-    if (i >= 0) {
+    // Lines sung word by word leave the glow to their held notes.
+    if (i >= 0 && gap < 0 && !L.lines[i].words) {
       var line = L.lines[i], nextAt = L.lines[i + 1] ? L.lines[i + 1].timeMs : line.timeMs + 4000, len = nextAt - line.timeMs;
       var g = len >= 6000 ? Math.sin(Math.min(1, Math.max(0, (ms - line.timeMs) / len)) * Math.PI) * Math.min(1, (len - 6000) / 4000 + .5) : 0;
-      $$('[data-lyrics] li[data-li="' + i + '"] > button').forEach(function (b) { b.style.setProperty('--glow', g.toFixed(2)); });
+      g = Math.round(g * 50) / 50;
+      if (g !== L.glow) { L.glow = g; $$('[data-lyrics] li[data-li="' + i + '"] > button').forEach(function (b) { b.style.setProperty('--glow', g.toFixed(2)); }); }
+    }
+    paintLyric(ms);
+  }
+
+  /** What moves between two lines (KaraokeLine, IntroDots): the fill of each word of the line being sung, the glow of
+   * a held note, the three dots of an instrumental passage. Nothing is measured here and nothing changes the layout:
+   * a background position and an opacity, written only when they change. With reduced motion a word is sung or not. */
+  function paintLyric(ms) {
+    var L = ui.lyrics, smooth = motion();
+    for (var s = 0; s < L.sets.length; s++) {
+      var set = L.sets[s];
+      if (set.dots) {
+        var g = L.gaps[L.gap];
+        if (!g) continue;
+        var f = Math.min(1, Math.max(0, (ms - g.fromMs) / Math.max(1, g.toMs - 700 - g.fromMs)));
+        var step = smooth ? Math.round(f * 150) : Math.floor(f * 3);
+        if (step !== set.last) {
+          set.last = step;
+          for (var d = 0; d < set.dots.length; d++) set.dots[d].style.opacity = (.3 + .7 * (smooth ? Math.min(1, Math.max(0, f * 3 - d)) : (Math.floor(f * 3 + 1e-9) > d ? 1 : 0))).toFixed(2);
+        }
+        // The dots swell and vanish as the line arrives.
+        if (g.toMs - ms < 700 !== set.out) { set.out = g.toMs - ms < 700; set.host.classList.toggle('out', set.out); }
+        continue;
+      }
+      for (var k = 0; k < set.spans.length; k++) {
+        var sp = set.spans[k], w = sp.w;
+        if (!w) continue;
+        var p = smooth ? KVLyrics.progress(ms, w.startMs, w.endMs) : (ms >= w.startMs ? 1 : 0);
+        p = Math.round(p * 500) / 500;
+        if (p !== sp.p) { sp.p = p; sp.el.style.backgroundPositionX = ((sp.rtl ? p : 1 - p) * 100).toFixed(1) + '%'; }
+        var glow = smooth ? Math.round(KVLyrics.glow(p, w.endMs - w.startMs) * 25) / 25 : 0;
+        if (glow !== sp.g) { sp.g = glow; sp.el.style.setProperty('--g', glow.toFixed(2)); }
+      }
     }
   }
+
+  // The frames: only while a title plays, the tab shows, the lyrics are timed by word (or a passage shows its dots)
+  // and motion is allowed. The line is found again on each frame (a binary search), so words and lines share one clock.
+  var lyricRaf = 0, clockSeen = -1, clockAt = 0;
+  /** The position, moving between two reports of a player that reports in steps (YouTube): at most half a second ahead. */
+  function lyricClock() {
+    var v = engine.nowMs(), n = performance.now();
+    if (v !== clockSeen) { clockSeen = v; clockAt = n; }
+    return v + (engine.state.playing ? Math.min(500, n - clockAt) : 0);
+  }
+  function framesWanted() {
+    var L = ui.lyrics;
+    return motion() && engine.state.playing && !document.hidden && L.synced && L.shown > 0 && (L.level === 'word' || L.level === 'syllable' || L.gap >= 0);
+  }
+  function lyricFrame() {
+    lyricRaf = 0;
+    if (!framesWanted()) return;
+    updateLyric(lyricClock());
+    lyricRaf = requestAnimationFrame(lyricFrame);
+  }
+  /** From each report of the position (four a second): the frames take over when they can; a lyrics view that opened or closed is seen. */
+  function followLyric(ms) {
+    var L = ui.lyrics;
+    if (!L.synced) return;
+    var shown = lyricBoxes().length;
+    if (shown !== L.shown) { L.shown = shown; updateLyric(ms, true); }
+    if (lyricRaf) return;
+    updateLyric(ms);
+    if (framesWanted()) lyricRaf = requestAnimationFrame(lyricFrame);
+  }
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) followLyric(engine.state.positionMs); });
 
   document.addEventListener('keydown', function (e) {
     var box = e.target.closest && e.target.closest('[data-lyrics]');
