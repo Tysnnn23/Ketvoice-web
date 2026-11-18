@@ -578,7 +578,25 @@
       /** Puts a queue in place without playing (« Reprendre » waits for the listener's tap). */
       cueQueue: function (tracks, index, startMs) { s.queue = tracks.slice(); s.original = null; s.shuffle = false; s.radio = null; s.index = index; preload = null; load(startMs || 0, false); },
       enqueue: function (track) { s.queue.push(track); if (s.original) s.original.push(track); changed('queue'); },
-      playNext: function (track) { s.queue.splice(s.index + 1, 0, track); if (s.original) s.original.push(track); dropPreload(); changed('queue'); }
+      playNext: function (track) { s.queue.splice(s.index + 1, 0, track); if (s.original) s.original.push(track); dropPreload(); changed('queue'); },
+      /** Takes a title out of the queue (not the one playing), as the app's queue does with its ✕. */
+      removeAt: function (i) {
+        if (!(i >= 0 && i < s.queue.length) || i === s.index) return;
+        var gone = s.queue.splice(i, 1)[0];
+        if (i < s.index) s.index--;
+        if (s.original) { var k = s.original.indexOf(gone); if (k >= 0) s.original.splice(k, 1); }
+        dropPreload(); changed('queue');
+      },
+      /** Moves a title of the queue from [from] to [to] (dragged by its handle); the title playing keeps playing. */
+      move: function (from, to) {
+        var n = s.queue.length;
+        if (!(from >= 0 && from < n) || !(to >= 0 && to < n) || from === to) return;
+        var playing = s.queue[s.index];
+        var item = s.queue.splice(from, 1)[0];
+        s.queue.splice(to, 0, item);
+        s.index = Math.max(0, s.queue.indexOf(playing));
+        dropPreload(); changed('queue');
+      }
     };
   }
 
