@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/changelog", "destination": "/changelog.html" },
-    { "source": "/listen", "destination": "/listen.html" }
+    { "source": "/listen", "destination": "/listen.html" },
+    { "source": "/player", "destination": "/player.html" }
   ]
 }

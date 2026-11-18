@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<meta content="dark light" name="color-scheme"/>
+<meta content="#0b0714" name="theme-color"/>
+<title>Ketvoice — web player</title>
+<meta content="Listen to Ketvoice in the browser, on iPhone or a computer, with your Ketvoice account and your synced library." name="description"/>
+<link rel="canonical" href="https://ketvoice-web.vercel.app/player"/>
+<link rel="icon" href="favicon.ico" sizes="any"/>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Ketvoice — web player"/>
+<meta property="og:description" content="Your Ketvoice library in the browser: favourites, playlists, synced lyrics."/>
+<meta property="og:image" content="https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png"/>
+<script>(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('ketvoice-player-theme')==='light')d.classList.add('light')}catch(e){}if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion');if(/^fr\b/i.test(navigator.language||''))d.lang='fr'})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preconnect" href="https://xodklrunqlzyeiqtovgx.supabase.co" crossorigin/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;family=Geist+Mono:wght@400;500&amp;display=swap"/>
+<link rel="stylesheet" href="css/player.css?v=202611181500"/>
+</head>
+<body>
+<svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M8 5.2v13.6c0 .8.9 1.3 1.6.8l10.3-6.8c.6-.4.6-1.2 0-1.6L9.6 4.4C8.9 3.9 8 4.4 8 5.2Z"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><rect fill="currentColor" stroke="none" x="6.5" y="5" width="4" height="14" rx="1.3"/><rect fill="currentColor" stroke="none" x="13.5" y="5" width="4" height="14" rx="1.3"/></symbol>
+<symbol id="i-next" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M5 6.3v11.4c0 .8.9 1.2 1.5.8l8.2-5.7c.6-.4.6-1.2 0-1.6L6.5 5.5C5.9 5.1 5 5.5 5 6.3Z"/><rect fill="currentColor" stroke="none" x="16.4" y="5" width="2.6" height="14" rx="1.2"/></symbol>
+<symbol id="i-prev" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M19 6.3v11.4c0 .8-.9 1.2-1.5.8l-8.2-5.7c-.6-.4-.6-1.2 0-1.6l8.2-5.7c.6-.4 1.5 0 1.5.8Z"/><rect fill="currentColor" stroke="none" x="5" y="5" width="2.6" height="14" rx="1.2"/></symbol>
+<symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.5c2 0 3.2.9 4.3 2.6l2.4 4.8c1.1 1.7 2.3 2.6 4.3 2.6H21M3 17h3.5c1.4 0 2.4-.4 3.2-1.3M21 7h-3.5c-1.4 0-2.4.4-3.2 1.3M18 4l3 3-3 3M18 14l3 3-3 3"/></symbol>
+<symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 11V9.5A3.5 3.5 0 0 1 7.5 6H20m-3-3 3 3-3 3M20 13v1.5a3.5 3.5 0 0 1-3.5 3.5H4m3 3-3-3 3-3"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.6 12 20 12 20Z"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></symbol>
+<symbol id="i-lyrics" viewBox="0 0 24 24"><path d="M4 6h11M4 11h16M4 16h8"/><circle cx="18" cy="17" r="2.4"/><path d="M20.4 17V9"/></symbol>
+<symbol id="i-queue" viewBox="0 0 24 24"><path d="M4 6h16M4 11h16M4 16h9"/><path fill="currentColor" stroke="none" d="M16 14.2v5.6c0 .5.5.8.9.5l4.2-2.8c.4-.2.4-.8 0-1l-4.2-2.8c-.4-.3-.9 0-.9.5Z"/></symbol>
+<symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10.5 5-3v9l-5-3"/></symbol>
+<symbol id="i-cover" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.5"/><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r=".6"/></symbol>
+<symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/></symbol>
+<symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z"/><path d="m16 9.5 5 5m0-5-5 5"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11m0-11-11 11"/></symbol>
+<symbol id="i-out" viewBox="0 0 24 24"><path d="M14 4.5h3.5A2.5 2.5 0 0 1 20 7v10a2.5 2.5 0 0 1-2.5 2.5H14M10 8l-4 4 4 4M6 12h10"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.4A8.4 8.4 0 1 1 9.6 4a6.9 6.9 0 0 0 10.4 10.4Z"/></symbol>
+<symbol id="i-resume" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/><path fill="currentColor" stroke="none" d="M10 9.2v5.6c0 .5.5.7.9.5l4.3-2.8c.3-.2.3-.7 0-.9l-4.3-2.8c-.4-.3-.9 0-.9.4Z"/></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15 14.3c2.6-.4 4.7 1.2 5.3 4.2"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 20c1.2-3.5 3.8-5.5 7-5.5s5.8 2 7 5.5"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1v-8.5Z"/></symbol>
+<symbol id="i-disc" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.029ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.956 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.946 2.419-2.157 2.419Z"/></symbol>
+</svg>
+<a class="skip-link" href="#main" data-t="skip">Skip to content</a>
+<div aria-hidden="true" class="sky"><i class="sky-glow"></i><i class="sky-sun"></i><i class="sky-floor"></i></div>
+
+<div aria-hidden="true" class="boot" id="boot"><img alt="" height="56" src="assets/ketvoice-logo-vc-96.png" width="56"/></div>
+
+<section aria-labelledby="auth-title" class="auth" hidden id="auth">
+<div class="auth-card">
+<a class="brand" href="./"><img alt="" height="32" src="assets/ketvoice-logo-vc-96.png" width="32"/><span>Ketvoice</span></a>
+<p class="tag">/player</p>
+<h1 data-t="auth.title" id="auth-title">Listen on the web</h1>
+<p class="auth-sub" data-t="auth.sub">Your Ketvoice account, your favourites and your playlists, in sync with the app.</p>
+<button class="btn btn-discord" id="discord" type="button"><svg aria-hidden="true" class="icon"><use href="#i-disc"/></svg><span data-t="auth.discord">Continue with Discord</span></button>
+<div aria-hidden="true" class="or"><span data-t="auth.or">or</span></div>
+<form id="signin" novalidate>
+<label class="field"><span data-t="auth.email">E-mail</span><input autocomplete="username" inputmode="email" name="email" required type="email"/></label>
+<label class="field"><span data-t="auth.password">Password</span><input autocomplete="current-password" maxlength="72" name="password" required type="password"/></label>
+<p aria-live="assertive" class="form-error" id="auth-error" role="alert"></p>
+<button class="btn btn-accent" id="signin-btn" type="submit"><span data-t="auth.signin">Sign in</span></button>
+</form>
+<p class="auth-fine" data-t="auth.noaccount">No account yet? Create one in the Ketvoice app (Settings → Account), then sign in here.</p>
+</div>
+<p class="auth-foot"><a href="./" data-t="auth.site">Ketvoice website</a> · <span>Ketvoice is not affiliated with Rockstar Games.</span></p>
+</section>
+
+<div class="app" hidden id="app">
+<aside class="side" id="side">
+<a class="brand" href="./"><img alt="" height="28" src="assets/ketvoice-logo-vc-96.png" width="28"/><span>Ketvoice</span><small class="brand-tag">/player</small></a>
+<form class="search" role="search" id="search-side"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.ph" enterkeyhint="search" id="q" placeholder="Search your library" type="search"/></form>
+<nav aria-label="Library" class="lib-nav" data-t-label="nav.label" id="lib-nav"></nav>
+<div class="me" id="me"></div>
+</aside>
+
+<main class="main" id="main" tabindex="-1">
+<header class="m-top">
+<a class="brand" href="./"><img alt="" height="28" src="assets/ketvoice-logo-vc-96.png" width="28"/><span>Ketvoice</span></a>
+<form class="search m-search" role="search" id="search-top"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.short" enterkeyhint="search" id="q2" placeholder="Search" type="search"/></form>
+<button aria-controls="me-pop" aria-expanded="false" aria-label="Account" class="avatar-btn" data-t-label="me.label" id="me-btn" type="button"></button>
+<div class="me-pop" hidden id="me-pop"></div>
+</header>
+<div class="resume-slot" id="resume"></div>
+<div class="view" id="view"></div>
+</main>
+
+<section aria-label="Now playing" class="np" data-t-label="np.label" data-tab="lyrics" id="np">
+<div class="np-head">
+<button aria-label="Close the player" class="icon-btn np-close" data-act="sheet-close" data-t-label="np.close" type="button"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg></button>
+<div class="np-tabs" role="tablist">
+<button aria-selected="false" class="np-tab tab-cover" data-tab="cover" role="tab" type="button"><span data-t="tab.cover">Artwork</span></button>
+<button aria-selected="true" class="np-tab" data-tab="lyrics" role="tab" type="button"><span data-t="tab.lyrics">Lyrics</span></button>
+<button aria-selected="false" class="np-tab" data-tab="queue" role="tab" type="button"><span data-t="tab.queue">Queue</span></button>
+</div>
+</div>
+<div class="stage" id="stage">
+<img alt="" aria-hidden="true" class="stage-glow" decoding="async" id="stage-glow" referrerpolicy="no-referrer"/>
+<div class="stage-art"><img alt="" class="stage-cover" decoding="async" id="stage-cover" referrerpolicy="no-referrer"/><div aria-hidden="true" class="stage-empty"><img alt="" height="72" src="assets/ketvoice-logo-vc-96.png" width="72"/></div></div>
+<div aria-hidden="true" class="slot slot-stage" id="slot-stage"></div>
+<div aria-hidden="true" class="slot slot-pip" id="slot-pip"></div>
+</div>
+<p class="tap-hint" data-t="tap" hidden>Tap the video to start the sound.</p>
+<div class="np-meta">
+<div class="np-text"><p class="np-title" data-bind="title"></p><p class="np-artist" data-bind="artist"></p></div>
+<button aria-pressed="false" class="chip video-toggle" data-act="video" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-video"/></svg><span data-t="video">Video</span></button>
+<button aria-pressed="false" class="icon-btn like" data-act="like" type="button"><svg aria-hidden="true" class="icon"><use href="#i-heart"/></svg></button>
+</div>
+<div class="np-panels">
+<div aria-hidden="true" class="slot slot-band" id="slot-band"></div>
+<div class="panel lyrics" id="lyrics" role="tabpanel"></div>
+<div class="panel queue" hidden id="queue" role="tabpanel"></div>
+</div>
+<div class="np-transport">
+<div class="seek"><span class="t-now" data-bind="now">0:00</span><input aria-label="Position" class="range seek-range" data-t-label="seek" max="1000" min="0" step="1" type="range" value="0"/><span class="t-dur" data-bind="dur">0:00</span></div>
+<div class="controls">
+<button aria-label="Shuffle" aria-pressed="false" class="icon-btn c-shuffle" data-act="shuffle" data-t-label="c.shuffle" type="button"><svg aria-hidden="true" class="icon"><use href="#i-shuffle"/></svg></button>
+<button aria-label="Previous" class="icon-btn c-prev" data-act="prev" data-t-label="c.prev" type="button"><svg aria-hidden="true" class="icon"><use href="#i-prev"/></svg></button>
+<button aria-label="Play" class="play-btn" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
+<button aria-label="Next" class="icon-btn c-next" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-next"/></svg></button>
+<button aria-label="Repeat" aria-pressed="false" class="icon-btn c-repeat" data-act="repeat" data-t-label="c.repeat" type="button"><svg aria-hidden="true" class="icon"><use href="#i-repeat"/></svg><i aria-hidden="true" class="one">1</i></button>
+</div>
+<div class="volume"><button aria-label="Mute" class="icon-btn" data-act="mute" data-t-label="c.mute" type="button"><svg aria-hidden="true" class="icon i-vol"><use href="#i-volume"/></svg><svg aria-hidden="true" class="icon i-mute"><use href="#i-mute"/></svg></button><input aria-label="Volume" class="range vol-range" max="100" min="0" step="1" type="range" value="100"/></div>
+</div>
+<p class="ios-note" data-t="ios.note" hidden>On iPhone, Safari stops a YouTube video embedded in a page when it goes to the background or the screen locks: keep Safari open while you listen. Titles published on Ketvoice keep playing.</p>
+</section>
+
+<footer class="bar" id="bar">
+<div aria-hidden="true" class="mini-band" id="mini-band"><div class="slot slot-mini" id="slot-mini"></div></div>
+<div class="bar-row">
+<div class="bar-now">
+<button aria-label="Open the player" class="bar-open" data-act="sheet-open" data-t-label="np.open" type="button"><img alt="" class="bar-cover" data-bind="cover" decoding="async" referrerpolicy="no-referrer"/><span class="bar-text"><b data-bind="title"></b><small data-bind="artist"></small></span></button>
+<button aria-pressed="false" class="icon-btn like" data-act="like" type="button"><svg aria-hidden="true" class="icon"><use href="#i-heart"/></svg></button>
+</div>
+<div class="bar-mid">
+<div class="controls">
+<button aria-label="Shuffle" aria-pressed="false" class="icon-btn c-shuffle" data-act="shuffle" data-t-label="c.shuffle" type="button"><svg aria-hidden="true" class="icon"><use href="#i-shuffle"/></svg></button>
+<button aria-label="Previous" class="icon-btn c-prev" data-act="prev" data-t-label="c.prev" type="button"><svg aria-hidden="true" class="icon"><use href="#i-prev"/></svg></button>
+<button aria-label="Play" class="play-btn" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
+<button aria-label="Next" class="icon-btn c-next" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-next"/></svg></button>
+<button aria-label="Repeat" aria-pressed="false" class="icon-btn c-repeat" data-act="repeat" data-t-label="c.repeat" type="button"><svg aria-hidden="true" class="icon"><use href="#i-repeat"/></svg><i aria-hidden="true" class="one">1</i></button>
+</div>
+<div class="seek"><span class="t-now" data-bind="now">0:00</span><input aria-label="Position" class="range seek-range" data-t-label="seek" max="1000" min="0" step="1" type="range" value="0"/><span class="t-dur" data-bind="dur">0:00</span></div>
+</div>
+<div class="bar-end">
+<button aria-pressed="false" class="icon-btn" data-act="video" data-t-label="video" type="button"><svg aria-hidden="true" class="icon"><use href="#i-video"/></svg></button>
+<button aria-pressed="false" class="icon-btn" data-act="tab-lyrics" data-t-label="tab.lyrics" type="button"><svg aria-hidden="true" class="icon"><use href="#i-lyrics"/></svg></button>
+<button aria-pressed="false" class="icon-btn" data-act="tab-queue" data-t-label="tab.queue" type="button"><svg aria-hidden="true" class="icon"><use href="#i-queue"/></svg></button>
+<div class="volume"><button aria-label="Mute" class="icon-btn" data-act="mute" data-t-label="c.mute" type="button"><svg aria-hidden="true" class="icon i-vol"><use href="#i-volume"/></svg><svg aria-hidden="true" class="icon i-mute"><use href="#i-mute"/></svg></button><input aria-label="Volume" class="range vol-range" max="100" min="0" step="1" type="range" value="100"/></div>
+</div>
+<button aria-label="Play" class="play-btn mini-play" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
+<button aria-label="Next" class="icon-btn mini-next-btn" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-next"/></svg></button>
+</div>
+<div aria-hidden="true" class="mini-progress"><i></i></div>
+</footer>
+</div>
+
+<div class="yt-dock off" id="yt-dock"><div id="yt-host"></div></div>
+<audio id="audio" playsinline preload="metadata"></audio>
+<div aria-live="polite" class="toast" id="toast" role="status"></div>
+<script src="js/player/core.js?v=202611181500"></script>
+<script src="js/player/api.js?v=202611181500"></script>
+<script src="js/player/engine.js?v=202611181500"></script>
+<script src="js/player/app.js?v=202611181500"></script>
+</body>
+</html>
