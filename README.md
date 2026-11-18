@@ -112,12 +112,44 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
 - Lyrics: LRCLIB the app's way (up to three searches, the closest synced answer, credits dropped), highlighted line by
   line by colour only — no blur, no glow — kept in view unless the listener scrolls; a line seeks when clicked; one
   tab stop (the sung line), arrows move between lines.
-- Design: the site at night — the striped sun, the neon floor and the sunset gradient behind glass panels, Geist and
-  Geist Mono, motion on cubic-bezier(.22,1,.36,1) with a little spring (rows rise in, the artwork steps back on pause,
-  the heart pops, the sheet slides like iOS); nothing moves with reduced motion. Dark by default, light in the account
-  menu (`ketvoice-player-theme`). Desktop ≥ 1024 px: library sidebar, main, now-playing panel (artwork, lyrics or
-  queue), transport bar. Below: a mini-player and a full-screen sheet (Artwork / Lyrics / Queue, swipe down or Esc to
-  close, focus kept inside). French or English from the browser's language.
+- Design (owner, 2026-11-18: « il faut 1:1 l'interface mobile sur le site, mais un peu style Apple Music macOS pour
+  ceux qui sont sur PC »): Ket 27, the app's interface, read from its code (`theme/Ket27.kt`, `ui/chrome/Chrome.kt`,
+  `ui/home`, `ui/library`, `ui/explorer`, `ui/overlay/SearchScreen.kt`, `ui/player/{FullPlayerScreen,PlayerControls,
+  PlayerSliders,LyricsView,QueuePane}.kt`, `ui/common/{GlassContextMenu,SpringSheet,Ket27Page,Ket27Glyphs}.kt`,
+  `ui/sub/{AlbumPage,ArtistHeader}.kt`) and compared with `assets/app-*.png`. iOS 27's system colours (#F2F2F7 / black,
+  cards white / #1C1C1E, accent #FF2D55 with black words on it, as `onAccent` picks), Inter as the app ships it
+  (`assets/fonts/inter-var.woff2`, subset, SIL OFL beside it), the app's metrics (34/22/20/17 type, 16 margins,
+  52–66 rows, 62 tab bar), its glass (a milky surface, a 20 px blur, a lit rim, a shadow 8 below), its symbols drawn
+  as inline SVG from `Ket27Glyphs` and `TransportGlyph` (the others in the same filled, rounded style), its springs as
+  `linear()` easings. Phone (≤ 820 px): Home (KETVOICE line, the hour's greeting, « Reprendre », Récents with large
+  covers, Favoris, Playlists, Artistes suivis, Albums), Explorer (radios from the favourites, top songs, the library's
+  artists, the app's genre tiles opening a search), Bibliothèque (count, filter field, the categories list, Ajouts
+  récents; Playlists / Artistes / Albums / Titres / Écoutés récemment as pages; albums are the library's titles grouped
+  as `LocalAlbums` does), Rechercher (Tout / Bibliothèque, favourite artists, recent searches kept in this browser);
+  album pages (the cover edge to edge dissolving into the page, numbered titles with a hairline), artist pages (a tall
+  portrait drifting slowly, Écouter / Aléatoire, Radio de l'artiste, popular titles, discography shelves, À propos);
+  the floating glass tab bar with its sliding lens, the round search button that stretches into the field, the
+  docked mini-player, all three folding into one row while the page scrolls down; the full player (artwork edge to
+  edge stepping back on pause, the lyric being sung above the seek bar, the seek bar and the volume that swell when
+  pressed and stretch past their ends, the output / account capsule, « Ce navigateur »), its lyrics page (Cascade:
+  33 px black lines, the sung line and those before it white, the others dimmed and a little smaller catching up in
+  a wave, no blur, a long held line glowing a little, the controls clearing after 2 s) and queue page (remove,
+  reorder by the handle or the arrow keys, crossfade / shuffle / repeat / radio capsule), dragged down to close;
+  the glass menu from « … » or a long press (the row lifted as a preview); spring sheets for the account (dark,
+  light, Vice City) and the output. Tablet (821–1023 px): the app's glass rail and a floating mini-player. Desktop
+  (≥ 1024 px), Music on macOS: a translucent sidebar (search with ⌘F / Ctrl+F, Accueil, Explorer, Radio; Bibliothèque:
+  Récents, Artistes, Albums, Titres, Favoris, Partagées; the playlists), the « now playing » bar in the title area
+  (transport, the LCD with artwork, title, artist — album, heart and menu on hover, its thin seek bar), volume, lyrics
+  and up-next toggles opening a side panel, context menus on right click, hover states, album and playlist heads with
+  the cover beside the name, and the full-window player (artwork and controls left, lyrics or queue right) from the
+  LCD's artwork. Keyboard: Space/K, ←/→ ±5 s, ⌘/Ctrl+←/→ previous/next, ⌘/Ctrl+↑/↓ volume, ⌘/Ctrl+L lyrics, ⌘/Ctrl+F
+  or `/` search, M, L (heart), Esc. The cover's colours (sampled from a 16 × 16 copy) tint the player, its lyrics mesh
+  and the desktop window. Reduced motion: nothing moves (no springs, waves, drift or smooth scrolling). The
+  YouTube player keeps its visible places (over or in a corner of the artwork, a band above the mini-player or the
+  lyrics, the panel or a corner of the window on a computer). Dark or light from the system until chosen in the
+  account sheet (`ketvoice-player-theme`; Vice City `kv-player-vc`); the side panel is remembered (`kv-player-panel`),
+  the titles played here feed Récents (`kv-player-recent`, 40 at most). Not on the web, as before: downloads,
+  creating or editing playlists, following artists. French or English from the browser's language.
 - Tests: `node tests/player-sync.test.cjs` (document format, merge, favourites, playlists, artists, shared rows, now
   playing, LRC, PKCE), `node tests/player-api.test.cjs` (a fake Supabase with recorded shapes: sign-in, refresh,
   revision races, upsert, Discord, content, lyrics), `node tests/player-catalog.test.cjs` (search rows, catalogue
@@ -128,6 +160,12 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
   Rendered with Playwright at 1440 and 390 px, signed in with mocked Supabase, ketvoice-api (its /catalog answers made by
   that same mapping) and audio files: no horizontal overflow, no script errors, text contrast measured on rendered
   pixels; the crossfade sampled on both decks; the catalogue off as today.
+  The Ket 27 redesign: rendered at 360, 390, 900, 1024 and 1440 px in light, dark and Vice City with mocked Supabase,
+  ketvoice-api, ketvoice-catalog and LRCLIB (real titles, the site's covers and crops of the app's screenshots), set
+  side by side with `assets/app-*.png`; every visible text measured on rendered pixels (4.5:1, 3:1 for large text)
+  on 20 screens; 31 scripted checks (keyboard shortcuts, the menu, play next, remove from the queue, the heart written
+  back, now playing published, the full-window player, the folding chrome, the search bubble, drag to close, e-mail
+  and Discord sign-in, the YouTube player's size, reduced motion); no horizontal scroll at 360 px, no script errors.
 - Checked live once (2026-11-18, muted): the real `ketvoice-api/search` and `/stream` from the page — « One More Time »
   played from the address /stream gave. Not verified here: a real sign-in, a real Discord round trip, real YouTube
   playback, the `/catalog/*` routes deployed (their InnerTube answers are hand-written fixtures; from this machine's
