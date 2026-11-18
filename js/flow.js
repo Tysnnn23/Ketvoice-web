@@ -61,10 +61,12 @@
     st.draw = function (t) {
       gl.uniform2f(u.R, cv.width, cv.height);
       gl.uniform1f(u.T, t + st.seed);
-      gl.uniform1f(u.E, foot ? 0.5 : (innerWidth < 760 ? 0.46 : 0.52));
+      // the hero's sky: js/motion.js writes how far the sun has set (0 → 1)
+      var sky = foot ? 0 : Math.max(0, Math.min(1, window.KV_SKY || 0));
+      gl.uniform1f(u.E, foot ? 0.5 : (innerWidth < 760 ? 0.46 : 0.52) + sky * 0.1);
       gl.uniform1f(u.L, document.documentElement.classList.contains('dark') ? 0 : 1);
       gl.uniform1f(u.S, 1);
-      gl.uniform1f(u.D, foot ? 0.62 : 1);
+      gl.uniform1f(u.D, foot ? 0.62 : 1 + sky * 0.5);
       gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
