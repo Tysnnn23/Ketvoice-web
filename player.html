@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <meta content="dark light" name="color-scheme"/>
-<meta content="#0b0714" name="theme-color"/>
+<meta content="#000000" name="theme-color"/>
 <title>Ketvoice — web player</title>
 <meta content="Listen to Ketvoice in the browser, on iPhone or a computer: its catalogue, artists, albums and radio, with your Ketvoice account and your synced library." name="description"/>
 <link rel="canonical" href="https://ketvoice-web.vercel.app/player"/>
@@ -15,158 +15,204 @@
 <meta property="og:title" content="Ketvoice — web player"/>
 <meta property="og:description" content="Your Ketvoice library in the browser: favourites, playlists, synced lyrics."/>
 <meta property="og:image" content="https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png"/>
-<script>(function(){var d=document.documentElement;d.classList.add('js');try{if(localStorage.getItem('ketvoice-player-theme')==='light')d.classList.add('light')}catch(e){}if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion');if(/^fr\b/i.test(navigator.language||''))d.lang='fr'})();</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<script>(function(){var d=document.documentElement,t=null,v=null;d.classList.add('js');try{t=localStorage.getItem('ketvoice-player-theme');v=localStorage.getItem('kv-player-vc')}catch(e){}var dark=t?t!=='light':!matchMedia('(prefers-color-scheme: light)').matches;d.classList.add(dark?'dark':'light');if(v==='1')d.classList.add('vc');if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion');if(/^fr\b/i.test(navigator.language||''))d.lang='fr'})();</script>
 <link rel="preconnect" href="https://xodklrunqlzyeiqtovgx.supabase.co" crossorigin/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;family=Geist+Mono:wght@400;500&amp;display=swap"/>
-<link rel="stylesheet" href="css/player.css?v=202611182100"/>
+<link rel="preload" href="assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="stylesheet" href="css/player.css?v=202611190100"/>
 </head>
 <body>
 <svg aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
-<symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M8 5.2v13.6c0 .8.9 1.3 1.6.8l10.3-6.8c.6-.4.6-1.2 0-1.6L9.6 4.4C8.9 3.9 8 4.4 8 5.2Z"/></symbol>
-<symbol id="i-pause" viewBox="0 0 24 24"><rect fill="currentColor" stroke="none" x="6.5" y="5" width="4" height="14" rx="1.3"/><rect fill="currentColor" stroke="none" x="13.5" y="5" width="4" height="14" rx="1.3"/></symbol>
-<symbol id="i-next" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M5 6.3v11.4c0 .8.9 1.2 1.5.8l8.2-5.7c.6-.4.6-1.2 0-1.6L6.5 5.5C5.9 5.1 5 5.5 5 6.3Z"/><rect fill="currentColor" stroke="none" x="16.4" y="5" width="2.6" height="14" rx="1.2"/></symbol>
-<symbol id="i-prev" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M19 6.3v11.4c0 .8-.9 1.2-1.5.8l-8.2-5.7c-.6-.4-.6-1.2 0-1.6l8.2-5.7c.6-.4 1.5 0 1.5.8Z"/><rect fill="currentColor" stroke="none" x="5" y="5" width="2.6" height="14" rx="1.2"/></symbol>
-<symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M3 7h3.5c2 0 3.2.9 4.3 2.6l2.4 4.8c1.1 1.7 2.3 2.6 4.3 2.6H21M3 17h3.5c1.4 0 2.4-.4 3.2-1.3M21 7h-3.5c-1.4 0-2.4.4-3.2 1.3M18 4l3 3-3 3M18 14l3 3-3 3"/></symbol>
-<symbol id="i-repeat" viewBox="0 0 24 24"><path d="M4 11V9.5A3.5 3.5 0 0 1 7.5 6H20m-3-3 3 3-3 3M20 13v1.5a3.5 3.5 0 0 1-3.5 3.5H4m3 3-3-3 3-3"/></symbol>
-<symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.4-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.6 12 20 12 20Z"/></symbol>
-<symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></symbol>
-<symbol id="i-lyrics" viewBox="0 0 24 24"><path d="M4 6h11M4 11h16M4 16h8"/><circle cx="18" cy="17" r="2.4"/><path d="M20.4 17V9"/></symbol>
-<symbol id="i-queue" viewBox="0 0 24 24"><path d="M4 6h16M4 11h16M4 16h9"/><path fill="currentColor" stroke="none" d="M16 14.2v5.6c0 .5.5.8.9.5l4.2-2.8c.4-.2.4-.8 0-1l-4.2-2.8c-.4-.3-.9 0-.9.5Z"/></symbol>
-<symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="m16 10.5 5-3v9l-5-3"/></symbol>
-<symbol id="i-cover" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.5"/><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r=".6"/></symbol>
-<symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/></symbol>
-<symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5v5h3.5L12 18V6L7.5 9.5H4Z"/><path d="m16 9.5 5 5m0-5-5 5"/></symbol>
-<symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9.5 6 6 6-6"/></symbol>
-<symbol id="i-back" viewBox="0 0 24 24"><path d="m14.5 6-6 6 6 6"/></symbol>
-<symbol id="i-close" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11m0-11-11 11"/></symbol>
-<symbol id="i-out" viewBox="0 0 24 24"><path d="M14 4.5h3.5A2.5 2.5 0 0 1 20 7v10a2.5 2.5 0 0 1-2.5 2.5H14M10 8l-4 4 4 4M6 12h10"/></symbol>
-<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M18.6 5.4 17 7M7 17l-1.6 1.6"/></symbol>
-<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.4A8.4 8.4 0 1 1 9.6 4a6.9 6.9 0 0 0 10.4 10.4Z"/></symbol>
-<symbol id="i-resume" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4h4"/><path fill="currentColor" stroke="none" d="M10 9.2v5.6c0 .5.5.7.9.5l4.3-2.8c.3-.2.3-.7 0-.9l-4.3-2.8c-.4-.3-.9 0-.9.4Z"/></symbol>
-<symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3.5 19c.6-3.2 2.8-5 5.5-5s4.9 1.8 5.5 5M15 14.3c2.6-.4 4.7 1.2 5.3 4.2"/></symbol>
-<symbol id="i-mic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M5 20c1.2-3.5 3.8-5.5 7-5.5s5.8 2 7 5.5"/></symbol>
-<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></symbol>
-<symbol id="i-home" viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1v-8.5Z"/></symbol>
-<symbol id="i-radio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.2"/><path d="M8.2 15.8a5.4 5.4 0 0 1 0-7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.4 18.6a9.3 9.3 0 0 1 0-13.2M18.6 5.4a9.3 9.3 0 0 1 0 13.2"/></symbol>
-<symbol id="i-disc" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.029ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.956 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.946 2.419-2.157 2.419Z"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 2.6C11.6 2.6 11.2 2.75 10.9 3L3.2 9.6C2.6 10.1 2.95 11.1 3.75 11.1L4.6 11.1L4.6 19.2C4.6 20.4 5.4 21.2 6.6 21.2L17.4 21.2C18.6 21.2 19.4 20.4 19.4 19.2L19.4 11.1L20.25 11.1C21.05 11.1 21.4 10.1 20.8 9.6L13.1 3C12.8 2.75 12.4 2.6 12 2.6ZM11.2 14.6L12.8 14.6Q14 14.6 14 15.8L14 20Q14 21.2 12.8 21.2L11.2 21.2Q10 21.2 10 20L10 15.8Q10 14.6 11.2 14.6Z"/></symbol>
+<symbol id="i-explore" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.4 3L8.6 3Q11 3 11 5.4L11 8.6Q11 11 8.6 11L5.4 11Q3 11 3 8.6L3 5.4Q3 3 5.4 3ZM15.4 3L18.6 3Q21 3 21 5.4L21 8.6Q21 11 18.6 11L15.4 11Q13 11 13 8.6L13 5.4Q13 3 15.4 3ZM5.4 13L8.6 13Q11 13 11 15.4L11 18.6Q11 21 8.6 21L5.4 21Q3 21 3 18.6L3 15.4Q3 13 5.4 13ZM15.4 13L18.6 13Q21 13 21 15.4L21 18.6Q21 21 18.6 21L15.4 21Q13 21 13 18.6L13 15.4Q13 13 15.4 13Z"/></symbol>
+<symbol id="i-library" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M7.4 2.6L16.6 2.6Q17.5 2.6 17.5 3.5L17.5 3.5Q17.5 4.4 16.6 4.4L7.4 4.4Q6.5 4.4 6.5 3.5L6.5 3.5Q6.5 2.6 7.4 2.6ZM5.5 5.4L18.5 5.4Q19.4 5.4 19.4 6.3L19.4 6.3Q19.4 7.2 18.5 7.2L5.5 7.2Q4.6 7.2 4.6 6.3L4.6 6.3Q4.6 5.4 5.5 5.4ZM6 8.3L18 8.3Q21.2 8.3 21.2 11.5L21.2 18.2Q21.2 21.4 18 21.4L6 21.4Q2.8 21.4 2.8 18.2L2.8 11.5Q2.8 8.3 6 8.3ZM13.6 10.8L13.6 16.2C13.1 15.95 12.5 15.9 11.9 16.1C10.8 16.5 10.3 17.6 10.8 18.4C11.3 19.2 12.6 19.3 13.6 18.7C14.4 18.2 14.8 17.5 14.8 16.7L14.8 12.9L16.6 12.4L16.6 10.8L13.6 10.8Z"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M17.2 10.6C17.2 14.25 14.25 17.2 10.6 17.2C6.95 17.2 4 14.25 4 10.6C4 6.95 6.95 4 10.6 4C14.25 4 17.2 6.95 17.2 10.6ZM15.4 15.4L20.2 20.2"/></symbol>
+<symbol id="i-heart-fill" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M12 20.6C11.7 20.6 11.4 20.5 11.15 20.3C6.2 16.6 2.6 13.4 2.6 9.1C2.6 6.1 4.9 3.8 7.7 3.8C9.5 3.8 11.1 4.75 12 6.2C12.9 4.75 14.5 3.8 16.3 3.8C19.1 3.8 21.4 6.1 21.4 9.1C21.4 13.4 17.8 16.6 12.85 20.3C12.6 20.5 12.3 20.6 12 20.6Z"/></symbol>
+<symbol id="i-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 20.6C11.7 20.6 11.4 20.5 11.15 20.3C6.2 16.6 2.6 13.4 2.6 9.1C2.6 6.1 4.9 3.8 7.7 3.8C9.5 3.8 11.1 4.75 12 6.2C12.9 4.75 14.5 3.8 16.3 3.8C19.1 3.8 21.4 6.1 21.4 9.1C21.4 13.4 17.8 16.6 12.85 20.3C12.6 20.5 12.3 20.6 12 20.6Z"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.81 2.45Q4.08 0.72 4.08 4.18L4.08 19.82Q4.08 23.28 7.54 21.55L19.63 13.73Q23.09 12 19.63 10.27Z"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.92 1.92L8.24 1.92Q9.84 1.92 9.84 3.52L9.84 20.48Q9.84 22.08 8.24 22.08L5.92 22.08Q4.32 22.08 4.32 20.48L4.32 3.52Q4.32 1.92 5.92 1.92ZM15.76 1.92L18.08 1.92Q19.68 1.92 19.68 3.52L19.68 20.48Q19.68 22.08 18.08 22.08L15.76 22.08Q14.16 22.08 14.16 20.48L14.16 3.52Q14.16 1.92 15.76 1.92Z"/></symbol>
+<symbol id="i-next" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M1.63 5.71Q0.48 4.56 0.48 6.86L0.48 17.14Q0.48 19.44 2.78 18.29L10.85 13.15Q13.15 12 10.85 10.85ZM12.91 5.71Q11.76 4.56 11.76 6.86L11.76 17.14Q11.76 19.44 14.06 18.29L22.13 13.15Q24.43 12 22.13 10.85Z"/></symbol>
+<symbol id="i-prev" viewBox="0 0 24 24"><g transform="matrix(-1 0 0 1 24 0)"><path fill="currentColor" d="M1.63 5.71Q0.48 4.56 0.48 6.86L0.48 17.14Q0.48 19.44 2.78 18.29L10.85 13.15Q13.15 12 10.85 10.85ZM12.91 5.71Q11.76 4.56 11.76 6.86L11.76 17.14Q11.76 19.44 14.06 18.29L22.13 13.15Q24.43 12 22.13 10.85Z"/></g></symbol>
+<symbol id="i-skip" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M5.36 6.16Q4.2 5 4.2 7.32L4.2 16.68Q4.2 19 6.52 17.84L14.64 13.16Q16.96 12 14.64 10.84ZM18 5L18 5Q19.4 5 19.4 6.4L19.4 17.6Q19.4 19 18 19L18 19Q16.6 19 16.6 17.6L16.6 6.4Q16.6 5 18 5Z"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><circle fill="currentColor" cx="5.5" cy="12" r="2"/><circle fill="currentColor" cx="12" cy="12" r="2"/><circle fill="currentColor" cx="18.5" cy="12" r="2"/></symbol>
+<symbol id="i-lyrics" viewBox="0 0 24 24"><rect x="1.44" y="2.4" width="21.12" height="16.32" rx="5.28" fill="none" stroke="currentColor" stroke-width="2.1"/><path fill="currentColor" d="M7.68 18.48L6.24 23.28L12.48 18.48Z"/><circle fill="currentColor" cx="8.4" cy="9.6" r="1.32"/><circle fill="currentColor" cx="15.12" cy="9.6" r="1.32"/><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" d="M8.4 11.04L7.92 13.44M15.12 11.04L14.64 13.44"/></symbol>
+<symbol id="i-queue" viewBox="0 0 24 24"><circle fill="currentColor" cx="1.92" cy="4.8" r="1.25"/><circle fill="currentColor" cx="1.92" cy="12" r="1.25"/><circle fill="currentColor" cx="1.92" cy="19.2" r="1.25"/><path fill="none" stroke="currentColor" stroke-width="2.04" stroke-linecap="round" d="M6.72 4.8L22.8 4.8M6.72 12L22.8 12M6.72 19.2L22.8 19.2"/></symbol>
+<symbol id="i-shuffle" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" d="M3 7h3.2c2.1 0 3.3.9 4.5 2.7l2.6 4.6c1.2 1.8 2.4 2.7 4.5 2.7H20M3 17h3.2c1.4 0 2.4-.4 3.3-1.3M20 7h-2.2c-1.4 0-2.4.4-3.3 1.3M17.4 4.2 20.2 7l-2.8 2.8M17.4 14.2l2.8 2.8-2.8 2.8"/></symbol>
+<symbol id="i-repeat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" d="M4 11.2V9.6A3.6 3.6 0 0 1 7.6 6H19.6M16.8 3.2 19.6 6l-2.8 2.8M20 12.8v1.6a3.6 3.6 0 0 1-3.6 3.6H4.4M7.2 20.8 4.4 18l2.8-2.8"/></symbol>
+<symbol id="i-repeat-one" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" d="M4 11.2V9.6A3.6 3.6 0 0 1 7.6 6H19.6M16.8 3.2 19.6 6l-2.8 2.8M20 12.8v1.6a3.6 3.6 0 0 1-3.6 3.6H4.4M7.2 20.8 4.4 18l2.8-2.8"/><path fill="currentColor" d="M11.1 10.2h1.5c.3 0 .5.2.5.5v4.6c0 .4-.3.7-.7.7s-.7-.3-.7-.7v-3.8h-.6c-.4 0-.6-.3-.6-.6s.3-.7.6-.7Z"/></symbol>
+<symbol id="i-infinity" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 12c-1.6-2.1-3-3.6-5.1-3.6a3.6 3.6 0 0 0 0 7.2c2.1 0 3.5-1.5 5.1-3.6Zm0 0c1.6 2.1 3 3.6 5.1 3.6a3.6 3.6 0 0 0 0-7.2c-2.1 0-3.5 1.5-5.1 3.6Z"/></symbol>
+<symbol id="i-rings" viewBox="0 0 24 24"><circle cx="8.6" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="15.4" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
+<symbol id="i-laptop" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M6.2 4.6L17.8 4.6Q19.8 4.6 19.8 6.6L19.8 13.6Q19.8 15.6 17.8 15.6L6.2 15.6Q4.2 15.6 4.2 13.6L4.2 6.6Q4.2 4.6 6.2 4.6ZM7 6.6L17 6.6Q17.8 6.6 17.8 7.4L17.8 12.8Q17.8 13.6 17 13.6L7 13.6Q6.2 13.6 6.2 12.8L6.2 7.4Q6.2 6.6 7 6.6ZM3.2 17L20.8 17Q22 17 22 18.2L22 18.2Q22 19.4 20.8 19.4L3.2 19.4Q2 19.4 2 18.2L2 18.2Q2 17 3.2 17Z"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M9 2.2L15 2.2Q17.6 2.2 17.6 4.8L17.6 19.2Q17.6 21.8 15 21.8L9 21.8Q6.4 21.8 6.4 19.2L6.4 4.8Q6.4 2.2 9 2.2ZM9 4.4L15 4.4Q15.8 4.4 15.8 5.2L15.8 17Q15.8 17.8 15 17.8L9 17.8Q8.2 17.8 8.2 17L8.2 5.2Q8.2 4.4 9 4.4ZM11.3 18.7L12.7 18.7Q13.4 18.7 13.4 19.4L13.4 19.4Q13.4 20.1 12.7 20.1L11.3 20.1Q10.6 20.1 10.6 19.4L10.6 19.4Q10.6 18.7 11.3 18.7Z"/></symbol>
+<symbol id="i-person" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M12 3.2a4.3 4.3 0 1 1 0 8.6 4.3 4.3 0 0 1 0-8.6ZM4 19.4c.9-3.6 4.1-5.8 8-5.8s7.1 2.2 8 5.8c.2.8-.4 1.4-1.2 1.4H5.2c-.8 0-1.4-.6-1.2-1.4Z"/></symbol>
+<symbol id="i-vol-low" viewBox="0 0 24 24"><path fill="currentColor" d="M3.6 9.3c0-.7.5-1.2 1.2-1.2h2.6l4.1-3.5c.8-.7 2-.1 2 .9v13c0 1-1.2 1.6-2 .9l-4.1-3.5H4.8c-.7 0-1.2-.5-1.2-1.2Z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.6 9.4a3.8 3.8 0 0 1 0 5.2"/></symbol>
+<symbol id="i-vol-high" viewBox="0 0 24 24"><path fill="currentColor" d="M3.6 9.3c0-.7.5-1.2 1.2-1.2h2.6l4.1-3.5c.8-.7 2-.1 2 .9v13c0 1-1.2 1.6-2 .9l-4.1-3.5H4.8c-.7 0-1.2-.5-1.2-1.2Z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16.6 9.4a3.8 3.8 0 0 1 0 5.2M19.2 6.8a7.6 7.6 0 0 1 0 10.4"/></symbol>
+<symbol id="i-vol-off" viewBox="0 0 24 24"><path fill="currentColor" d="M3.6 9.3c0-.7.5-1.2 1.2-1.2h2.6l4.1-3.5c.8-.7 2-.1 2 .9v13c0 1-1.2 1.6-2 .9l-4.1-3.5H4.8c-.7 0-1.2-.5-1.2-1.2Z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="m16.4 9.6 4.8 4.8m0-4.8-4.8 4.8"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M9.5 5.5 16 12l-6.5 6.5"/></symbol>
+<symbol id="i-back" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M14.5 5.5 8 12l6.5 6.5"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5.5 9.5 12 16l6.5-6.5"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" d="M6.5 6.5l11 11m0-11-11 11"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m5.5 12.5 4.2 4.2 8.8-9.4"/></symbol>
+<symbol id="i-radio" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.6 8.2L18.4 8.2Q21.4 8.2 21.4 11.2L21.4 18Q21.4 21 18.4 21L5.6 21Q2.6 21 2.6 18L2.6 11.2Q2.6 8.2 5.6 8.2ZM8.6 12.3a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM14 12.4L17.4 12.4Q18.2 12.4 18.2 13.2L18.2 13.2Q18.2 14 17.4 14L14 14Q13.2 14 13.2 13.2L13.2 13.2Q13.2 12.4 14 12.4ZM14 15.6L17.4 15.6Q18.2 15.6 18.2 16.4L18.2 16.4Q18.2 17.2 17.4 17.2L14 17.2Q13.2 17.2 13.2 16.4L13.2 16.4Q13.2 15.6 14 15.6ZM5.4 7.4 16.6 3.2c.5-.2 1 .1 1.2.5.2.5-.1 1-.5 1.2L9.2 8.2Z"/></symbol>
+<symbol id="i-album" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 2.6a9.4 9.4 0 1 1 0 18.8 9.4 9.4 0 0 1 0-18.8ZM12 9.4a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 0 0 0-5.2Z"/></symbol>
+<symbol id="i-note" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M9 17.2V5.9c0-.6.4-1.1 1-1.2l8.6-1.8c.7-.1 1.4.4 1.4 1.2v10.8a3.3 3.3 0 1 1-2.1-3.1V7.3L11.1 8.7v8.6a3.3 3.3 0 1 1-2.1-3.1Z"/></symbol>
+<symbol id="i-playlist" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M4 4.6L13.6 4.6Q14.8 4.6 14.8 5.8L14.8 5.8Q14.8 7 13.6 7L4 7Q2.8 7 2.8 5.8L2.8 5.8Q2.8 4.6 4 4.6ZM4 9.6L13.6 9.6Q14.8 9.6 14.8 10.8L14.8 10.8Q14.8 12 13.6 12L4 12Q2.8 12 2.8 10.8L2.8 10.8Q2.8 9.6 4 9.6ZM4 14.6L9 14.6Q10.2 14.6 10.2 15.8L10.2 15.8Q10.2 17 9 17L4 17Q2.8 17 2.8 15.8L2.8 15.8Q2.8 14.6 4 14.6ZM18 9.4c0-.5.6-.8 1-.5l2 1.3c.3.2.4.6.2.9-.2.3-.6.4-.9.2l-.6-.4v6.6a2.8 2.8 0 1 1-1.7-2.6Z"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 2.6a9.4 9.4 0 1 1 0 18.8 9.4 9.4 0 0 1 0-18.8Zm0 3.6c-.6 0-1 .4-1 1V12c0 .3.1.6.4.8l3.2 2.4c.4.3 1.1.2 1.4-.2.3-.4.2-1.1-.2-1.4L13 11.5V7.2c0-.6-.4-1-1-1Z"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M12 2.4c2.2 0 4 1.8 4 4v5.2c0 2.2-1.8 4-4 4s-4-1.8-4-4V6.4c0-2.2 1.8-4 4-4ZM5.8 10.6c.6 0 1 .4 1 1a5.2 5.2 0 0 0 10.4 0c0-.6.4-1 1-1s1 .4 1 1c0 3.6-2.7 6.6-6.2 7.1v2c0 .6-.4 1-1 1s-1-.4-1-1v-2a7.2 7.2 0 0 1-6.2-7.1c0-.6.4-1 1-1Z"/></symbol>
+<symbol id="i-people" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M8.6 3.6a3.7 3.7 0 1 1 0 7.4 3.7 3.7 0 0 1 0-7.4ZM2.2 18.8c.7-3.4 3.3-5.6 6.4-5.6s5.7 2.2 6.4 5.6c.1.7-.4 1.3-1.1 1.3H3.3c-.7 0-1.2-.6-1.1-1.3ZM16.4 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm.6 8.2c2.5.2 4.4 2.2 4.9 5 .1.6-.3 1.1-.9 1.1h-3.4c-.1-2.2-.7-4.4-1.9-5.9.4-.1.9-.2 1.3-.2Z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.4 3L8.6 3Q11 3 11 5.4L11 8.6Q11 11 8.6 11L5.4 11Q3 11 3 8.6L3 5.4Q3 3 5.4 3ZM15.4 3L18.6 3Q21 3 21 5.4L21 8.6Q21 11 18.6 11L15.4 11Q13 11 13 8.6L13 5.4Q13 3 15.4 3ZM5.4 13L8.6 13Q11 13 11 15.4L11 18.6Q11 21 8.6 21L5.4 21Q3 21 3 18.6L3 15.4Q3 13 5.4 13ZM15.4 13L18.6 13Q21 13 21 15.4L21 18.6Q21 21 18.6 21L15.4 21Q13 21 13 18.6L13 15.4Q13 13 15.4 13Z"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" d="M12 14.5V3.8M8 7.4l4-4 4 4M7 10.4H6.4a2 2 0 0 0-2 2v6.4a2 2 0 0 0 2 2h11.2a2 2 0 0 0 2-2v-6.4a2 2 0 0 0-2-2H17"/></symbol>
+<symbol id="i-play-next" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M3.6 6h10.8M3.6 11h10.8M3.6 16h6"/><path fill="currentColor" d="M15.6 13.4c0-.6.6-.9 1.1-.6l4.2 2.6c.5.3.5.9 0 1.2l-4.2 2.6c-.5.3-1.1 0-1.1-.6Z"/></symbol>
+<symbol id="i-queue-add" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M3.6 6h12M3.6 11h12M3.6 16h7.2M17.6 13.6v6.4M14.4 16.8h6.4"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.4" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2.4v2.2M12 19.4v2.2M2.4 12h2.2M19.4 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M20.2 14.6A8.6 8.6 0 1 1 9.4 3.8c.5-.2 1 .4.8.9a6.8 6.8 0 0 0 9.1 9.1c.5-.2 1.1.3.9.8Z"/></symbol>
+<symbol id="i-out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" d="M14 4.4h3.4a2.6 2.6 0 0 1 2.6 2.6v10a2.6 2.6 0 0 1-2.6 2.6H14M10 8l-4 4 4 4M6 12h10"/></symbol>
+<symbol id="i-resume" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 2.6a9.4 9.4 0 1 1 0 18.8 9.4 9.4 0 0 1 0-18.8Zm-1.8 5.8c-.6-.4-1.4 0-1.4.7v5.8c0 .7.8 1.1 1.4.7l4.6-2.9c.5-.3.5-1.1 0-1.4Z"/></symbol>
+<symbol id="i-video" viewBox="0 0 24 24"><rect x="2.4" y="5.6" width="13.6" height="12.8" rx="3.2" fill="currentColor"/><path fill="currentColor" d="M17.6 10.2l3-2c.6-.4 1.4 0 1.4.7v6.2c0 .7-.8 1.1-1.4.7l-3-2Z"/></symbol>
+<symbol id="i-sidebar" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M6 4L18 4Q21.4 4 21.4 7.4L21.4 16.6Q21.4 20 18 20L6 20Q2.6 20 2.6 16.6L2.6 7.4Q2.6 4 6 4ZM6.2 6L7.8 6Q9.4 6 9.4 7.6L9.4 16.4Q9.4 18 7.8 18L6.2 18Q4.6 18 4.6 16.4L4.6 7.6Q4.6 6 6.2 6ZM12.8 6L17.8 6Q19.4 6 19.4 7.6L19.4 16.4Q19.4 18 17.8 18L12.8 18Q11.2 18 11.2 16.4L11.2 7.6Q11.2 6 12.8 6Z"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M12 2.8c.4 0 .7.3.8.7.6 3.8 2.6 5.8 6.4 6.4.4.1.7.4.7.8s-.3.7-.7.8c-3.8.6-5.8 2.6-6.4 6.4-.1.4-.4.7-.8.7s-.7-.3-.8-.7c-.6-3.8-2.6-5.8-6.4-6.4-.4-.1-.7-.4-.7-.8s.3-.7.7-.8c3.8-.6 5.8-2.6 6.4-6.4.1-.4.4-.7.8-.7Z"/></symbol>
+<symbol id="i-handle" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="nonzero" d="M5 8L19 8Q20 8 20 9L20 9Q20 10 19 10L5 10Q4 10 4 9L4 9Q4 8 5 8ZM5 14L19 14Q20 14 20 15L20 15Q20 16 19 16L5 16Q4 16 4 15L4 15Q4 14 5 14Z"/></symbol>
+<symbol id="i-disc" viewBox="0 0 24 24"><path fill="currentColor" d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.865-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.058a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.011c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .079.01c.12.099.246.198.373.292a.077.077 0 0 1-.007.128 12.3 12.3 0 0 1-1.873.891.077.077 0 0 0-.04.107c.36.698.772 1.363 1.225 1.993a.076.076 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.029ZM8.02 15.331c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.956 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.211 0 2.176 1.095 2.157 2.419 0 1.334-.946 2.419-2.157 2.419Z"/></symbol>
 </svg>
 <a class="skip-link" href="#main" data-t="skip">Skip to content</a>
-<div aria-hidden="true" class="sky"><i class="sky-glow"></i><i class="sky-sun"></i><i class="sky-floor"></i></div>
-
 <div aria-hidden="true" class="boot" id="boot"><img alt="" height="56" src="assets/ketvoice-logo-vc-96.png" width="56"/></div>
 
 <section aria-labelledby="auth-title" class="auth" hidden id="auth">
 <div class="auth-card">
-<a class="brand" href="./"><img alt="" height="32" src="assets/ketvoice-logo-vc-96.png" width="32"/><span>Ketvoice</span></a>
-<p class="tag">/player</p>
+<img alt="" class="auth-logo" height="64" src="assets/ketvoice-logo-vc-96.png" width="64"/>
+<p class="brand-line" aria-hidden="true">KETVOICE</p>
 <h1 data-t="auth.title" id="auth-title">Listen on the web</h1>
 <p class="auth-sub" data-t="auth.sub">Your Ketvoice account, your favourites and your playlists, in sync with the app.</p>
-<button class="btn btn-discord" id="discord" type="button"><svg aria-hidden="true" class="icon"><use href="#i-disc"/></svg><span data-t="auth.discord">Continue with Discord</span></button>
+<button class="capsule capsule-discord" id="discord" type="button"><svg aria-hidden="true" class="icon"><use href="#i-disc"/></svg><span data-t="auth.discord">Continue with Discord</span></button>
 <div aria-hidden="true" class="or"><span data-t="auth.or">or</span></div>
 <form id="signin" novalidate>
-<label class="field"><span data-t="auth.email">E-mail</span><input autocomplete="username" inputmode="email" name="email" required type="email"/></label>
-<label class="field"><span data-t="auth.password">Password</span><input autocomplete="current-password" maxlength="72" name="password" required type="password"/></label>
+<div class="group">
+<label class="group-row"><span data-t="auth.email">E-mail</span><input autocomplete="username" inputmode="email" name="email" required type="email"/></label>
+<label class="group-row"><span data-t="auth.password">Password</span><input autocomplete="current-password" maxlength="72" name="password" required type="password"/></label>
+</div>
 <p aria-live="assertive" class="form-error" id="auth-error" role="alert"></p>
-<button class="btn btn-accent" id="signin-btn" type="submit"><span data-t="auth.signin">Sign in</span></button>
+<button class="capsule capsule-accent" id="signin-btn" type="submit"><span data-t="auth.signin">Sign in</span></button>
 </form>
 <p class="auth-fine" data-t="auth.noaccount">No account yet? Create one in the Ketvoice app (Settings → Account), then sign in here.</p>
 </div>
-<p class="auth-foot"><a href="./" data-t="auth.site">Ketvoice website</a> · <span>Ketvoice is not affiliated with Rockstar Games.</span></p>
+<p class="auth-foot"><a href="./" data-t="auth.site">Ketvoice website</a></p>
 </section>
 
 <div class="app" hidden id="app">
+
 <aside class="side" id="side">
-<a class="brand" href="./"><img alt="" height="28" src="assets/ketvoice-logo-vc-96.png" width="28"/><span>Ketvoice</span><small class="brand-tag">/player</small></a>
-<form class="search" role="search" id="search-side"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-controls="results" aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.ph" enterkeyhint="search" id="q" placeholder="Titles, artists, albums" type="search"/></form>
-<nav aria-label="Library" class="lib-nav" data-t-label="nav.label" id="lib-nav"></nav>
-<div class="me" id="me"></div>
+<div class="side-brand"><img alt="" height="22" src="assets/ketvoice-logo-vc-96.png" width="22"/><span>Ketvoice</span></div>
+<form class="field side-search" role="search" id="search-side"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-controls="results" aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.ph" enterkeyhint="search" id="q" placeholder="Search" type="search"/><kbd class="side-kbd" aria-hidden="true" id="kbd-find">⌘F</kbd></form>
+<nav aria-label="Ketvoice" class="side-nav" data-t-label="nav.main" id="side-nav"></nav>
+<button aria-expanded="false" aria-haspopup="menu" class="side-me" id="me-btn" type="button"></button>
 </aside>
 
-<main class="main" id="main" tabindex="-1">
-<header class="m-top">
-<a class="brand" href="./"><img alt="" height="28" src="assets/ketvoice-logo-vc-96.png" width="28"/><span>Ketvoice</span></a>
-<form class="search m-search" role="search" id="search-top"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.short" enterkeyhint="search" id="q2" placeholder="Search" type="search"/></form>
-<button aria-controls="me-pop" aria-expanded="false" aria-label="Account" class="avatar-btn" data-t-label="me.label" id="me-btn" type="button"></button>
-<div class="me-pop" hidden id="me-pop"></div>
+<header class="lcd-bar" id="lcd-bar" aria-label="Now playing" data-t-label="np.label">
+<div class="lcd-transport">
+<button aria-label="Shuffle" aria-pressed="false" class="ib c-shuffle" data-act="shuffle" data-t-label="c.shuffle" type="button"><svg aria-hidden="true" class="icon"><use href="#i-shuffle"/></svg></button>
+<button aria-label="Previous" class="ib" data-act="prev" data-t-label="c.prev" type="button"><svg aria-hidden="true" class="icon"><use href="#i-prev"/></svg></button>
+<button aria-label="Play" class="ib play-ib" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
+<button aria-label="Next" class="ib" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-next"/></svg></button>
+<button aria-label="Repeat" aria-pressed="false" class="ib c-repeat" data-act="repeat" data-t-label="c.repeat" type="button"><svg aria-hidden="true" class="icon i-rep"><use href="#i-repeat"/></svg><svg aria-hidden="true" class="icon i-rep1"><use href="#i-repeat-one"/></svg></button>
+</div>
+<div class="lcd" id="lcd">
+<button aria-label="Open the player" class="lcd-art" data-act="np-open" data-t-label="np.open" type="button"><img alt="" data-bind="cover" decoding="async" referrerpolicy="no-referrer"/><span class="lcd-logo" aria-hidden="true"><img alt="" height="22" src="assets/ketvoice-logo-vc-96.png" width="22"/></span></button>
+<div class="lcd-text"><p class="lcd-title" data-bind="title"></p><p class="lcd-sub"><span data-bind="artist-link"></span><span class="lcd-album" data-bind="album"></span></p></div>
+<div class="lcd-acts"><button aria-pressed="false" class="ib like" data-act="like" type="button"><svg aria-hidden="true" class="icon i-h"><use href="#i-heart"/></svg><svg aria-hidden="true" class="icon i-hf"><use href="#i-heart-fill"/></svg></button><button aria-haspopup="menu" aria-label="More" class="ib" data-act="np-menu" data-t-label="more" type="button"><svg aria-hidden="true" class="icon"><use href="#i-more"/></svg></button></div>
+<div class="lcd-seek"><span class="t-now" data-bind="now">0:00</span><div class="slider seek" data-slider="seek"><i class="sl-track"><i class="sl-fill"></i></i></div><span class="t-left" data-bind="left">-0:00</span></div>
+</div>
+<div class="lcd-end">
+<div class="vol" data-vol=""><svg aria-hidden="true" class="icon vol-i"><use href="#i-vol-low"/></svg><div class="slider volume" data-slider="volume"><i class="sl-track"><i class="sl-fill"></i></i></div></div>
+<button aria-label="Lyrics" aria-pressed="false" class="ib" data-act="panel-lyrics" data-t-label="tab.lyrics" type="button"><svg aria-hidden="true" class="icon"><use href="#i-lyrics"/></svg></button>
+<button aria-label="Up next" aria-pressed="false" class="ib" data-act="panel-queue" data-t-label="queue.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-queue"/></svg></button>
+</div>
 </header>
-<div class="resume-slot" id="resume"></div>
+
+<main class="main" id="main" tabindex="-1">
+<div class="page-bar" id="page-bar"><button aria-label="Back" class="glass-btn back-btn" data-act="back" data-t-label="back" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-back"/></svg></button><p aria-hidden="true" class="page-bar-title" id="page-bar-title"></p><span class="page-bar-end" id="page-bar-end"></span></div>
 <div class="view" id="view"></div>
+<div aria-hidden="true" class="slot slot-pip-main" id="slot-pip-main"></div>
 </main>
 
-<section aria-label="Now playing" class="np" data-t-label="np.label" data-tab="lyrics" id="np">
-<div class="np-head">
-<button aria-label="Close the player" class="icon-btn np-close" data-act="sheet-close" data-t-label="np.close" type="button"><svg aria-hidden="true" class="icon"><use href="#i-down"/></svg></button>
-<div class="np-tabs" role="tablist">
-<button aria-selected="false" class="np-tab tab-cover" data-tab="cover" role="tab" type="button"><span data-t="tab.cover">Artwork</span></button>
-<button aria-selected="true" class="np-tab" data-tab="lyrics" role="tab" type="button"><span data-t="tab.lyrics">Lyrics</span></button>
-<button aria-selected="false" class="np-tab" data-tab="queue" role="tab" type="button"><span data-t="tab.queue">Queue</span></button>
+<aside aria-label="Lyrics and queue" class="panel" data-t-label="panel.label" hidden id="panel">
+<div class="panel-head"><div class="seg" role="tablist"><button aria-selected="true" class="seg-b" data-panel="lyrics" role="tab" type="button"><span data-t="tab.lyrics">Lyrics</span></button><button aria-selected="false" class="seg-b" data-panel="queue" role="tab" type="button"><span data-t="queue.next">Up next</span></button><i aria-hidden="true" class="seg-lens"></i></div></div>
+<div aria-hidden="true" class="slot slot-panel" id="slot-panel"></div>
+<div class="panel-body"><div class="ly-box panel-ly" data-lyrics="panel" role="tabpanel"></div><div class="q-box panel-q" data-queue="panel" hidden role="tabpanel"></div></div>
+</aside>
+
+<div class="chrome" id="chrome">
+<div aria-hidden="true" class="mini-band" id="mini-band"><div class="slot slot-mini" id="slot-mini"></div></div>
+<div class="mini glass" id="mini">
+<button aria-label="Open the player" class="mini-open" data-act="np-open" data-t-label="np.open" type="button"><span class="mini-cover"><img alt="" data-bind="cover" decoding="async" referrerpolicy="no-referrer"/></span><span class="mini-text"><b data-bind="title"></b><small data-bind="artist"></small></span></button>
+<button aria-label="Play" class="mini-b" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
+<button aria-label="Next" class="mini-b mini-next" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-skip"/></svg></button>
+<i aria-hidden="true" class="mini-progress"><i></i></i>
 </div>
+<nav aria-label="Tabs" class="tabs glass" data-t-label="nav.tabs" id="tabs">
+<i aria-hidden="true" class="tab-lens glass-sel"></i>
+<a class="tab" data-tab="home" href="#/"><svg aria-hidden="true" class="icon"><use href="#i-home"/></svg><span data-t="tab.home">Home</span></a>
+<a class="tab" data-tab="explore" href="#/explore"><svg aria-hidden="true" class="icon"><use href="#i-explore"/></svg><span data-t="tab.explore">Explore</span></a>
+<a class="tab" data-tab="library" href="#/library"><svg aria-hidden="true" class="icon"><use href="#i-library"/></svg><span data-t="tab.library">Library</span></a>
+<button aria-label="Show the tabs" class="tab-pill" data-act="pill" data-t-label="tabs.show" type="button"><svg aria-hidden="true" class="icon"><use href="#i-home"/></svg></button>
+</nav>
+<form class="bubble glass" id="bubble" role="search"><button aria-label="Search" class="bubble-b" data-act="search-open" data-t-label="search.label" type="button"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg></button><svg aria-hidden="true" class="icon bubble-i"><use href="#i-search"/></svg><input aria-controls="results" aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.ph" enterkeyhint="search" id="q2" placeholder="Search" tabindex="-1" type="search"/></form>
 </div>
-<div class="stage" id="stage">
-<img alt="" aria-hidden="true" class="stage-glow" decoding="async" id="stage-glow" referrerpolicy="no-referrer"/>
-<div class="stage-art"><video aria-hidden="true" class="stage-canvas" disablepictureinpicture disableremoteplayback id="stage-canvas" loop muted playsinline preload="none" tabindex="-1"></video><img alt="" class="stage-cover" decoding="async" id="stage-cover" referrerpolicy="no-referrer"/><div aria-hidden="true" class="stage-empty"><img alt="" height="72" src="assets/ketvoice-logo-vc-96.png" width="72"/></div></div>
-<div aria-hidden="true" class="slot slot-stage" id="slot-stage"></div>
-<div aria-hidden="true" class="slot slot-pip" id="slot-pip"></div>
+
+<section aria-label="Now playing" class="np" data-page="artwork" data-t-label="np.label" id="np" inert>
+<div aria-hidden="true" class="np-bg"><i class="np-mesh"></i></div>
+<div class="np-scene">
+<div class="np-art-wrap" id="np-art-wrap"><div class="np-art" id="stage"><video aria-hidden="true" class="stage-canvas" disablepictureinpicture disableremoteplayback id="stage-canvas" loop muted playsinline preload="none" tabindex="-1"></video><img alt="" class="stage-cover" decoding="async" id="stage-cover" referrerpolicy="no-referrer"/><span aria-hidden="true" class="stage-empty"><img alt="" height="72" src="assets/ketvoice-logo-vc-96.png" width="72"/></span><div aria-hidden="true" class="slot slot-stage" id="slot-stage"></div><div aria-hidden="true" class="slot slot-pip" id="slot-pip"></div></div></div>
+<p class="np-from" id="np-from"></p>
 </div>
-<p class="tap-hint" data-t="tap" hidden>Tap the video to start the sound.</p>
-<div class="np-meta">
-<div class="np-text"><p class="np-title" data-bind="title"></p><p class="np-artist" id="np-artist"></p><p class="np-via" id="np-via"></p></div>
-<button class="chip radio-chip" data-act="radio" data-t-label="radio.start" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-radio"/></svg><span data-t="radio">Radio</span></button>
-<button aria-pressed="false" class="chip video-toggle" data-act="video" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-video"/></svg><span data-t="video">Video</span></button>
-<button aria-pressed="false" class="icon-btn like" data-act="like" type="button"><svg aria-hidden="true" class="icon"><use href="#i-heart"/></svg></button>
+<button aria-label="Close the player" class="np-handle" data-act="np-close" data-t-label="np.close" type="button"><i></i></button>
+<div class="np-title np-title-big">
+<div class="np-tt"><p class="np-t" data-bind="title"></p><p class="np-a" data-bind="artist-link"></p></div>
+<button aria-pressed="false" class="circ like" data-act="like" type="button"><svg aria-hidden="true" class="icon i-h"><use href="#i-heart"/></svg><svg aria-hidden="true" class="icon i-hf"><use href="#i-heart-fill"/></svg></button>
+<button aria-haspopup="menu" aria-label="More" class="circ" data-act="np-menu" data-t-label="more" type="button"><svg aria-hidden="true" class="icon"><use href="#i-more"/></svg></button>
 </div>
-<div class="np-panels">
+<div class="np-title np-head">
+<button aria-label="Back to the artwork" class="np-head-art" data-act="np-page" data-page="artwork" data-t-label="np.artwork" type="button"><img alt="" data-bind="cover" decoding="async" referrerpolicy="no-referrer"/></button>
+<div class="np-tt"><p class="np-t" data-bind="title"></p><p class="np-a" data-bind="artist-link"></p></div>
+<button aria-pressed="false" class="circ like" data-act="like" type="button"><svg aria-hidden="true" class="icon i-h"><use href="#i-heart"/></svg><svg aria-hidden="true" class="icon i-hf"><use href="#i-heart-fill"/></svg></button>
+<button aria-haspopup="menu" aria-label="More" class="circ" data-act="np-menu" data-t-label="more" type="button"><svg aria-hidden="true" class="icon"><use href="#i-more"/></svg></button>
+</div>
+<div class="np-pane" id="np-pane">
 <div aria-hidden="true" class="slot slot-band" id="slot-band"></div>
-<div class="panel lyrics" id="lyrics" role="tabpanel"></div>
-<div class="panel queue" hidden id="queue" role="tabpanel"></div>
+<div class="ly-box np-ly" data-lyrics="np" role="region" aria-label="Lyrics" data-t-label="tab.lyrics"></div>
+<div class="q-box np-q" data-queue="np" hidden role="region" aria-label="Queue" data-t-label="tab.queue"></div>
 </div>
+<div class="np-controls" id="np-controls">
+<div class="np-line" id="np-line"></div>
+<div class="np-seek"><div class="slider seek big" data-slider="seek"><i class="sl-track"><i class="sl-fill"></i></i></div><div class="np-times"><span class="t-now" data-bind="now">0:00</span><span class="np-via" id="np-via"></span><span class="t-left" data-bind="left">-0:00</span></div></div>
 <div class="np-transport">
-<div class="seek"><span class="t-now" data-bind="now">0:00</span><input aria-label="Position" class="range seek-range" data-t-label="seek" max="1000" min="0" step="1" type="range" value="0"/><span class="t-dur" data-bind="dur">0:00</span></div>
-<div class="controls">
-<button aria-label="Shuffle" aria-pressed="false" class="icon-btn c-shuffle" data-act="shuffle" data-t-label="c.shuffle" type="button"><svg aria-hidden="true" class="icon"><use href="#i-shuffle"/></svg></button>
-<button aria-label="Previous" class="icon-btn c-prev" data-act="prev" data-t-label="c.prev" type="button"><svg aria-hidden="true" class="icon"><use href="#i-prev"/></svg></button>
-<button aria-label="Play" class="play-btn" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
-<button aria-label="Next" class="icon-btn c-next" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-next"/></svg></button>
-<button aria-label="Repeat" aria-pressed="false" class="icon-btn c-repeat" data-act="repeat" data-t-label="c.repeat" type="button"><svg aria-hidden="true" class="icon"><use href="#i-repeat"/></svg><i aria-hidden="true" class="one">1</i></button>
+<button aria-label="Previous" class="tp" data-act="prev" data-t-label="c.prev" type="button"><svg aria-hidden="true" class="icon"><use href="#i-prev"/></svg></button>
+<button aria-label="Play" class="tp tp-play" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
+<button aria-label="Next" class="tp" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-next"/></svg></button>
 </div>
-<div class="volume"><button aria-label="Mute" class="icon-btn" data-act="mute" data-t-label="c.mute" type="button"><svg aria-hidden="true" class="icon i-vol"><use href="#i-volume"/></svg><svg aria-hidden="true" class="icon i-mute"><use href="#i-mute"/></svg></button><input aria-label="Volume" class="range vol-range" max="100" min="0" step="1" type="range" value="100"/></div>
+<div class="vol np-vol" data-vol=""><svg aria-hidden="true" class="icon vol-i"><use href="#i-vol-low"/></svg><div class="slider volume big" data-slider="volume"><i class="sl-track"><i class="sl-fill"></i></i></div><svg aria-hidden="true" class="icon vol-hi"><use href="#i-vol-high"/></svg></div>
+<div class="np-bottom np-bottom-main">
+<button aria-label="Lyrics" aria-pressed="false" class="circ clear" data-act="np-page" data-page="lyrics" data-t-label="tab.lyrics" type="button"><svg aria-hidden="true" class="icon"><use href="#i-lyrics"/></svg></button>
+<div class="np-cap glass-dark"><button aria-label="Output" class="cap-b" data-act="output" data-t-label="output" type="button"><svg aria-hidden="true" class="icon"><use href="#i-laptop"/></svg></button><i aria-hidden="true"></i><button aria-label="Account" class="cap-b" data-act="account" data-t-label="me.label" type="button"><svg aria-hidden="true" class="icon"><use href="#i-person"/></svg></button></div>
+<button aria-label="Queue" aria-pressed="false" class="circ clear" data-act="np-page" data-page="queue" data-t-label="tab.queue" type="button"><svg aria-hidden="true" class="icon"><use href="#i-queue"/></svg></button>
 </div>
-<p class="ios-note" data-t="ios.note" hidden>On iPhone, Safari stops a YouTube video embedded in a page when it goes to the background or the screen locks: keep Safari open while this title plays. The other titles keep playing in the background.</p>
+<div class="np-bottom np-bottom-queue">
+<div class="np-cap np-cap-wide glass-dark">
+<button aria-pressed="false" class="cap-b q-seg" data-act="nofade" type="button"><svg aria-hidden="true" class="icon"><use href="#i-rings"/></svg></button>
+<button aria-label="Shuffle" aria-pressed="false" class="cap-b q-seg" data-act="shuffle" data-t-label="c.shuffle" type="button"><svg aria-hidden="true" class="icon"><use href="#i-shuffle"/></svg></button>
+<button aria-label="Repeat" aria-pressed="false" class="cap-b q-seg c-repeat" data-act="repeat" data-t-label="c.repeat" type="button"><svg aria-hidden="true" class="icon i-rep"><use href="#i-repeat"/></svg><svg aria-hidden="true" class="icon i-rep1"><use href="#i-repeat-one"/></svg></button>
+<button aria-label="Radio" aria-pressed="false" class="cap-b q-seg" data-act="radio" data-t-label="radio.start" type="button"><svg aria-hidden="true" class="icon"><use href="#i-infinity"/></svg></button>
+</div>
+<button aria-label="Close the queue" class="circ q-close" data-act="np-page" data-page="artwork" data-t-label="queue.close" type="button"><svg aria-hidden="true" class="icon"><use href="#i-queue"/></svg></button>
+</div>
+<p class="np-device" id="np-device"></p>
+</div>
+<p class="np-note" data-t="ios.note" hidden>On iPhone, Safari stops a YouTube video embedded in a page when it goes to the background or the screen locks: keep Safari open while this title plays. The other titles keep playing in the background.</p>
 </section>
 
-<footer class="bar" id="bar">
-<div aria-hidden="true" class="mini-band" id="mini-band"><div class="slot slot-mini" id="slot-mini"></div></div>
-<div class="bar-row">
-<div class="bar-now">
-<button aria-label="Open the player" class="bar-open" data-act="sheet-open" data-t-label="np.open" type="button"><img alt="" class="bar-cover" data-bind="cover" decoding="async" referrerpolicy="no-referrer"/><span class="bar-text"><b data-bind="title"></b><small data-bind="artist"></small></span></button>
-<button aria-pressed="false" class="icon-btn like" data-act="like" type="button"><svg aria-hidden="true" class="icon"><use href="#i-heart"/></svg></button>
-</div>
-<div class="bar-mid">
-<div class="controls">
-<button aria-label="Shuffle" aria-pressed="false" class="icon-btn c-shuffle" data-act="shuffle" data-t-label="c.shuffle" type="button"><svg aria-hidden="true" class="icon"><use href="#i-shuffle"/></svg></button>
-<button aria-label="Previous" class="icon-btn c-prev" data-act="prev" data-t-label="c.prev" type="button"><svg aria-hidden="true" class="icon"><use href="#i-prev"/></svg></button>
-<button aria-label="Play" class="play-btn" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
-<button aria-label="Next" class="icon-btn c-next" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-next"/></svg></button>
-<button aria-label="Repeat" aria-pressed="false" class="icon-btn c-repeat" data-act="repeat" data-t-label="c.repeat" type="button"><svg aria-hidden="true" class="icon"><use href="#i-repeat"/></svg><i aria-hidden="true" class="one">1</i></button>
-</div>
-<div class="seek"><span class="t-now" data-bind="now">0:00</span><input aria-label="Position" class="range seek-range" data-t-label="seek" max="1000" min="0" step="1" type="range" value="0"/><span class="t-dur" data-bind="dur">0:00</span></div>
-</div>
-<div class="bar-end">
-<button class="icon-btn" data-act="radio" data-t-label="radio.start" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-radio"/></svg></button>
-<button aria-pressed="false" class="icon-btn" data-act="video" data-t-label="video" type="button"><svg aria-hidden="true" class="icon"><use href="#i-video"/></svg></button>
-<button aria-pressed="false" class="icon-btn" data-act="tab-lyrics" data-t-label="tab.lyrics" type="button"><svg aria-hidden="true" class="icon"><use href="#i-lyrics"/></svg></button>
-<button aria-pressed="false" class="icon-btn" data-act="tab-queue" data-t-label="tab.queue" type="button"><svg aria-hidden="true" class="icon"><use href="#i-queue"/></svg></button>
-<div class="volume"><button aria-label="Mute" class="icon-btn" data-act="mute" data-t-label="c.mute" type="button"><svg aria-hidden="true" class="icon i-vol"><use href="#i-volume"/></svg><svg aria-hidden="true" class="icon i-mute"><use href="#i-mute"/></svg></button><input aria-label="Volume" class="range vol-range" max="100" min="0" step="1" type="range" value="100"/></div>
-</div>
-<button aria-label="Play" class="play-btn mini-play" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
-<button aria-label="Next" class="icon-btn mini-next-btn" data-act="next" data-t-label="c.next" type="button"><svg aria-hidden="true" class="icon"><use href="#i-next"/></svg></button>
-</div>
-<div aria-hidden="true" class="mini-progress"><i></i></div>
-</footer>
 </div>
 
+<div class="menu-host" hidden id="menu"></div>
+<div class="sheet-host" hidden id="sheet"></div>
 <div class="yt-dock off" id="yt-dock"><div id="yt-host"></div></div>
 <audio id="audio" playsinline preload="metadata"></audio>
 <audio id="audio2" playsinline preload="metadata"></audio>
@@ -174,7 +220,7 @@
 <script src="js/player/core.js?v=202611182100"></script>
 <script src="js/player/api.js?v=202611182100"></script>
 <script src="js/player/catalog.js?v=202611182230"></script>
-<script src="js/player/engine.js?v=202611182100"></script>
-<script src="js/player/app.js?v=202611182100"></script>
+<script src="js/player/engine.js?v=202611190100"></script>
+<script src="js/player/app.js?v=202611190100"></script>
 </body>
 </html>
