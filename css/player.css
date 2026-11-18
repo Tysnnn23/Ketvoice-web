@@ -22,7 +22,7 @@
   --accent-ink:#ff9cc6;
   --track:rgba(255,255,255,.16);
   --sunset:linear-gradient(90deg,#ffd36e,#ff8f5a 34%,#ff5c9d 68%,#a46bff);
-  --ly-dim:rgba(247,242,252,.46);--ly-past:rgba(247,242,252,.34);
+  --ly-dim:rgba(247,242,252,.5);--ly-past:rgba(247,242,252,.4);
   --shadow:0 24px 70px rgba(0,0,0,.45);
   --bar-h:84px;
   color-scheme:dark;
@@ -38,7 +38,7 @@ html.light{
   --accent:#ffc3dc;--accent-hover:#ffadd0;--on-accent:#150a27;
   --accent-ink:#b8326b;
   --track:rgba(20,10,38,.14);
-  --ly-dim:rgba(21,10,39,.5);--ly-past:rgba(21,10,39,.38);
+  --ly-dim:rgba(21,10,39,.56);--ly-past:rgba(21,10,39,.46);
   --shadow:0 24px 60px rgba(40,20,70,.16);
   color-scheme:light;
 }
@@ -167,7 +167,7 @@ html.light .form-error{color:#b4204a}
 .form-error:empty{display:none}
 #signin .btn{height:48px}
 .auth-fine{color:var(--faint);font-size:13px;line-height:20px}
-.auth-foot{color:var(--faint);font-size:13px;text-align:center}
+.auth-foot{color:var(--muted);font-size:13px;text-align:center}
 .auth-foot a{color:var(--muted);border-bottom:1px solid currentColor}
 html.motion .auth-card{animation:kv-rise .9s var(--out) both}
 html.motion .auth-card>*{animation:kv-rise .8s var(--out) both;animation-delay:calc(var(--k,0)*60ms + 120ms)}

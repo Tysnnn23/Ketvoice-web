@@ -39,6 +39,64 @@ moment » are one or two lines from LRCLIB's synced lyrics (the line at `t`, els
 whole text. Preview tags (Open Graph / Twitter) are static: link-preview robots do not run JavaScript, and per-title
 previews would need server rendering.
 
+## Web player (`/player`)
+
+Owner, 2026-11-18, chosen: « Lecteur web (iPhone/PC) : écouter Ketvoice dans le navigateur depuis le site, avec ton
+compte et ta bibliothèque synchronisée ». `player.html` (served at `/player` by the `vercel.json` rewrite),
+`css/player.css`, `js/player/{core,api,engine,app}.js`; linked as « Listen on the web » from the nav, the mobile menu,
+the footer and a card under the downloads (the nav pill is 920 px wide since, so six links fit on one line).
+- Account: the app's Supabase Auth over REST with the publishable (anon) key only — e-mail and password
+  (`/auth/v1/token?grant_type=password`), or « Continue with Discord » through `/auth/v1/authorize` with PKCE back to
+  `/player` (`?code=` exchanged with `grant_type=pkce`). Session in `localStorage` (`kv-player-session`), renewed a
+  minute before it expires, one refresh at a time (also across tabs, refresh tokens being single use), a 401 renews
+  and retries once, a refused refresh signs out. The server clock comes from the token's `iat` (Supabase does not
+  expose `Date` to browsers). Signing up stays in the app.
+- Library: `ketvoice_library` (owner-only RLS) — favourites (newest first; a bare `{"id":…}` is kept), playlists in
+  the account's order, followed artists (blocked ones left out), plus the shared playlists
+  (`ketvoice_shared_playlists` / `_tracks`, read only here) and the profile name and photo (a signed URL of the
+  private bucket). « Reprendre / Resume here » offers `now_playing` written by another device less than 12 hours ago
+  (live when it was playing in the last minute) and continues at the position it has reached.
+- Written back, the app's way (`sync/SyncDoc.kt`, `SyncKinds.kt`, `LibrarySync.kt`, `NowPlayingSync.kt`): a favourite
+  added or removed is a `{"t":…,"v":<title as DownloadQueue.trackToJson, cleaned like SyncTracks.clean>}` item or a
+  `{"t":…,"d":true}` tombstone in `{"v":1,"items":{…}}`, stamped with the server time and always newer than the
+  cloud's copy, written with `PATCH …&revision=eq.N` (four tries when another device wrote first; an insert that
+  meets a row created meanwhile becomes an update); 90-day-old tombstones are pruned. `now_playing` is upserted
+  (`on_conflict=user_id,kind`) every 15 s while playing, on each title or play/pause change and when the tab hides,
+  with the app's document (`device_id` `web-<uuid>`, `device_name` « Web · Safari · iPhone », a window of 50 titles).
+  Playlists and settings are not written from the web.
+- Search: the app's catalogue search is YouTube Music's InnerTube API, which a browser cannot call (no CORS); the web
+  player searches the listener's library and the titles published on Ketvoice (`ketvoice-content/search`, public,
+  CORS `*`), and says so under the results.
+- Playback: a title whose id is `yt:<11 characters>` (or with a `videoId`) plays in the official YouTube IFrame Player
+  API (`youtube-nocookie.com`, YouTube's own controls on), which always stays visible at 200 × 200 px or more: over
+  the artwork (« Video » on), in a corner of the artwork (« Video » off), in a band above the iPhone mini-player or
+  above the lyrics in the sheet — one fixed element moved over the slot of the current layout, never hidden off
+  screen. `kv:upload:` titles play their public file in an `<audio>` element (`ketvoice-content/track`). Other
+  titles (addon sources) are marked « App » and skipped. Queue, next/previous (previous restarts after 3 s), shuffle
+  (reorders the queue, as in the app), repeat off/all/one, seek, volume (not on iOS, where the hardware buttons set
+  it), Media Session (lock screen, media keys), keyboard (Space/K, ←/→ ±5 s, Shift+←/→ or P/N, M, L, `/`, Esc).
+  An embedding refusal (YouTube errors 101/150) is said and the next title plays. A browser that blocks the first
+  sound asks to tap the video.
+- iPhone: Safari stops an embedded YouTube video when it goes to the background or the screen locks; the sheet says
+  so (only on iOS) instead of promising background playback. Published Ketvoice titles keep playing.
+- Lyrics: LRCLIB the app's way (up to three searches, the closest synced answer, credits dropped), highlighted line by
+  line by colour only — no blur, no glow — kept in view unless the listener scrolls; a line seeks when clicked; one
+  tab stop (the sung line), arrows move between lines.
+- Design: the site at night — the striped sun, the neon floor and the sunset gradient behind glass panels, Geist and
+  Geist Mono, motion on cubic-bezier(.22,1,.36,1) with a little spring (rows rise in, the artwork steps back on pause,
+  the heart pops, the sheet slides like iOS); nothing moves with reduced motion. Dark by default, light in the account
+  menu (`ketvoice-player-theme`). Desktop ≥ 1024 px: library sidebar, main, now-playing panel (artwork, lyrics or
+  queue), transport bar. Below: a mini-player and a full-screen sheet (Artwork / Lyrics / Queue, swipe down or Esc to
+  close, focus kept inside). French or English from the browser's language.
+- Tests: `node tests/player-sync.test.cjs` (document format, merge, favourites, playlists, artists, shared rows, now
+  playing, LRC, PKCE) and `node tests/player-api.test.cjs` (a fake Supabase with recorded shapes: sign-in, refresh,
+  revision races, upsert, Discord, content, lyrics). Rendered with Playwright at 1440, 1024, 390 and 360 px, signed in
+  with mocked Supabase/YouTube/LRCLIB answers, with and without reduced motion: no horizontal overflow, no console
+  errors, text contrast measured on rendered pixels (lyrics lines are large text, ≥ 3:1 when not sung).
+- Not verified here: a real sign-in, a real Discord round trip and real YouTube playback (no credentials or network
+  for them in the test runs); on Supabase, `https://ketvoice-web.vercel.app/player` must be in Auth → URL
+  Configuration → Redirect URLs for Discord to come back to the player.
+
 ## Vice City edition (until 10 December 2026)
 
 The site wears the limited Vice City theme of the app in the design language of
@@ -47,7 +105,7 @@ recreated with original code, copy and art:
 - Light first (`#f3f4f6` / white surfaces, ink `#0e0820`), dark on the toggle (saved in
   `localStorage`). Geist for all text (52/60 hero, 40/48 sections, 20/28 titles, 16/24 body),
   Geist Mono for the `/slash` tags and small UI, from Google Fonts. Flat surfaces with hairline
-  rings, 8 px buttons, a floating 800 px nav pill, a pink accent for actions.
+  rings, 8 px buttons, a floating nav pill (800 px, 920 px since the web player link), a pink accent for actions.
 - Structure: centred hero with a split download button (its menu lists the editions the
   latest release carries) → the owner's VI sunset as the showcase, with the player on a
   phone and the « Vice City edition · Not affiliated with Rockstar Games » caption → a
@@ -522,6 +580,7 @@ phone/Quest validation.
 - `assets/` — theme toggle, app screenshots from 6.1.2 (`app-*`, owner tools and account name blurred), song covers (`cover-*`), the Vice City logo (`ketvoice-logo-vc-*`), banner
   (`banner-vc-*`) and hero art (`hero-vi-*`)
 - `tests/release-assets.test.cjs` — release asset selection (`node tests/release-assets.test.cjs`)
+- `player.html`, `css/player.css`, `js/player/` — the web player (`/player`, see above); `tests/player-sync.test.cjs`, `tests/player-api.test.cjs` and `tests/fixtures/player-library.json`
 
 ## Run locally
 
