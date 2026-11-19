@@ -1,0 +1,104 @@
+/* Hallmark · v2.0.0 · theme: incumbent (ketvoice-web css/style.css: Geist, hairline rings, pink accent) · genre: atmospheric · signature: the Ketmix timeline, played live · scope: component (home section) + page (/ketmix) */
+/* critique: the timeline is the content; the controls sit under it in one row, nothing decorates it; the box is the only thing in the accent. */
+/* Hallmark · waive 24b · off-scale spacing · the demo sits inside the home page, whose controls use 9, 14 and 18 px steps; it matches them */
+/* Ketmix demo (js/ketmix/demo.js): the timeline of the app's editor (KetmixTimeline.kt) drawn on a canvas, the
+   box of the transition a focusable element above it. Data in fixed hues (bass orange, filter blue, as the app's
+   TimelineInk), the box in the site's pink. Uses the site's tokens (--ink, --card, --ring…) from style.css. */
+:root{
+  --kx-font:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --kx-wave:#0e0820;--kx-vol:#0e0820;--kx-bass:#b25000;--kx-filter:#0a6e9e;--kx-box:#c2366f;
+  --kx-grid:#0e0820;--kx-text:#4c5064;--kx-pressed-bg:#0e0820;--kx-pressed-ink:#fbf9fe;--kx-panel:#fdfcfe;--kx-focus:#c2366f;
+  /* the dark theme's values; html.dark (the site's theme switch) points the tokens at them */
+  --kx-wave-dark:#f3eff8;--kx-panel-dark:#17121f;--kx-vol-dark:#f3eff8;--kx-bass-dark:#ffb340;--kx-filter-dark:#5ac8fa;--kx-box-dark:#ff9cc6;--kx-grid-dark:#f3eff8;--kx-text-dark:#b9b2c7;--kx-pressed-bg-dark:#f3eff8;--kx-pressed-ink-dark:#0c0913;--kx-focus-dark:#ff9cc6;
+}
+html.dark{
+  --kx-wave:var(--kx-wave-dark);--kx-panel:var(--kx-panel-dark);--kx-vol:var(--kx-vol-dark);--kx-bass:var(--kx-bass-dark);--kx-filter:var(--kx-filter-dark);--kx-box:var(--kx-box-dark);--kx-grid:var(--kx-grid-dark);--kx-text:var(--kx-text-dark);--kx-pressed-bg:var(--kx-pressed-bg-dark);--kx-pressed-ink:var(--kx-pressed-ink-dark);--kx-focus:var(--kx-focus-dark);
+}
+
+.kx-section{padding:120px 0}
+.kx-section .sec-head{margin-bottom:40px}
+.kx-more{margin-top:20px;font-size:14px;line-height:22px}
+.kx-more a{border-bottom:1px solid currentColor;font-weight:500}
+.kx-more a:hover{color:var(--kx-box)}
+.kx-more a:focus-visible{outline:2px solid var(--kx-focus);outline-offset:3px}
+.kx-nojs{color:var(--muted);font-size:14px}
+.kx-ready .kx-nojs{display:none}
+
+.kx-panel{display:grid;gap:12px;padding:20px;border-radius:20px;background:var(--kx-panel);box-shadow:inset 0 0 0 1px var(--ring);min-width:0}
+.kx-deck{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;font-size:15px;line-height:22px;min-width:0}
+.kx-deck strong{font-weight:500}
+.kx-role,.kx-meta{color:var(--muted);font-size:13px}
+.kx-role{min-width:64px}
+
+.kx-stage{position:relative;height:232px;border-radius:14px;background:var(--soft);touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.kx-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.kx-box{position:absolute;top:0;bottom:0;border-radius:12px;cursor:grab;touch-action:none}
+.kx-box:hover{background:color-mix(in srgb,var(--kx-box) 8%,transparent)}
+.kx-box:focus-visible{outline:2px solid var(--kx-focus);outline-offset:2px}
+.kx-box.kx-dragging{cursor:grabbing;background:color-mix(in srgb,var(--kx-box) 12%,transparent)}
+.kx-grip{position:absolute;top:0;bottom:0;width:28px;cursor:ew-resize}
+.kx-grip-s{left:-14px}
+.kx-grip-e{right:-14px}
+.kx-fixed .kx-grip{display:none}
+
+.kx-legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0;padding:0;list-style:none;color:var(--muted);font-size:13px;line-height:20px}
+.kx-legend li{display:flex;align-items:center;gap:8px}
+.kx-legend i{display:block;width:22px;height:0;border-top:2.5px solid var(--kx-vol)}
+.kx-l-bass i{border-top:2px dashed var(--kx-bass)}
+.kx-l-filter i{border-top:2.5px dotted var(--kx-filter)}
+
+.kx-controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:4px}
+.kx-play{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px 0 14px;border-radius:8px;background:var(--accent);color:var(--on-accent);font-size:15px;font-weight:500;transition:background-color .15s,transform .15s}
+.kx-play svg{width:16px;height:16px;fill:currentColor}
+.kx-play:hover{background:var(--accent-hover)}
+.kx-play:active{transform:scale(.97)}
+.kx-play:focus-visible,.kx-ab button:focus-visible,.kx-chip:focus-visible{outline:2px solid var(--kx-focus);outline-offset:2px}
+.kx-play:disabled{opacity:.5;cursor:not-allowed}
+.kx-ab{display:inline-flex;padding:3px;border-radius:10px;box-shadow:inset 0 0 0 1px var(--ring)}
+.kx-ab button{height:38px;padding:0 14px;border-radius:7px;font-size:14px;transition:background-color .15s,color .15s}
+.kx-ab button:hover{background:var(--soft)}
+.kx-ab button[aria-pressed="true"]{background:var(--kx-pressed-bg);color:var(--kx-pressed-ink)}
+.kx-presets{display:flex;flex-wrap:wrap;gap:8px}
+.kx-chip{height:36px;padding:0 14px;border-radius:18px;box-shadow:inset 0 0 0 1px var(--ring);font-size:14px;transition:background-color .15s,color .15s,box-shadow .15s}
+.kx-chip:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+.kx-chip:active{transform:scale(.97)}
+.kx-chip[aria-checked="true"]{background:var(--kx-pressed-bg);color:var(--kx-pressed-ink);box-shadow:none}
+.kx-chip:disabled{opacity:.45;cursor:not-allowed}
+.kx-status{min-height:44px;font-size:14px;line-height:22px;color:var(--ink);max-width:68ch}
+.kx-hint{color:var(--muted);font-size:13px;line-height:20px}
+
+@media (max-width:640px){
+  .kx-section{padding:80px 0}
+  .kx-panel{padding:14px;border-radius:16px}
+  .kx-stage{height:184px}
+  .kx-role{min-width:0}
+  .kx-controls{gap:8px}
+  .kx-ab button{padding:0 11px}
+}
+@media (prefers-reduced-motion:reduce){
+  .kx-play,.kx-ab button,.kx-chip{transition:none}
+  .kx-play:active,.kx-chip:active{transform:none}
+}
+
+/* ---------- /ketmix, the page ---------- */
+html.kx-page,html.kx-page body{overflow-x:clip}
+.kx-page body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+.kx-top{display:flex;align-items:center;justify-content:space-between;gap:16px;width:min(1120px,100% - 32px);margin:0 auto;padding:20px 0}
+.kx-top .brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:500}
+.kx-top .brand img{width:28px;height:28px;border-radius:7px}
+.kx-top a:focus-visible{outline:2px solid var(--kx-focus);outline-offset:3px;border-radius:6px}
+.kx-main{flex:1;width:min(1120px,100% - 32px);margin:0 auto;padding:40px 0 80px;display:grid;gap:32px}
+.kx-hero{display:grid;gap:14px;max-width:720px}
+.kx-hero h1{text-wrap:balance;font-size:56px;line-height:60px;font-weight:500;letter-spacing:-.015em;overflow-wrap:break-word;min-width:0}
+.kx-hero p{font-size:18px;line-height:28px;color:var(--muted);max-width:46ch}
+.kx-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:8px 0 0;padding:0;list-style:none}
+.kx-notes h2{font-size:17px;line-height:24px;font-weight:500;margin:0 0 6px}
+.kx-notes p{color:var(--muted);font-size:15px;line-height:23px}
+.kx-foot{width:min(1120px,100% - 32px);margin:0 auto;padding:24px 0 40px;color:var(--muted);font-size:13px;line-height:20px;border-top:1px solid var(--line)}
+.kx-foot a{border-bottom:1px solid currentColor}
+@media (max-width:760px){
+  .kx-hero h1{text-wrap:balance;font-size:38px;line-height:44px}
+  .kx-hero p{font-size:16px;line-height:25px}
+  .kx-notes{grid-template-columns:minmax(0,1fr);gap:18px}
+  .kx-main{padding-top:16px;gap:24px}
+}
