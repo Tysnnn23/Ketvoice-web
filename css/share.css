@@ -1,0 +1,107 @@
+/* Hallmark · v2.0.0 · theme: incumbent (ketvoice-web: Geist, hairline rings, pink accent, listen.html's tokens) · genre: atmospheric · shape: catalogue page, the artwork leads · signature: the cover or the artist's photo, set big beside the name · job: listen (open in the app) */
+/* critique: the picture and the name carry the first screen; one pink action; lists stay quiet with hairlines; no cards inside cards, no labels above heads. */
+/* Public pages: /artist/…, /album/…, /u/… (api/og-page.js, js/share-render.js, js/share.js). */
+:root{
+  --font:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --bg:#f3f4f6;--card:#ffffff;--soft:#e9eaee;--ink:#0e0820;--muted:#4c5064;
+  --line:rgba(14,8,32,.12);--ring:rgba(14,8,32,.16);
+  --accent:#ffc3dc;--accent-hover:#ffadd0;--on-accent:#0e0820;--tint:#fdecf4;--focus:#c2366f;
+  color-scheme:light;
+}
+html.dark{
+  --bg:#0c0913;--card:#17121f;--soft:#1d1727;--ink:#f3eff8;--muted:#b9b2c7;
+  --line:rgba(255,255,255,.11);--ring:rgba(255,255,255,.18);
+  --accent:#ff9cc6;--accent-hover:#ffb3d3;--on-accent:#0e0820;--tint:#22152b;--focus:#ff9cc6;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{overflow-x:clip}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font:400 16px/24px var(--font);-webkit-font-smoothing:antialiased}
+h1,h2,p,ol,ul{margin:0}
+ol,ul{padding:0;list-style:none}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
+.sh-skip{position:fixed;left:16px;top:-60px;z-index:10;padding:10px 14px;border-radius:8px;background:var(--ink);color:var(--bg)}
+.sh-skip:focus-visible{top:16px}
+.sh-vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+
+.sh-top,.sh-main,.sh-foot{width:min(1120px,100% - 32px);margin-inline:auto}
+.sh-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0}
+.sh-brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:500}
+.sh-brand img{width:28px;height:28px;border-radius:7px}
+.sh-main{flex:1;padding:32px 0 96px}
+
+.sh-btn{display:inline-flex;align-items:center;justify-content:center;height:44px;padding:0 18px;border-radius:8px;font-size:15px;font-weight:500;white-space:nowrap;transition:background-color .15s,box-shadow .15s,transform .15s}
+.sh-btn:active{transform:scale(.97)}
+.sh-btn-accent{background:var(--accent);color:var(--on-accent)}
+.sh-btn-accent:hover{background:var(--accent-hover)}
+.sh-btn-line{background:var(--card);box-shadow:inset 0 0 0 1px var(--ring)}
+.sh-btn-line:hover{box-shadow:inset 0 0 0 1px var(--ink)}
+
+.sh-hero{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:56px;align-items:end}
+.sh-hero-plain{display:block;padding:72px 0}
+.sh-hero-profile{grid-template-columns:minmax(0,240px) minmax(0,1fr);align-items:center}
+.sh-hero-profile .sh-initial{font-size:96px}
+.sh-art{width:100%;aspect-ratio:1;object-fit:cover;border-radius:20px;background:var(--soft)}
+.sh-round{border-radius:50%}
+.sh-initial{display:grid;place-items:center;background:var(--tint);color:var(--muted);font-size:120px;line-height:1;font-weight:500}
+.sh-head{display:grid;gap:12px;min-width:0;padding-bottom:8px}
+.sh-head h1{font-size:72px;line-height:76px;font-weight:500;letter-spacing:-.02em;overflow-wrap:break-word;min-width:0}
+.sh-lead{color:var(--muted);font-size:17px;line-height:26px;max-width:52ch}
+.sh-by{font-size:22px;line-height:30px;font-weight:500}
+.sh-by a{border-bottom:1px solid var(--ring)}
+.sh-by a:hover{border-bottom-color:currentColor}
+.sh-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+
+.sh-block{margin-top:72px}
+.sh-block > h2,.sh-note h2{font-size:22px;line-height:30px;font-weight:500;margin-bottom:16px}
+.sh-tracks{border-top:1px solid var(--line)}
+.sh-tracks li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}
+.sh-thumb{width:44px;height:44px;border-radius:6px;object-fit:cover;background:var(--soft)}
+.sh-n{width:28px;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums}
+.sh-t{display:grid;min-width:0}
+.sh-title{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.sh-sub2{color:var(--muted);font-size:14px;line-height:20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sh-d{color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+.sh-e{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:3px;background:var(--soft);color:var(--muted);font-size:10px;text-decoration:none;vertical-align:1px}
+
+.sh-grid,.sh-people{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:24px 18px}
+.sh-grid a,.sh-card,.sh-people a{display:grid;gap:4px;min-width:0}
+.sh-cover{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--soft);margin-bottom:6px;transition:transform .2s}
+.sh-grid a:hover .sh-cover{transform:scale(1.02)}
+.sh-grid a:hover .sh-title,.sh-people a:hover .sh-title{text-decoration:underline;text-underline-offset:3px}
+.sh-face{width:100%;aspect-ratio:1;object-fit:cover;border-radius:50%;background:var(--soft);margin-bottom:6px}
+.sh-face.sh-initial{font-size:40px}
+.sh-people .sh-title{text-align:center}
+.sh-about p{max-width:68ch;color:var(--muted);font-size:16px;line-height:26px}
+.sh-listening{display:grid;gap:2px;margin-bottom:40px}
+.sh-note{max-width:520px;padding:24px;border-radius:16px;box-shadow:inset 0 0 0 1px var(--ring)}
+.sh-note p{color:var(--muted);margin-bottom:18px}
+.sh-blank{display:block}
+.sh-art,.sh-cover,.sh-face{height:auto}
+
+.sh-foot{padding:24px 0 40px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;line-height:20px}
+.sh-foot a{border-bottom:1px solid currentColor}
+
+@media (max-width:1023px){
+  .sh-hero{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:36px}
+  .sh-head h1{font-size:52px;line-height:56px}
+  .sh-grid,.sh-people{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .sh-main{padding-top:8px}
+  .sh-hero{grid-template-columns:minmax(0,1fr);gap:24px}
+  .sh-hero .sh-art{width:min(100%,320px)}
+  .sh-hero-profile .sh-art{width:min(100%,200px)}
+  .sh-head h1{font-size:40px;line-height:44px}
+  .sh-block{margin-top:48px}
+  .sh-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 14px}
+  .sh-people{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px}
+  .sh-actions .sh-btn{flex:1 1 auto}
+}
+@media (prefers-reduced-motion:reduce){
+  .sh-btn,.sh-cover{transition:none}
+  .sh-btn:active,.sh-grid a:hover .sh-cover{transform:none}
+}

@@ -1,7 +1,14 @@
 {
   "rewrites": [
     { "source": "/changelog", "destination": "/changelog.html" },
-    { "source": "/listen", "destination": "/listen.html" },
-    { "source": "/player", "destination": "/player.html" }
-  ]
+    { "source": "/listen", "destination": "/api/og-page?type=listen" },
+    { "source": "/player", "destination": "/player.html" },
+    { "source": "/ketmix", "destination": "/ketmix.html" },
+    { "source": "/artist/:id", "destination": "/api/og-page?type=artist&id=:id" },
+    { "source": "/album/:id", "destination": "/api/og-page?type=album&id=:id" },
+    { "source": "/u/:handle", "destination": "/api/og-page?type=profile&id=:handle" }
+  ],
+  "functions": {
+    "api/og-page.js": { "includeFiles": "listen.html", "maxDuration": 10 }
+  }
 }
