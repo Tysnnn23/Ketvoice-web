@@ -67,6 +67,7 @@
       ketmix: 'Ketmix', 'ketmix.tip': 'Titles blend into each other like a mix, on the beat when the tempo is found',
       'ketmix.on': 'Ketmix on: titles blend like in a mix', 'ketmix.off': 'Ketmix off', 'ketmix.note': 'Ketmix blends titles played from Ketvoice and the Ketvoice API. A YouTube title fades out instead.',
       mixing: 'Mixing', 'mixing.beat': 'Mixing · {n} beats',
+      install: 'Install the app', 'install.done': 'Ketvoice is installed',
       'menu.pl': 'Add to a playlist', 'pl.added': 'Added to « {p} »', 'pl.already': 'Already in « {p} »', 'pl.failed': 'Could not add it, try again', 'pl.none': 'Make a playlist in the app first',
       'artist.top': 'Top songs', 'artist.albums': 'Albums', 'artist.singles': 'Singles and EPs', 'artist.related': 'Fans also like', 'artist.about': 'About',
       'artist.open': 'Artist page', 'artist.error': 'This page could not be opened. Try again in a moment.', 'tag.album': 'Album', 'tag.artist': 'Artist',
@@ -131,6 +132,7 @@
       ketmix: 'Ketmix', 'ketmix.tip': 'Les titres s’enchaînent comme dans un mix, sur le temps quand le tempo est trouvé',
       'ketmix.on': 'Ketmix activé : les titres s’enchaînent comme dans un mix', 'ketmix.off': 'Ketmix désactivé', 'ketmix.note': 'Ketmix mixe les titres lus depuis Ketvoice et l’API Ketvoice. Un titre YouTube s’efface en fondu à la place.',
       mixing: 'Mixage', 'mixing.beat': 'Mixage · {n} temps',
+      install: 'Installer l’app', 'install.done': 'Ketvoice est installé',
       'menu.pl': 'Ajouter à une playlist', 'pl.added': 'Ajouté à « {p} »', 'pl.already': 'Déjà dans « {p} »', 'pl.failed': 'Ajout impossible, réessayez', 'pl.none': 'Créez d’abord une playlist dans l’app',
       'artist.top': 'Titres populaires', 'artist.albums': 'Albums', 'artist.singles': 'Singles et EP', 'artist.related': 'Les fans aiment aussi', 'artist.about': 'À propos',
       'artist.open': 'Page de l’artiste', 'artist.error': 'Cette page n’a pas pu s’ouvrir. Réessayez dans un instant.', 'tag.album': 'Album', 'tag.artist': 'Artiste',
@@ -1418,6 +1420,7 @@
       case 'radio-seed': { var seed = trackById(el.getAttribute('data-id')); if (seed) radioFrom(seed, true); break; }
       case 'radio-artist': { var pg = ui.page && ui.page.data; if (pg && pg.tracks && pg.tracks[0]) radioFrom(pg.tracks[0], true); break; }
       case 'more': ui.artistAll = !ui.artistAll; repaint(); break;
+      case 'install': install(); break;
       case 'nofade': if (engine.ketmixWorks) setKetmix(!ketmix); else setFade(noFade); break;
       case 'clear-searches': searches = []; store.setItem('kv-player-searches', '[]'); runSearch('', false); break;
       case 'queue-clear': clearUpNext(); break;
@@ -1633,6 +1636,7 @@
       return;
     }
     openSheet('<h2>' + esc(t('me.label')) + '</h2><div class="sheet-who">' + avatarHtml() + '<div><b>' + esc(myName()) + '</b><small>' + esc(s.email || '') + '</small></div></div>' + themeRows() +
+      (installEvent && !standalone() ? '<button class="capsule" data-act-s="install" type="button">' + ic('plus') + esc(t('install')) + '</button>' : '') +
       '<button class="capsule" data-act-s="signout" type="button">' + ic('out') + esc(t('me.signout')) + '</button><p class="sheet-note"><a class="link" href="./">' + esc(t('me.site')) + '</a></p>', from);
   }
   function openOutput() {
@@ -1657,6 +1661,7 @@
     if (!a) return;
     var what = a.getAttribute('data-act-s');
     if (what === 'signout') { closeSheet(); api.signOut(); }
+    else if (what === 'install') { closeSheet(); install(); }
     else if (what === 'fade') { setFade(noFade); a.setAttribute('aria-checked', String(!noFade)); }
     else if (what === 'ketmix') { setKetmix(!ketmix); a.setAttribute('aria-checked', String(ketmix)); }
     else if (what === 'video') { setVideo(!ui.video); a.setAttribute('aria-checked', String(ui.video)); }
@@ -2403,6 +2408,24 @@
     else if (e.key === 'm' || e.key === 'M') engine.toggleMute();
     else if (e.key === 'l' || e.key === 'L') toggleLike(engine.current());
   });
+
+  // ------------------------------------------------------------ installable (manifest, service worker, install prompt)
+
+  var installEvent = null;
+  function standalone() { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
+  function renderInstall() { $$('[data-act="install"]').forEach(function (b) { b.hidden = !installEvent || standalone(); }); }
+  function install() {
+    if (!installEvent) return;
+    var ev = installEvent;
+    ev.prompt();
+    Promise.resolve(ev.userChoice).then(function (c) { if (c && c.outcome === 'accepted') { installEvent = null; renderInstall(); } });
+  }
+  // Chrome and Edge offer to install from the page's own button (the sidebar on a computer, the account sheet on a phone).
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); installEvent = e; renderInstall(); });
+  window.addEventListener('appinstalled', function () { installEvent = null; renderInstall(); toast(t('install.done')); });
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js', { scope: '/player' }).catch(function () { /* private mode, blocked */ }); });
+  }
 
   // ------------------------------------------------------------ boot
 

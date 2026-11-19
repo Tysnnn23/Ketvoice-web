@@ -11,6 +11,12 @@
 <link rel="icon" href="favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<link rel="manifest" href="/player.webmanifest"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Ketvoice" name="apple-mobile-web-app-title"/>
+<meta content="Ketvoice" name="application-name"/>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Ketvoice — web player"/>
 <meta property="og:description" content="Your Ketvoice library in the browser: favourites, playlists, synced lyrics."/>
@@ -105,6 +111,7 @@
 <div class="side-brand"><img alt="" height="22" src="assets/ketvoice-logo-vc-96.png" width="22"/><span>Ketvoice</span></div>
 <form class="field side-search" role="search" id="search-side"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-controls="results" aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.ph" enterkeyhint="search" id="q" placeholder="Search" type="search"/><kbd class="side-kbd" aria-hidden="true" id="kbd-find">⌘F</kbd></form>
 <nav aria-label="Ketvoice" class="side-nav" data-t-label="nav.main" id="side-nav"></nav>
+<button class="side-install" data-act="install" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-plus"/></svg><span data-t="install">Install the app</span></button>
 <button aria-expanded="false" aria-haspopup="menu" class="side-me" id="me-btn" type="button"></button>
 </aside>
 

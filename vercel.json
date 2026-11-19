@@ -1,4 +1,8 @@
 {
+  "headers": [
+    { "source": "/sw.js", "headers": [{ "key": "Cache-Control", "value": "no-cache" }, { "key": "Service-Worker-Allowed", "value": "/player" }] },
+    { "source": "/player.webmanifest", "headers": [{ "key": "Content-Type", "value": "application/manifest+json" }] }
+  ],
   "rewrites": [
     { "source": "/changelog", "destination": "/changelog.html" },
     { "source": "/listen", "destination": "/listen.html" },
