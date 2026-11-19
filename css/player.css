@@ -594,6 +594,13 @@ html:not(.playing) .np[data-page="artwork"] .np-art.has-art { transform: scale(.
 .np .volume .sl-track { background: rgba(255, 255, 255, .26); }
 .np-times { display: flex; align-items: center; gap: 8px; margin-top: 1px; color: rgba(255, 255, 255, .62); }
 .np-via { flex: 1; text-align: center; font-size: 10px; line-height: 13px; color: rgba(255, 255, 255, .66); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Ketmix: « Mixage » while two titles blend (in the quality line, and in the LCD on a computer). */
+.mix-badge { flex: 0 1 auto; margin: 0 auto; padding: 0 7px; border-radius: 999px; font-size: 10px; line-height: 15px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; color: var(--on-accent); background: var(--accent); }
+.mix-badge[hidden] { display: none; }
+html.mixing .np-via { display: none; }
+html.motion .mix-badge:not([hidden]) { animation: mix-pulse 1.6s ease-in-out infinite; }
+@keyframes mix-pulse { 50% { opacity: .72; } }
+.lcd-mix { position: absolute; top: 4px; right: 6px; margin: 0; z-index: 2; font-size: 9px; line-height: 14px; }
 .np-transport { flex: 1 1 88px; min-height: 76px; max-height: 168px; display: flex; align-items: center; justify-content: space-between; }
 .tp { width: 66px; height: 66px; display: grid; place-items: center; border-radius: 50%; color: #fff; }
 .tp .icon { width: 48px; height: 48px; }

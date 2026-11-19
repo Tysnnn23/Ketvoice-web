@@ -259,6 +259,19 @@
       return round();
     }
 
+    function uuid() {
+      if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+      var b = new Uint8Array(16); crypto.getRandomValues(b); b[6] = (b[6] & 15) | 64; b[8] = (b[8] & 63) | 128;
+      var h = Array.from(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+      return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+    }
+
+    /** Adds a title at the end of one of the account's playlists, the app's way (PlaylistStore.add → PlaylistsKind). */
+    function addToPlaylist(listId, track, deviceId) {
+      var entry = uuid();
+      return changeKind('playlists', deviceId, function (doc, t) { return core.addToPlaylist(doc, listId, track, t, entry); });
+    }
+
     function setFavorite(track, on, deviceId) {
       return changeKind('favorites', deviceId, function (doc, t) { return core.setFavorite(doc, track, on, t); });
     }
@@ -368,7 +381,7 @@
       serverNow: serverNow, access: access, authorized: authorized,
       signIn: signIn, oauthUrl: oauthUrl, hasOAuthAnswer: hasOAuthAnswer, completeOAuth: completeOAuth, signOut: signOut,
       readRows: readRows, fetchKind: fetchKind, insertKind: insertKind, updateKind: updateKind, changeKind: changeKind,
-      setFavorite: setFavorite, putNowPlaying: putNowPlaying, profile: profile, avatarUrl: avatarUrl,
+      setFavorite: setFavorite, addToPlaylist: addToPlaylist, putNowPlaying: putNowPlaying, profile: profile, avatarUrl: avatarUrl,
       sharedLists: sharedLists, sharedTracks: sharedTracks, contentSearch: contentSearch, resolveUpload: resolveUpload, lyrics: lyrics
     };
   }
