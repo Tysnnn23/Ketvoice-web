@@ -313,3 +313,22 @@ test('sign-out forgets the session', async () => {
   assert.equal(server.calls.at(-1).path, '/auth/v1/logout?scope=local');
   await assert.rejects(c.fetchKind('favorites'), (e) => e.code === 'signed_out');
 });
+
+test('the change check moves when the phone writes or changes the profile photo, and only then', async () => {
+  const server = fakeServer();
+  const { c } = client(server);
+  await c.signIn('listener@example.invalid', 'right');
+  const kinds = ['favorites', 'playlists', 'artists'];
+  const first = await c.changeToken(kinds);
+  assert.equal(await c.changeToken(kinds), first);
+  const read = server.calls.filter((x) => x.path.startsWith('/rest/v1/ketvoice_library')).at(-1);
+  assert.match(read.path, /select=kind,revision&/);
+  server.rows.get('favorites').revision++;
+  const afterLike = await c.changeToken(kinds);
+  assert.notEqual(afterLike, first);
+  const saved = fixture.profile[0].avatar_url;
+  fixture.profile[0].avatar_url = USER + '/avatar-1795000999000.jpg';
+  try { assert.notEqual(await c.changeToken(kinds), afterLike); } finally { fixture.profile[0].avatar_url = saved; }
+  await c.signOut();
+  await assert.rejects(c.changeToken(kinds), (e) => e.code === 'signed_out');
+});

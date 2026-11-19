@@ -171,6 +171,21 @@ test('the catalogue is used only when the function has its routes (404 « Not fo
   assert.equal(await on.c.matchVideo({ title: 'Something else', artist: 'Daft Punk' }), null);
 });
 
+test('Canvas: a choice changed elsewhere shows after ten minutes, or at once after forgetCanvases', async () => {
+  let url = 'https://xodklrunqlzyeiqtovgx.supabase.co/storage/v1/object/public/ketvoice-public-media/a/canvas.mp4';
+  const { c, fetch, tick } = client({ '/canvas': () => ({ body: { url } }) });
+  assert.equal(await c.canvas(YT_TRACK), url);
+  const old = url;
+  url = 'https://xodklrunqlzyeiqtovgx.supabase.co/storage/v1/object/public/ketvoice-public-media/b/canvas.mp4';
+  assert.equal(await c.canvas(YT_TRACK), old, 'kept for a while');
+  tick(11 * 60000);
+  assert.equal(await c.canvas(YT_TRACK), url);
+  url = 'https://xodklrunqlzyeiqtovgx.supabase.co/storage/v1/object/public/ketvoice-public-media/c/canvas.mp4';
+  c.forgetCanvases();
+  assert.equal(await c.canvas(YT_TRACK), url);
+  assert.equal(fetch.calls.length, 3);
+});
+
 test('Canvas: asked once per title, null when there is none; Google pictures asked bigger', async () => {
   const { c, fetch } = client({ '/canvas': (u) => u.searchParams.get('title') === 'One More Time'
     ? { body: { url: 'https://canvaz.scdn.co/upload/artist/x/video/y.cnvs.mp4', spotifyId: '0DiWol3AO6WpXZgp0goxAV' } }

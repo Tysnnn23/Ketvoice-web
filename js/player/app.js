@@ -330,7 +330,8 @@
     if (!started) {
       started = true;
       setInterval(publishTick, 1000);
-      setInterval(function () { if (!document.hidden && api.session) { if (Date.now() - lib.at > 120000) loadLibrary(); else checkRemote(); } }, 60000);
+      // Every minute in front: what plays elsewhere, and a two-row check of the account (the whole library only when it changed).
+      setInterval(function () { if (!document.hidden && api.session) { if (Date.now() - lib.at > 600000) loadLibrary(); else { checkRemote(); checkChanges(); } } }, 60000);
     }
   }
   function history_replace(hash) { window.history.replaceState(null, '', location.pathname + location.search + hash); }
@@ -338,9 +339,10 @@
   function loadLibrary() {
     if (!api.session) return Promise.resolve();
     return Promise.all([
-      api.readRows(['favorites', 'playlists', 'artists', 'now_playing']),
+      api.readRows(SYNC_KINDS.concat(['now_playing'])),
       api.sharedLists().catch(function () { return null; }),
-      lib.profile ? Promise.resolve(lib.profile) : api.profile().catch(function () { return null; })
+      // The profile is read each time: a name or a photo changed on the phone shows here too.
+      api.profile().catch(function () { return null; })
     ]).then(function (all) {
       var rows = all[0];
       if (!pendingLikes) lib.favDoc = core.decodeDoc(rows.favorites && rows.favorites.doc);
@@ -351,11 +353,18 @@
         var known = new Map(lib.shared.map(function (s) { return [s.id, s.tracks]; }));
         lib.shared = all[1].map(function (s) { s.tracks = known.get(s.id) || null; return s; });
       }
-      if (all[2] && all[2] !== lib.profile) {
+      if (all[2]) {
+        // A new photo is a new file name (one per upload), so its address changes with it and no stale image
+        // is kept; the signed address itself lasts an hour, so it is renewed before that.
+        var photoChanged = !lib.profile || all[2].avatar_url !== lib.profile.avatar_url || Date.now() - (lib.avatarAt || 0) > 3000000;
         lib.profile = all[2];
-        api.avatarUrl(lib.profile.avatar_url).then(function (url) { lib.avatar = url; renderMe(); repaintHead(); });
+        if (photoChanged) {
+          lib.avatarAt = Date.now();
+          api.avatarUrl(lib.profile.avatar_url).then(function (url) { lib.avatar = url; renderMe(); repaintHead(); });
+        }
       }
       lib.loaded = true; lib.error = null; lib.at = Date.now();
+      api.changeToken(SYNC_KINDS).then(function (token) { lib.token = token; }, function () {});
       renderMe(); renderSide(); repaint(); renderResume(); refreshLikes();
       return loadShared();
     }, function (err) {
@@ -370,6 +379,19 @@
         return api.sharedTracks(list.id).then(function (tracks) { list.tracks = tracks; }, function () { list.tracks = list.tracks || []; });
       });
     }, Promise.resolve()).then(function () { renderSide(); repaint(); });
+  }
+
+  var SYNC_KINDS = ['favorites', 'playlists', 'artists'];
+  var checking = null;
+  /** The phone changed a like, a playlist, an artist, the name or the photo: the library is read again. */
+  function checkChanges() {
+    if (!api.session || checking || pendingLikes) return checking || Promise.resolve();
+    checking = api.changeToken(SYNC_KINDS).then(function (token) {
+      var changed = lib.token != null && token !== lib.token;
+      lib.token = token;
+      if (changed) return loadLibrary();
+    }, function () {}).then(function () { checking = null; });
+    return checking;
   }
 
   function checkRemote() {
@@ -451,11 +473,16 @@
     return api.putNowPlaying(doc, DEVICE, keepalive).then(function () { return true; }, function () { return false; });
   }
 
+  var hiddenAt = 0;
   document.addEventListener('visibilitychange', function () {
+    if (document.hidden) hiddenAt = Date.now();
+    // Away for a while: Canvas choices are asked again (before the stage asks for the current one).
+    else if (hiddenAt && Date.now() - hiddenAt > 300000) catalog.forgetCanvases();
     if (!api.session) return;
     if (document.hidden) { if (engine.current()) publish(true); }
-    else checkRemote();
+    else { checkRemote(); checkChanges(); }
   });
+  window.addEventListener('focus', function () { if (api.session && Date.now() - lib.at > 15000) checkChanges(); });
   window.addEventListener('pagehide', function () { if (api.session && engine.current()) publish(true); });
 
   function currentOffer() {

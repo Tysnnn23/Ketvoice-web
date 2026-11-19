@@ -16,6 +16,7 @@
 
   var ROOT = 'https://xodklrunqlzyeiqtovgx.supabase.co';
   var API = ROOT + '/functions/v1/ketvoice-api';
+  var CANVAS_KEEP_MS = 10 * 60000;
   // The YouTube Music catalogue is its own function (ketvoice-catalog), apart from the app's ketvoice-api.
   var CATALOG = ROOT + '/functions/v1/ketvoice-catalog';
   var CONTENT = ROOT + '/functions/v1/ketvoice-content';
@@ -353,20 +354,29 @@
       });
     }
 
-    /** The title's Canvas (a short looping video), null when it has none; asked once per title. */
+    /**
+     * The title's Canvas (a short looping video), null when it has none. Kept ten minutes per title, then
+     * asked again: a Canvas changed or switched off elsewhere shows here without a reload. A new Canvas is a
+     * new file name (one per upload), so the browser never shows the old video for the new address.
+     */
     function canvas(t) {
       var key = (t.spotifyId || '') + '\u0000' + normTitle(t.title) + '\u0000' + normTitle(t.artist);
       if (!t.title || !t.artist) return Promise.resolve(null);
-      if (canvases.has(key)) return canvases.get(key);
+      var kept = canvases.get(key);
+      if (kept && now() - kept.at < CANVAS_KEEP_MS) return kept.value;
       var p = get(API, canvasPath(t), 60000).then(function (r) { return r.ok && r.json ? https(r.json.url) || null : null; }, function () { return null; });
-      canvases.set(key, p);
+      canvases.set(key, { at: now(), value: p });
+      if (canvases.size > 300) canvases.delete(canvases.keys().next().value);
       return p;
     }
+
+    /** The tab was away a while: Canvas choices are asked again. */
+    function forgetCanvases() { canvases.clear(); }
 
     return {
       get catalogOn() { return state.catalog === 'on'; },
       probe: probe, loadProviders: loadProviders, enabled: enabled, search: search, addonSearch: addonSearch,
-      artist: artist, album: album, radio: radio, stream: stream, resolve: resolve, canvas: canvas, matchVideo: matchVideo,
+      artist: artist, album: album, radio: radio, stream: stream, resolve: resolve, canvas: canvas, forgetCanvases: forgetCanvases, matchVideo: matchVideo,
       forget: function (id) { streams.delete(id); }
     };
   }

@@ -290,8 +290,27 @@
 
     function profile() {
       return later(function () {
-        return authorized('GET', '/rest/v1/ketvoice_profiles?select=display_name,handle,avatar_url&id=eq.' + uid())
+        return authorized('GET', '/rest/v1/ketvoice_profiles?select=display_name,handle,avatar_url,updated_at&id=eq.' + uid())
           .then(function (r) { return r.ok && Array.isArray(r.json) && r.json[0] ? r.json[0] : null; });
+      });
+    }
+
+    /**
+     * A short text that changes when the phone (or another tab) changed the account: each library kind's
+     * revision (the server counts one per write) and the profile's updated_at. Two tiny reads instead of
+     * the whole library, so it can be asked on every return to the tab and every minute (LibrarySync.poll).
+     */
+    function changeToken(kinds) {
+      return later(function () {
+        var lib = authorized('GET', TABLE + '?select=kind,revision&user_id=eq.' + uid() + '&kind=in.(' + kinds.join(',') + ')');
+        var me = authorized('GET', '/rest/v1/ketvoice_profiles?select=updated_at,avatar_url&id=eq.' + uid());
+        return Promise.all([lib, me]).then(function (all) {
+          if (!all[0].ok || !Array.isArray(all[0].json)) throw fail('library_read', all[0].status);
+          var revs = all[0].json.filter(function (r) { return r && typeof r.kind === 'string'; })
+            .map(function (r) { return r.kind + '=' + Number(r.revision || 0); }).sort();
+          var p = all[1].ok && Array.isArray(all[1].json) && all[1].json[0] ? all[1].json[0] : {};
+          return revs.join(';') + '|' + (p.updated_at || '') + '|' + (p.avatar_url || '');
+        });
       });
     }
 
@@ -381,7 +400,7 @@
       serverNow: serverNow, access: access, authorized: authorized,
       signIn: signIn, oauthUrl: oauthUrl, hasOAuthAnswer: hasOAuthAnswer, completeOAuth: completeOAuth, signOut: signOut,
       readRows: readRows, fetchKind: fetchKind, insertKind: insertKind, updateKind: updateKind, changeKind: changeKind,
-      setFavorite: setFavorite, addToPlaylist: addToPlaylist, putNowPlaying: putNowPlaying, profile: profile, avatarUrl: avatarUrl,
+      setFavorite: setFavorite, addToPlaylist: addToPlaylist, putNowPlaying: putNowPlaying, profile: profile, avatarUrl: avatarUrl, changeToken: changeToken,
       sharedLists: sharedLists, sharedTracks: sharedTracks, contentSearch: contentSearch, resolveUpload: resolveUpload, lyrics: lyrics
     };
   }
