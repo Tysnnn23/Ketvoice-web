@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr" class="kx-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Ketmix en direct</title>
+<meta name="description" content="Écoutez Ketmix enchaîner deux boucles dans votre navigateur, avec la frise de l'éditeur de Ketvoice : glissez la transition, changez de préréglage, comparez avec et sans mix.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ketvoice">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Ketmix en direct, dans le navigateur">
+<meta property="og:description" content="Deux boucles, une transition à glisser, cinq préréglages : écoutez comment Ketmix mixe.">
+<meta property="og:image" content="https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png">
+<meta property="og:image:width" content="1448">
+<meta property="og:image:height" content="1086">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>(function(){var d=document.documentElement,t=null;d.classList.add('js');try{t=localStorage.getItem('ketvoice-theme')}catch(e){}if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))d.classList.add('dark')})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="css/style.css?v=202611181500">
+<link rel="stylesheet" href="css/ketmix.css?v=202611191200">
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu</a>
+<header class="kx-top">
+  <a class="brand" href="/"><img src="assets/ketvoice-logo-vc-96.png" width="28" height="28" alt=""><span>Ketvoice</span></a>
+  <a class="btn btn-line" href="/#download">Télécharger</a>
+</header>
+<main class="kx-main" id="main">
+  <div class="kx-hero">
+    <h1>Ketmix, en direct.</h1>
+    <p>Deux boucles écrites en code pour cette page. Glissez la transition, choisissez un préréglage, comparez avec et sans mix.</p>
+  </div>
+  <div data-ketmix-demo="">
+    <div data-ketmix-slot=""><p class="kx-nojs">La démo demande JavaScript et Web Audio.</p></div>
+  </div>
+  <ul class="kx-notes">
+    <li><h2>Dans l'app, sur vos titres</h2><p>Le même éditeur, avec les ondes de vos deux morceaux et la grille de leurs mesures.</p></li>
+    <li><h2>Les paroles respectées</h2><p>Une transition ne coupe jamais une ligne chantée.</p></li>
+    <li><h2>Rien ne part d'ici</h2><p>Les boucles sont jouées par votre navigateur ; aucun morceau n'est envoyé.</p></li>
+  </ul>
+</main>
+<footer class="kx-foot">Boucles originales composées pour cette démo. <a href="/">Ketvoice</a>, le lecteur de musique gratuit pour Android.</footer>
+<script src="js/ketmix/mix.js?v=202611191200"></script>
+<script src="js/ketmix/demo.js?v=202611191200"></script>
+<script src="assets/ketvoice-theme.js?v=202611171700"></script>
+</body>
+</html>
