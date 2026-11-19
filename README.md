@@ -336,7 +336,10 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
-Ketvoice 7.0.0 (versionCode 141) brings Home « Pour toi », songs of the same style after the queue, Apple-Music-style Downloads and downloaded albums, the Ketmix DJ set and the built-in rhythm model. The site adds the full web player (library sync, Ketmix in the browser, installable), the live Ketmix demo (`/ketmix`) and public artist, album and profile pages with link previews.
+Ketvoice 7.1.0 (versionCode 142) makes Ketmix keep song endings (cut budget, false endings, steadier tempo matching, held volume), fixes the editor preview, keeps glass on navigation with a Tinted mode, and adds true black, a mini-player swipe, an A–Z index, a 4×1 widget and a radio without repeats; the DJ set mode is removed.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.1.0.md).
+
+Ketvoice 7.0.0 (versionCode 141) brings Home « Pour toi », songs of the same style after the queue, Apple-Music-style Downloads and downloaded albums and the built-in rhythm model (its DJ set mode was removed in 7.1.0). The site adds the full web player (library sync, Ketmix in the browser, installable), the live Ketmix demo (`/ketmix`) and public artist, album and profile pages with link previews.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.0.0.md).
 
 Ketvoice 6.9.0 (versionCode 140) brings a Ketmix editor with one timeline, presets, details and a preview, plus lyric-aware mixing, a bar loop and variety.
