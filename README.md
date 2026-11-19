@@ -336,6 +336,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 7.2.0 (versionCode 143) brings an Apple-Music-style Home and Library, Favourites and Downloads pages, Lossless badges, recommended songs after albums, progressive quality that really switches, a faster start, compact Canvas, a working Sync button, phone↔web change checks and better search; the web player follows the phone's changes.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.2.0.md).
+
 Ketvoice 7.1.0 (versionCode 142) makes Ketmix keep song endings (cut budget, false endings, steadier tempo matching, held volume), fixes the editor preview, keeps glass on navigation with a Tinted mode, and adds true black, a mini-player swipe, an A–Z index, a 4×1 widget and a radio without repeats; the DJ set mode is removed.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.1.0.md).
 
