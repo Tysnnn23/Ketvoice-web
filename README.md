@@ -253,6 +253,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 6.9.0 (versionCode 140) brings a Ketmix editor with one timeline, presets, details and a preview, plus lyric-aware mixing, a bar loop and variety.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.9.0.md).
+
 Ketvoice 6.8.0 (versionCode 139) lets Ketmix download a small AI model (Beat This!) that finds beats and bars.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v6.8.0.md).
 
