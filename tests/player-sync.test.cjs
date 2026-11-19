@@ -199,3 +199,34 @@ test('search folds accents and case', () => {
   assert.equal(C.clock(3723000), '1:02:03');
   assert.equal(C.clock(65000), '1:05');
 });
+
+test('a title added to a playlist: the app\'s entry at the end, the rest as the app wrote it, once only', () => {
+  const doc = C.decodeDoc(row('playlists').doc);
+  const before = C.playlists(doc);
+  const list = before[0];
+  const track = { id: 'yt:kvAddedWeb1', title: 'Added on the web', artist: 'Someone', album: 'A', durationMs: 180000, videoId: 'kvAddedWeb1',
+    streamUrl: 'https://example.com/s.mp3', canvasUrl: 'https://example.com/c.mp4', coverUrl: 'https://example.com/c.jpg' };
+  const next = C.addToPlaylist(doc, list.id, track, T0 + 50, 'e0f5b7a2-1c3d-4e5f-8a9b-0c1d2e3f4a5b');
+  assert.notEqual(next, doc);
+  const prevItem = doc.get('pl:' + list.id), item = next.get('pl:' + list.id);
+  assert.ok(item.t > prevItem.t && item.t >= T0 + 50);
+  const json = JSON.parse(item.value), old = JSON.parse(prevItem.value);
+  assert.deepEqual(Object.assign({}, json, { entries: null }), Object.assign({}, old, { entries: null }));
+  assert.deepEqual(json.entries.slice(0, -1), old.entries);
+  const added = json.entries[json.entries.length - 1];
+  assert.deepEqual(Object.keys(added).sort(), ['artist', 'id', 'spotifyId', 'title', 'track']);
+  assert.equal(added.spotifyId, null);
+  assert.equal(added.track.streamUrl, undefined); assert.equal(added.track.canvasUrl, undefined);
+  assert.equal(added.track.coverUrl, 'https://example.com/c.jpg');
+  assert.equal(item.value, C.canonical(json));
+  assert.equal(C.playlists(next)[0].tracks.slice(-1)[0].id, 'yt:kvAddedWeb1');
+  // The other kinds' keys and other playlists are untouched; the order item too.
+  for (const [k, v] of doc) if (k !== 'pl:' + list.id) assert.deepEqual(next.get(k), v);
+  // Already there, a playlist that is not, a title without a name: nothing changes.
+  assert.equal(C.addToPlaylist(next, list.id, track, T0 + 60, 'x'), next);
+  assert.equal(C.addToPlaylist(doc, 'nope', track, T0 + 60, 'x'), doc);
+  assert.equal(C.addToPlaylist(doc, list.id, { id: 'yt:x', title: '' }, T0 + 60, 'x'), doc);
+  assert.equal(C.addToPlaylist(doc, list.id, { id: 'local:1', title: 'A' }, T0 + 60, 'x'), doc);
+  // Encoded the app's way: {"t":…,"v":{…}} with the object itself.
+  assert.deepEqual(C.encodeDoc(next).items['pl:' + list.id], { t: item.t, v: json });
+});

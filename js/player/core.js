@@ -251,6 +251,26 @@
     return unplaced.concat(known).slice(0, 100);
   }
 
+  /**
+   * The playlists document after this device added [track] at the end of playlist [listId] (PlaylistStore.add:
+   * an entry `{"id":<new uuid>,"title","artist","spotifyId":null,"track":<SyncTracks.json>}`), stamped [now]
+   * (server time) and newer than the cloud's copy; the playlist's other fields stay as the app wrote them.
+   * A title already in it (PlaylistRules.newEntries), a full playlist (500) or one gone returns the same Map.
+   */
+  function addToPlaylist(doc, listId, track, now, entryId) {
+    var key = 'pl:' + listId, prev = doc.get(key);
+    if (!prev || prev.deleted || !track || !str(track.title).trim() || !syncable(track.id) || !entryId) return doc;
+    var json; try { json = JSON.parse(prev.value); } catch (e) { return doc; }
+    if (!isObject(json) || !Array.isArray(json.entries) || json.entries.length >= 500) return doc;
+    if (json.entries.some(function (e) { return isObject(e) && isObject(e.track) && e.track.id === track.id; })) return doc;
+    json.entries.push({ id: entryId, title: str(track.title).slice(0, 300), artist: str(track.artist).slice(0, 300), spotifyId: null, track: trackJson(track) });
+    var value = canonical(json);
+    if (!decodePlaylist(listId, value)) return doc;
+    var next = new Map(doc);
+    next.set(key, { value: value, t: Math.max(Math.trunc(now), prev.t + 1), deleted: false });
+    return pruneDoc(next, now);
+  }
+
   /** ArtistsKind: the followed artists (`fav:` keys), blocked ones left out. */
   function artists(doc) {
     var values = live(doc), blocked = new Set(), out = [];
@@ -506,7 +526,7 @@
     canonical: canonical, decodeDoc: decodeDoc, encodeDoc: encodeDoc, mergeDocs: mergeDocs, pruneDoc: pruneDoc, sameDoc: sameDoc,
     live: live, trackFromJson: trackFromJson, cleanTrack: cleanTrack, trackJson: trackJson, parseTrack: parseTrack,
     youtubeId: youtubeId, uploadId: uploadId, playable: playable, syncable: syncable, setFavorite: setFavorite,
-    favorites: favorites, decodePlaylist: decodePlaylist, playlists: playlists, artists: artists, sharedRow: sharedRow,
+    favorites: favorites, decodePlaylist: decodePlaylist, playlists: playlists, addToPlaylist: addToPlaylist, artists: artists, sharedRow: sharedRow,
     sharedRows: sharedRows, nowWindow: nowWindow, encodeNowPlaying: encodeNowPlaying, decodeNowPlaying: decodeNowPlaying,
     positionAt: positionAt, isLive: isLive, offer: offer, deviceName: deviceName, parseLrc: parseLrc, isCredit: isCredit, activeLine: activeLine,
     normTitle: normTitle, lyricQueries: lyricQueries, pickLyrics: pickLyrics, jwtClaims: jwtClaims, base64url: base64url,

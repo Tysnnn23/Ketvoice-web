@@ -33,7 +33,7 @@
       'err.invalid_credentials': 'Wrong e-mail or password.', 'err.email_not_confirmed': 'This account is waiting for an e-mail confirmation.',
       'err.provider_disabled': 'This way of signing in is not available yet.', 'err.rate_limited': 'Too many attempts. Try again in a few minutes.',
       'err.invalid_email': 'Invalid e-mail address.', 'err.invalid_password': 'Enter your password.', 'err.auth_failed': 'Sign-in is not possible right now.',
-      'err.network': 'No connection to Ketvoice. Check your network.', 'err.oauth_cancelled': 'Discord sign-in was cancelled.',
+      'err.network': 'No connection to Ketvoice. Check your network.', 'err.oauth_cancelled': 'Discord sign-in was cancelled.', 'err.oauth_failed': 'Discord sign-in did not finish here. Sign in with your e-mail, or try again later.',
       'err.oauth_invalid': 'Invalid sign-in link. Try again.', 'err.oauth_expired': 'The sign-in took too long. Try again.',
       'err.signed_out': 'Your session has expired. Sign in again.',
       'hello.morning': 'Good morning', 'hello.day': 'Good afternoon', 'hello.evening': 'Good evening', 'home.origin': 'Your Ketvoice library',
@@ -64,6 +64,11 @@
       'via.youtube': 'YouTube', radio: 'Radio', 'radio.start': 'Start radio', 'radio.none': 'No radio for this title yet.',
       'radio.on': 'Radio · {t}', 'radio.started': 'Radio from « {t} »', nofade: 'Crossfade', 'nofade.tip': 'Titles follow each other with a 2 s crossfade',
       'nofade.on': 'Crossfade on', 'nofade.off': 'Crossfade off',
+      ketmix: 'Ketmix', 'ketmix.tip': 'Titles blend into each other like a mix, on the beat when the tempo is found',
+      'ketmix.on': 'Ketmix on: titles blend like in a mix', 'ketmix.off': 'Ketmix off', 'ketmix.note': 'Ketmix blends titles played from Ketvoice and the Ketvoice API. A YouTube title fades out instead.',
+      mixing: 'Mixing', 'mixing.beat': 'Mixing · {n} beats',
+      install: 'Install the app', 'install.done': 'Ketvoice is installed',
+      'menu.pl': 'Add to a playlist', 'pl.added': 'Added to « {p} »', 'pl.already': 'Already in « {p} »', 'pl.failed': 'Could not add it, try again', 'pl.none': 'Make a playlist in the app first',
       'artist.top': 'Top songs', 'artist.albums': 'Albums', 'artist.singles': 'Singles and EPs', 'artist.related': 'Fans also like', 'artist.about': 'About',
       'artist.open': 'Artist page', 'artist.error': 'This page could not be opened. Try again in a moment.', 'tag.album': 'Album', 'tag.artist': 'Artist',
       'artist.radio': 'Artist radio', 'artist.listeners': '{n} · YouTube Music', 'all': 'Show all', 'less': 'Show less', 'album.by': 'by {a}',
@@ -93,7 +98,7 @@
       'err.invalid_credentials': 'E-mail ou mot de passe incorrect.', 'err.email_not_confirmed': 'Ce compte attend une confirmation par e-mail.',
       'err.provider_disabled': 'Cette méthode de connexion n’est pas encore disponible.', 'err.rate_limited': 'Trop de tentatives. Réessayez dans quelques minutes.',
       'err.invalid_email': 'Adresse e-mail invalide.', 'err.invalid_password': 'Saisissez votre mot de passe.', 'err.auth_failed': 'Connexion impossible pour le moment.',
-      'err.network': 'Pas de connexion à Ketvoice. Vérifiez votre réseau.', 'err.oauth_cancelled': 'Connexion Discord annulée.',
+      'err.network': 'Pas de connexion à Ketvoice. Vérifiez votre réseau.', 'err.oauth_cancelled': 'Connexion Discord annulée.', 'err.oauth_failed': 'La connexion Discord n’a pas abouti ici. Connectez-vous avec votre e-mail, ou réessayez plus tard.',
       'err.oauth_invalid': 'Lien de connexion invalide. Réessayez.', 'err.oauth_expired': 'La connexion a pris trop de temps. Réessayez.',
       'err.signed_out': 'Votre session a expiré. Reconnectez-vous.',
       'hello.morning': 'Bonjour', 'hello.day': 'Bon après-midi', 'hello.evening': 'Bonsoir', 'home.origin': 'Votre bibliothèque Ketvoice',
@@ -124,6 +129,11 @@
       'via.youtube': 'YouTube', radio: 'Radio', 'radio.start': 'Lancer la radio', 'radio.none': 'Pas encore de radio pour ce titre.',
       'radio.on': 'Radio · {t}', 'radio.started': 'Radio depuis « {t} »', nofade: 'Fondu enchaîné', 'nofade.tip': 'Les titres s’enchaînent avec un fondu de 2 s',
       'nofade.on': 'Fondu enchaîné activé', 'nofade.off': 'Fondu enchaîné désactivé',
+      ketmix: 'Ketmix', 'ketmix.tip': 'Les titres s’enchaînent comme dans un mix, sur le temps quand le tempo est trouvé',
+      'ketmix.on': 'Ketmix activé : les titres s’enchaînent comme dans un mix', 'ketmix.off': 'Ketmix désactivé', 'ketmix.note': 'Ketmix mixe les titres lus depuis Ketvoice et l’API Ketvoice. Un titre YouTube s’efface en fondu à la place.',
+      mixing: 'Mixage', 'mixing.beat': 'Mixage · {n} temps',
+      install: 'Installer l’app', 'install.done': 'Ketvoice est installé',
+      'menu.pl': 'Ajouter à une playlist', 'pl.added': 'Ajouté à « {p} »', 'pl.already': 'Déjà dans « {p} »', 'pl.failed': 'Ajout impossible, réessayez', 'pl.none': 'Créez d’abord une playlist dans l’app',
       'artist.top': 'Titres populaires', 'artist.albums': 'Albums', 'artist.singles': 'Singles et EP', 'artist.related': 'Les fans aiment aussi', 'artist.about': 'À propos',
       'artist.open': 'Page de l’artiste', 'artist.error': 'Cette page n’a pas pu s’ouvrir. Réessayez dans un instant.', 'tag.album': 'Album', 'tag.artist': 'Artiste',
       'artist.radio': 'Radio de l’artiste', 'artist.listeners': '{n} · YouTube Music', 'all': 'Tout afficher', 'less': 'Afficher moins', 'album.by': 'de {a}',
@@ -207,8 +217,10 @@
   var lyricsApi = KVLyrics.createLyrics({ fetch: function (u, o) { return window.fetch(u, o); }, anonKey: KVApi.ANON_KEY, now: Date.now,
     lrclib: api.lyrics, enabled: catalog.enabled });
   var noFade = store.getItem('kv-player-nofade') === '1';
+  /** Ketmix (kv-player-ketmix): on unless turned off, where the browser can do it. */
+  var ketmix = store.getItem('kv-player-ketmix') !== '0';
   var engine = window.KVEngine.createEngine({ core: core, api: api, catalog: catalog, audio: $('#audio'), audio2: $('#audio2'), hostId: 'yt-host',
-    onChange: onEngine, fadeOn: function () { return !noFade; } });
+    onChange: onEngine, fadeOn: function () { return !noFade; }, ketmixOn: function () { return ketmix; } });
   var playable = function (tr) { return engine.playable(tr); };
 
   // ------------------------------------------------------------ state
@@ -384,6 +396,19 @@
       toast(t('like.failed'));
       api.fetchKind('favorites').then(function (row) { if (!pendingLikes) { lib.favDoc = core.decodeDoc(row && row.doc); refreshLikes(); } }, function () {});
     });
+  }
+
+  // ------------------------------------------------------------ playlists (a title added, written back)
+
+  function addToPlaylist(track, id) {
+    var list = lib.playlists.find(function (p) { return p.id === id; });
+    if (!list || !track) return;
+    if (list.tracks.some(function (x) { return x.id === track.id; })) { toast(t('pl.already', { p: list.name })); return; }
+    api.addToPlaylist(id, track, DEVICE).then(function (doc) {
+      lib.playlists = core.playlists(doc);
+      toast(t('pl.added', { p: list.name }));
+      if (ui.route && (ui.route.name === 'playlist' || ui.route.name === 'library' || ui.route.name === 'home')) repaint();
+    }, function (err) { if (!(err && err.code === 'signed_out')) toast(t('pl.failed')); });
   }
 
   function refreshLikes(pop) {
@@ -1395,7 +1420,8 @@
       case 'radio-seed': { var seed = trackById(el.getAttribute('data-id')); if (seed) radioFrom(seed, true); break; }
       case 'radio-artist': { var pg = ui.page && ui.page.data; if (pg && pg.tracks && pg.tracks[0]) radioFrom(pg.tracks[0], true); break; }
       case 'more': ui.artistAll = !ui.artistAll; repaint(); break;
-      case 'nofade': setFade(noFade); break;
+      case 'install': install(); break;
+      case 'nofade': if (engine.ketmixWorks) setKetmix(!ketmix); else setFade(noFade); break;
       case 'clear-searches': searches = []; store.setItem('kv-player-searches', '[]'); runSearch('', false); break;
       case 'queue-clear': clearUpNext(); break;
       case 'shelf-l': case 'shelf-r': { var s = el.parentNode.querySelector('.shelf'); s.scrollBy({ left: (act === 'shelf-r' ? 1 : -1) * s.clientWidth * .85, behavior: motion() ? 'smooth' : 'auto' }); break; }
@@ -1409,6 +1435,19 @@
     store.setItem('kv-player-nofade', noFade ? '1' : '0');
     renderState(); renderQueue();
     toast(t(noFade ? 'nofade.off' : 'nofade.on'));
+  }
+  function setKetmix(on) {
+    ketmix = on;
+    store.setItem('kv-player-ketmix', on ? '1' : '0');
+    engine.ketmixChanged();
+    renderState(); renderQueue();
+    toast(t(on ? 'ketmix.on' : 'ketmix.off'));
+  }
+  /** « Mixage » while two titles blend: in the player's quality line and the LCD (computer). */
+  function renderMix() {
+    var m = engine.state.mixing;
+    root.classList.toggle('mixing', !!m);
+    $$('[data-mix]').forEach(function (b) { b.hidden = !m; b.textContent = m ? (m.mode === 'beat' ? t('mixing.beat', { n: m.beats }) : t('mixing')) : ''; });
   }
   function clearUpNext() { var s = engine.state; for (var i = s.queue.length - 1; i > s.index; i--) engine.removeAt(i); toast(t('queue.cleared')); }
 
@@ -1448,13 +1487,18 @@
     menuReturn = o.from || document.activeElement;
     var fav = isFav(track.id), items = [];
     var add = function (id, label, icon, on) { items.push('<button class="mi' + (on ? ' on' : '') + '" data-mi="' + id + '" role="menuitem" type="button"><span>' + esc(label) + '</span>' + ic(icon) + '</button>'); };
+    if (o.playlists) {
+      lib.playlists.forEach(function (p) { items.push('<button class="mi" data-mi="pl" data-pl="' + esc(p.id) + '" role="menuitem" type="button"><span>' + esc(p.name) + '</span>' + ic('playlist') + '</button>'); });
+    } else {
     if (o.point && playable(track)) add('play', t('menu.play'), 'play');
     if (playable(track)) { add('next', t('menu.next'), 'play-next'); add('queue', t('menu.queue'), 'queue-add'); }
     if (core.syncable(track.id) && track.title) add('like', t(fav ? 'like.remove' : 'like.add'), fav ? 'heart-fill' : 'heart', fav);
+    if (core.syncable(track.id) && track.title && lib.loaded) add('pls', t('menu.pl'), 'plus');
     if (catalog.catalogOn && track.title) add('radio', t('radio.start'), 'radio');
     if (desk && items.length) items.push('<i class="mi-sep" aria-hidden="true"></i>');
     if (catalog.catalogOn && track.artist) add('artist', t('menu.artist'), 'mic');
     if (/^MPRE/.test(track.albumId || '') && catalog.catalogOn) add('album', t('menu.album'), 'album');
+    }
     if (items[items.length - 1] && items[items.length - 1].indexOf('mi-sep') >= 0) items.pop();
     if (!items.length) return;
     host.className = 'menu-host' + (desk ? ' desk' : '');
@@ -1486,7 +1530,7 @@
         menu.style.transformOrigin = 'var(--ox) ' + (below ? '0' : '100%');
       }
     }
-    host._track = track;
+    host._track = track; host._anchor = anchor; host._o = o;
     var first = $('.mi', menu);
     if (first) first.focus({ preventScroll: true });
   }
@@ -1503,7 +1547,16 @@
     var b = e.target.closest('[data-mi]');
     if (!b) return;
     var tr = $('#menu')._track, what = b.getAttribute('data-mi');
+    if (what === 'pls') {
+      // The account's playlists, in the same menu.
+      var mh = $('#menu'), anchor = mh._anchor, mo = Object.assign({}, mh._o, { playlists: true, preview: false });
+      if (!(anchor && document.contains(anchor)) && !mo.point) mo.point = { x: window.innerWidth / 2 - 120, y: window.innerHeight / 3 };
+      if (!lib.playlists.length) { closeMenu(); toast(t('pl.none')); return; }
+      closeMenu(true); openMenu(tr, anchor && document.contains(anchor) ? anchor : null, mo);
+      return;
+    }
     closeMenu();
+    if (what === 'pl' && tr) { addToPlaylist(tr, b.getAttribute('data-pl')); return; }
     if (!tr) return;
     if (what === 'play') { var host = ui.menuList; if (host && host.list) playFrom(host.list.slice(), host.i, false); else playFrom([tr], 0, false); }
     else if (what === 'next') { if (!engine.current()) playFrom([tr], 0); else { engine.playNext(tr); toast(t('queued.next', { t: tr.title })); } }
@@ -1583,15 +1636,17 @@
       return;
     }
     openSheet('<h2>' + esc(t('me.label')) + '</h2><div class="sheet-who">' + avatarHtml() + '<div><b>' + esc(myName()) + '</b><small>' + esc(s.email || '') + '</small></div></div>' + themeRows() +
+      (installEvent && !standalone() ? '<button class="capsule" data-act-s="install" type="button">' + ic('plus') + esc(t('install')) + '</button>' : '') +
       '<button class="capsule" data-act-s="signout" type="button">' + ic('out') + esc(t('me.signout')) + '</button><p class="sheet-note"><a class="link" href="./">' + esc(t('me.site')) + '</a></p>', from);
   }
   function openOutput() {
     var yt = engine.state.source === 'youtube';
     openSheet('<h2>' + esc(t('out.title')) + '</h2><div class="group">' +
       '<div class="group-row">' + ic('laptop') + '<span>' + esc(t('np.device')) + '<br><small>' + esc(DEVICE_NAME) + '</small></span>' + ic('check') + '</div>' +
+      (engine.ketmixWorks ? '<button aria-checked="' + ketmix + '" class="group-row" data-act-s="ketmix" role="switch" type="button">' + ic('ketmix') + '<span>' + esc(t('ketmix')) + '<br><small>' + esc(t('ketmix.tip')) + '</small></span><i class="switch" aria-hidden="true"></i></button>' : '') +
       (engine.volumeWorks ? '<button aria-checked="' + !noFade + '" class="group-row" data-act-s="fade" role="switch" type="button">' + ic('rings') + '<span>' + esc(t('nofade')) + '</span><i class="switch" aria-hidden="true"></i></button>' : '') +
       (yt ? '<button aria-checked="' + ui.video + '" class="group-row" data-act-s="video" role="switch" type="button">' + ic('video') + '<span>' + esc(t('out.video')) + '</span><i class="switch" aria-hidden="true"></i></button>' : '') +
-      '</div>' + (engine.volumeWorks ? '' : '<p class="sheet-note">' + esc(t('out.vol')) + '</p>'), document.activeElement);
+      '</div>' + (engine.volumeWorks ? '' : '<p class="sheet-note">' + esc(t('out.vol')) + '</p>') + (engine.ketmixWorks && ketmix ? '<p class="sheet-note">' + esc(t('ketmix.note')) + '</p>' : ''), document.activeElement);
   }
   $('#sheet').addEventListener('click', function (e) {
     if (e.target.closest('[data-sclose]')) { closeSheet(); return; }
@@ -1606,7 +1661,9 @@
     if (!a) return;
     var what = a.getAttribute('data-act-s');
     if (what === 'signout') { closeSheet(); api.signOut(); }
+    else if (what === 'install') { closeSheet(); install(); }
     else if (what === 'fade') { setFade(noFade); a.setAttribute('aria-checked', String(!noFade)); }
+    else if (what === 'ketmix') { setKetmix(!ketmix); a.setAttribute('aria-checked', String(ketmix)); }
     else if (what === 'video') { setVideo(!ui.video); a.setAttribute('aria-checked', String(ui.video)); }
   });
   $('#sheet').addEventListener('keydown', function (e) {
@@ -1872,6 +1929,7 @@
     if (what === 'source') { renderStage(); renderVia(); renderState(); renderCanvas(); followDock(300); return; }
     if (what === 'queue') { renderQueue(); renderState(); return; }
     if (what === 'volume') { renderVolume(); return; }
+    if (what === 'mix') { renderMix(); return; }
     if (what === 'error' && s.error) toast(t('error.' + s.error), s.error === 'youtube_api');
     renderState();
   }
@@ -1925,7 +1983,13 @@
       b.setAttribute('aria-label', label); if (b.classList.contains('ib')) b.title = label;
     });
     $$('[data-act="prev"],[data-act="next"]').forEach(function (b) { b.disabled = !cur; });
-    $$('[data-act="nofade"]').forEach(function (b) { b.hidden = !engine.volumeWorks; b.setAttribute('aria-pressed', String(!noFade)); b.setAttribute('aria-label', t('nofade')); b.title = t('nofade.tip'); });
+    // The first segment of the queue's capsule is Ketmix where it works (the app's place), the crossfade otherwise.
+    $$('[data-act="nofade"]').forEach(function (b) {
+      var km = engine.ketmixWorks;
+      b.hidden = !engine.volumeWorks; b.classList.toggle('km', km);
+      b.setAttribute('aria-pressed', String(km ? ketmix : !noFade)); b.setAttribute('aria-label', t(km ? 'ketmix' : 'nofade')); b.title = t(km ? 'ketmix.tip' : 'nofade.tip');
+      var u = b.querySelector('use'); if (u) u.setAttribute('href', km ? '#i-ketmix' : '#i-rings');
+    });
     $$('.q-seg[data-act="radio"]').forEach(function (b) { b.setAttribute('aria-pressed', String(!!s.radio)); });
     if (s.needsTap && !ui.tapShown) { ui.tapShown = true; toast(t('tap'), true); }
     if (!s.needsTap) ui.tapShown = false;
@@ -2344,6 +2408,24 @@
     else if (e.key === 'm' || e.key === 'M') engine.toggleMute();
     else if (e.key === 'l' || e.key === 'L') toggleLike(engine.current());
   });
+
+  // ------------------------------------------------------------ installable (manifest, service worker, install prompt)
+
+  var installEvent = null;
+  function standalone() { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
+  function renderInstall() { $$('[data-act="install"]').forEach(function (b) { b.hidden = !installEvent || standalone(); }); }
+  function install() {
+    if (!installEvent) return;
+    var ev = installEvent;
+    ev.prompt();
+    Promise.resolve(ev.userChoice).then(function (c) { if (c && c.outcome === 'accepted') { installEvent = null; renderInstall(); } });
+  }
+  // Chrome and Edge offer to install from the page's own button (the sidebar on a computer, the account sheet on a phone).
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); installEvent = e; renderInstall(); });
+  window.addEventListener('appinstalled', function () { installEvent = null; renderInstall(); toast(t('install.done')); });
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js', { scope: '/player' }).catch(function () { /* private mode, blocked */ }); });
+  }
 
   // ------------------------------------------------------------ boot
 

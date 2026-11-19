@@ -594,6 +594,13 @@ html:not(.playing) .np[data-page="artwork"] .np-art.has-art { transform: scale(.
 .np .volume .sl-track { background: rgba(255, 255, 255, .26); }
 .np-times { display: flex; align-items: center; gap: 8px; margin-top: 1px; color: rgba(255, 255, 255, .62); }
 .np-via { flex: 1; text-align: center; font-size: 10px; line-height: 13px; color: rgba(255, 255, 255, .66); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Ketmix: « Mixage » while two titles blend (in the quality line, and in the LCD on a computer). */
+.mix-badge { flex: 0 1 auto; margin: 0 auto; padding: 0 7px; border-radius: 999px; font-size: 10px; line-height: 15px; font-weight: 600; letter-spacing: .02em; white-space: nowrap; color: var(--on-accent); background: var(--accent); }
+.mix-badge[hidden], .side-install { display: none; }
+html.mixing .np-via { display: none; }
+html.motion .mix-badge:not([hidden]) { animation: mix-pulse 1.6s ease-in-out infinite; }
+@keyframes mix-pulse { 50% { opacity: .72; } }
+.lcd-mix { position: absolute; top: 4px; right: 6px; margin: 0; z-index: 2; font-size: 9px; line-height: 14px; }
 .np-transport { flex: 1 1 88px; min-height: 76px; max-height: 168px; display: flex; align-items: center; justify-content: space-between; }
 .tp { width: 66px; height: 66px; display: grid; place-items: center; border-radius: 50%; color: #fff; }
 .tp .icon { width: 48px; height: 48px; }
@@ -884,6 +891,9 @@ html.has-yt .np .ly-box, html.has-yt .np .q-box { top: 212px; }
   .side-pl .art .icon { width: 12px; height: 12px; margin: 5px; }
   .side-me { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; text-align: left; margin-top: 4px; }
   .side-me:hover { background: rgba(var(--ink-rgb), .06); }
+  .side-install:not([hidden]) { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 7px 10px; border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--accent-ink); background: var(--accent-soft); }
+  .side-install .icon { width: 16px; height: 16px; }
+  .side-install:hover { background: rgba(255, 45, 85, .22); }
   .side-me .avatar { width: 30px; height: 30px; font-size: 13px; }
   .me-text { flex: 1; min-width: 0; }
   .me-text b { display: block; font-size: 13px; line-height: 17px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

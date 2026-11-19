@@ -11,6 +11,12 @@
 <link rel="icon" href="favicon.ico" sizes="any"/>
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+<link rel="manifest" href="/player.webmanifest"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="Ketvoice" name="apple-mobile-web-app-title"/>
+<meta content="Ketvoice" name="application-name"/>
 <meta property="og:type" content="website"/>
 <meta property="og:title" content="Ketvoice — web player"/>
 <meta property="og:description" content="Your Ketvoice library in the browser: favourites, playlists, synced lyrics."/>
@@ -40,6 +46,7 @@
 <symbol id="i-repeat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" d="M4 11.2V9.6A3.6 3.6 0 0 1 7.6 6H19.6M16.8 3.2 19.6 6l-2.8 2.8M20 12.8v1.6a3.6 3.6 0 0 1-3.6 3.6H4.4M7.2 20.8 4.4 18l2.8-2.8"/></symbol>
 <symbol id="i-repeat-one" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" d="M4 11.2V9.6A3.6 3.6 0 0 1 7.6 6H19.6M16.8 3.2 19.6 6l-2.8 2.8M20 12.8v1.6a3.6 3.6 0 0 1-3.6 3.6H4.4M7.2 20.8 4.4 18l2.8-2.8"/><path fill="currentColor" d="M11.1 10.2h1.5c.3 0 .5.2.5.5v4.6c0 .4-.3.7-.7.7s-.7-.3-.7-.7v-3.8h-.6c-.4 0-.6-.3-.6-.6s.3-.7.6-.7Z"/></symbol>
 <symbol id="i-infinity" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 12c-1.6-2.1-3-3.6-5.1-3.6a3.6 3.6 0 0 0 0 7.2c2.1 0 3.5-1.5 5.1-3.6Zm0 0c1.6 2.1 3 3.6 5.1 3.6a3.6 3.6 0 0 0 0-7.2c-2.1 0-3.5 1.5-5.1 3.6Z"/></symbol>
+<symbol id="i-ketmix" viewBox="0 0 24 24"><circle cx="8.4" cy="12" r="5.7" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="15.6" cy="12" r="5.4" fill="none" stroke="currentColor" stroke-width="2.8"/></symbol>
 <symbol id="i-rings" viewBox="0 0 24 24"><circle cx="8.6" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="15.4" cy="12" r="5.6" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
 <symbol id="i-laptop" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M6.2 4.6L17.8 4.6Q19.8 4.6 19.8 6.6L19.8 13.6Q19.8 15.6 17.8 15.6L6.2 15.6Q4.2 15.6 4.2 13.6L4.2 6.6Q4.2 4.6 6.2 4.6ZM7 6.6L17 6.6Q17.8 6.6 17.8 7.4L17.8 12.8Q17.8 13.6 17 13.6L7 13.6Q6.2 13.6 6.2 12.8L6.2 7.4Q6.2 6.6 7 6.6ZM3.2 17L20.8 17Q22 17 22 18.2L22 18.2Q22 19.4 20.8 19.4L3.2 19.4Q2 19.4 2 18.2L2 18.2Q2 17 3.2 17Z"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M9 2.2L15 2.2Q17.6 2.2 17.6 4.8L17.6 19.2Q17.6 21.8 15 21.8L9 21.8Q6.4 21.8 6.4 19.2L6.4 4.8Q6.4 2.2 9 2.2ZM9 4.4L15 4.4Q15.8 4.4 15.8 5.2L15.8 17Q15.8 17.8 15 17.8L9 17.8Q8.2 17.8 8.2 17L8.2 5.2Q8.2 4.4 9 4.4ZM11.3 18.7L12.7 18.7Q13.4 18.7 13.4 19.4L13.4 19.4Q13.4 20.1 12.7 20.1L11.3 20.1Q10.6 20.1 10.6 19.4L10.6 19.4Q10.6 18.7 11.3 18.7Z"/></symbol>
@@ -104,6 +111,7 @@
 <div class="side-brand"><img alt="" height="22" src="assets/ketvoice-logo-vc-96.png" width="22"/><span>Ketvoice</span></div>
 <form class="field side-search" role="search" id="search-side"><svg aria-hidden="true" class="icon"><use href="#i-search"/></svg><input aria-controls="results" aria-label="Search" autocomplete="off" data-t-label="search.label" data-t-ph="search.ph" enterkeyhint="search" id="q" placeholder="Search" type="search"/><kbd class="side-kbd" aria-hidden="true" id="kbd-find">⌘F</kbd></form>
 <nav aria-label="Ketvoice" class="side-nav" data-t-label="nav.main" id="side-nav"></nav>
+<button class="side-install" data-act="install" hidden type="button"><svg aria-hidden="true" class="icon"><use href="#i-plus"/></svg><span data-t="install">Install the app</span></button>
 <button aria-expanded="false" aria-haspopup="menu" class="side-me" id="me-btn" type="button"></button>
 </aside>
 
@@ -116,6 +124,7 @@
 <button aria-label="Repeat" aria-pressed="false" class="ib c-repeat" data-act="repeat" data-t-label="c.repeat" type="button"><svg aria-hidden="true" class="icon i-rep"><use href="#i-repeat"/></svg><svg aria-hidden="true" class="icon i-rep1"><use href="#i-repeat-one"/></svg></button>
 </div>
 <div class="lcd" id="lcd">
+<span class="mix-badge lcd-mix" data-mix="" hidden></span>
 <button aria-label="Open the player" class="lcd-art" data-act="np-open" data-t-label="np.open" type="button"><img alt="" data-bind="cover" decoding="async" referrerpolicy="no-referrer"/><span class="lcd-logo" aria-hidden="true"><img alt="" height="22" src="assets/ketvoice-logo-vc-96.png" width="22"/></span></button>
 <div class="lcd-text"><p class="lcd-title" data-bind="title"></p><p class="lcd-sub"><span data-bind="artist-link"></span><span class="lcd-album" data-bind="album"></span></p></div>
 <div class="lcd-acts"><button aria-pressed="false" class="ib like" data-act="like" type="button"><svg aria-hidden="true" class="icon i-h"><use href="#i-heart"/></svg><svg aria-hidden="true" class="icon i-hf"><use href="#i-heart-fill"/></svg></button><button aria-haspopup="menu" aria-label="More" class="ib" data-act="np-menu" data-t-label="more" type="button"><svg aria-hidden="true" class="icon"><use href="#i-more"/></svg></button></div>
@@ -183,7 +192,7 @@
 </div>
 <div class="np-controls" id="np-controls">
 <div class="np-line" id="np-line"></div>
-<div class="np-seek"><div class="slider seek big" data-slider="seek"><i class="sl-track"><i class="sl-fill"></i></i></div><div class="np-times"><span class="t-now" data-bind="now">0:00</span><span class="np-via" id="np-via"></span><span class="t-left" data-bind="left">-0:00</span></div></div>
+<div class="np-seek"><div class="slider seek big" data-slider="seek"><i class="sl-track"><i class="sl-fill"></i></i></div><div class="np-times"><span class="t-now" data-bind="now">0:00</span><span class="mix-badge" data-mix="" hidden></span><span class="np-via" id="np-via"></span><span class="t-left" data-bind="left">-0:00</span></div></div>
 <div class="np-transport">
 <button aria-label="Previous" class="tp" data-act="prev" data-t-label="c.prev" type="button"><svg aria-hidden="true" class="icon"><use href="#i-prev"/></svg></button>
 <button aria-label="Play" class="tp tp-play" data-act="toggle" type="button"><svg aria-hidden="true" class="icon i-play"><use href="#i-play"/></svg><svg aria-hidden="true" class="icon i-pause"><use href="#i-pause"/></svg></button>
@@ -217,11 +226,12 @@
 <audio id="audio" playsinline preload="metadata"></audio>
 <audio id="audio2" playsinline preload="metadata"></audio>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
-<script src="js/player/core.js?v=202611190300"></script>
-<script src="js/player/api.js?v=202611182100"></script>
+<script src="js/player/core.js?v=202611190700"></script>
+<script src="js/player/api.js?v=202611190700"></script>
 <script src="js/player/catalog.js?v=202611182230"></script>
 <script src="js/player/lyrics.js?v=202611190300"></script>
-<script src="js/player/engine.js?v=202611190300"></script>
-<script src="js/player/app.js?v=202611190300"></script>
+<script src="js/player/ketmix.js?v=202611190700"></script>
+<script src="js/player/engine.js?v=202611190700"></script>
+<script src="js/player/app.js?v=202611190700"></script>
 </body>
 </html>

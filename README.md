@@ -63,7 +63,11 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
   meets a row created meanwhile becomes an update); 90-day-old tombstones are pruned. `now_playing` is upserted
   (`on_conflict=user_id,kind`) every 15 s while playing, on each title or play/pause change and when the tab hides,
   with the app's document (`device_id` `web-<uuid>`, `device_name` « Web · Safari · iPhone », a window of 50 titles).
-  Playlists and settings are not written from the web.
+  A title added to one of the account's playlists (« Ajouter à une playlist » in a title's menu, 7.0) is
+  PlaylistStore.add's entry `{"id":<uuid>,"title","artist","spotifyId":null,"track":<SyncTracks.json>}` at the end of
+  the `pl:<id>` item, its other fields kept as the app wrote them, written the same way (newer stamp, revision);
+  a title already there is not added again. Creating, renaming, reordering or deleting playlists, shared playlists
+  and settings are not written from the web.
 - Search (owner, 2026-11-18: « pour le site trouve un système pour avoir le catalogue etc. tout de Ketvoice et le
   streaming »), the app's: the listener's library, the titles published on Ketvoice (`ketvoice-content/search`), the
   Ketvoice API's catalogue (`ketvoice-api/search`, KetvoiceApi.search) and YouTube Music's songs, artists and albums
@@ -103,6 +107,31 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
   set it), Media Session (title, artist, album, artwork at 512 px, play/pause, next/previous, seek, lock screen and
   media keys), keyboard (Space/K, ←/→ ±5 s, Shift+←/→ or P/N, M, L, `/`, Esc). An embedding refusal (YouTube errors
   101/150) is said and the next title plays. A browser that blocks the first sound asks to tap.
+- Ketmix (owner, 7.0.0: « Lecteur web complet »), `js/player/ketmix.js` (pure, tested) and the engine: when two titles
+  of the queue that play from real audio (Ketvoice's files, `ketvoice-api/stream`) follow each other, both decks go
+  through Web Audio (MediaElementAudioSourceNode → low shelf → gain → output). While the next title loads, the last
+  and first 480 kB of the two MP3s are fetched by range and decoded here for a tempo estimate (onset envelope at
+  100 frames/s, autocorrelation over 70–180 BPM, then the beat's phase). Both tempos found and within 6 % (double
+  and half time count): a beat-matched blend of 32/16/8/4 beats (10 s at most) started on a beat of the outgoing
+  title, the next one started on its own beat at the outgoing tempo (`playbackRate`, pitch kept), equal-power gain
+  curves and the basses swapped at the middle; otherwise an equal-power crossfade of 6 s. A deck is routed only when
+  its host answered with CORS (the API's /stream host and Supabase's public files do; a host that refuses plays
+  again without CORS, and a routed deck gets a fresh `<audio>` for an address that cannot be routed). When one side
+  cannot be routed, the 2 s crossfade; before a YouTube title (an iframe: no Web Audio) the audio title fades out
+  over its last 1.5 s. « Mixage » (« Mixage · 16 temps » when beat-matched) shows in the player's quality line and
+  in the LCD while two titles blend. The switch is the first segment of the queue's capsule (the app's place) and a
+  row of the output sheet (`kv-player-ketmix`, on by default); not offered on iPhone (no page volume, and Safari
+  suspends Web Audio in the background), where titles follow without a gap as before.
+- Installable (7.0): `player.webmanifest` (name Ketvoice, start_url and scope `/player`, standalone, black theme, the
+  site's 192/512/180 px icons), `sw.js` registered with scope `/player` (cache names carry `VERSION`, older ones deleted
+  on activate; the page network first with a 4 s fallback to the kept copy, the site's scripts, styles, fonts and
+  images cache first by their versioned address; never audio, ranges or other hosts; `no-cache` for `/sw.js` in
+  `vercel.json`), iOS tags (`apple-mobile-web-app-capable`, status bar `black-translucent`, title) and an « Installer
+  l'app » button from Chrome/Edge's `beforeinstallprompt` (the sidebar on a computer, the account sheet on Android).
+  iPhone: Share → « Sur l'écran d'accueil ».
+- Discord while `/player` is not yet an allowed redirect on Supabase: Supabase sends the answer to the Site URL; the
+  home page passes a `?code=`/error answer on to `/player` when a sign-in was started there less than 10 minutes ago.
+  An error other than a cancel says « La connexion Discord n'a pas abouti ici… » and offers the e-mail sign-in.
 - Canvas: `ketvoice-api/canvas` (asked once per title, 1.2 s after it starts) — a muted looping video in the artwork's
   place, the cover fading out once it plays; paused with reduced motion (the cover stays), in a hidden tab and under
   the YouTube video.
@@ -168,7 +197,12 @@ the footer and a card under the downloads (the nav pill is 920 px wide since, so
   account sheet (`ketvoice-player-theme`; Vice City `kv-player-vc`); the side panel is remembered (`kv-player-panel`),
   the titles played here feed Récents (`kv-player-recent`, 40 at most). Not on the web, as before: downloads,
   creating or editing playlists, following artists. French or English from the browser's language.
-- Tests: `node tests/player-sync.test.cjs` (document format, merge, favourites, playlists, artists, shared rows, now
+- Tests: `node tests/player-ketmix.test.cjs` (tempo on synthetic click tracks, the blend plan, equal-power curves, the
+  bass swap), `node tools/player-web70-check.cjs` (Playwright, 390 and 1440 px: sign-in screen and a Discord error, the
+  home page passing a Discord answer on, the fixture library with the profile photo, a title added to a playlist and
+  the PATCH checked against the app's entry, Ketmix blending two published titles with both decks routed and
+  « Mixage » shown, the manifest, the service worker and its cache, the iOS tags, the install button),
+  `node tests/player-sync.test.cjs` (document format, merge, favourites, playlists, artists, shared rows, now
   playing, LRC, PKCE), `node tests/player-api.test.cjs` (a fake Supabase with recorded shapes: sign-in, refresh,
   revision races, upsert, Discord, content, lyrics), `node tests/player-catalog.test.cjs` (search rows, catalogue
   answers checked, the merge, the order of sources, provider switches, 429, the 404 detection, Canvas),

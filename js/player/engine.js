@@ -22,10 +22,12 @@
     var decks = [opts.audio, opts.audio2];
     var emit = opts.onChange || function () {};
     var fadeOn = opts.fadeOn || function () { return true; };
+    var ketmixOn = opts.ketmixOn || function () { return false; };
+    var KM = window.KVKetmix;
     var s = {
       queue: [], index: -1, original: null, shuffle: false, repeat: 'off', playing: false, loading: false,
       positionMs: 0, durationMs: 0, volume: 100, muted: false, source: null, via: null, quality: '', error: null, needsTap: false,
-      radio: null
+      radio: null, mixing: null
     };
     var yt = null, ytReady = null, ytApi = null, ticking = 0, token = 0, pendingSeek = 0, tapTimer = 0, skipTimer = 0;
     var active = 0, preload = null, fade = null, tried = [], unlocked = false, radioBusy = false;
@@ -55,6 +57,7 @@
     function unlock() {
       if (unlocked) return;
       unlocked = true;
+      if (ketmixOn()) ensureContext();
       decks.forEach(function (el) {
         if (el.getAttribute('src')) return;
         el.muted = true; el.src = SILENCE;
@@ -155,7 +158,78 @@
 
     function isActive(el) { return el === deck() && s.source === 'audio'; }
 
-    decks.forEach(function (el) {
+    // ------------------------------------------------------------ Ketmix: the decks through Web Audio
+
+    /**
+     * Ketmix routes a deck through Web Audio (MediaElementAudioSourceNode → low shelf → gain → output) only
+     * when its address answers with CORS: a cross-origin stream without it would play silence there. Hosts are
+     * learnt as they answer (the Ketvoice API's /stream host and Supabase's public files do). A deck once routed
+     * stays routed, so an address that cannot be routed gets a fresh <audio> element.
+     */
+    var AC = window.AudioContext || window.webkitAudioContext;
+    var ketmixWorks = !!(AC && KM && volumeWorks);
+    var ctx = null, corsOk = new Set(), corsBad = new Set();
+    function host(url) { try { return new URL(url, location.href).host; } catch (e) { return ''; } }
+    function ensureContext() {
+      if (!ketmixWorks) return null;
+      if (!ctx) { try { ctx = new AC({ latencyHint: 'playback' }); } catch (e) { ketmixWorks = false; return null; } }
+      if (ctx.state === 'suspended') ctx.resume().catch(function () {});
+      return ctx;
+    }
+    function route(el) {
+      if (el.__kv) return el.__kv;
+      if (!ensureContext() || el.crossOrigin !== 'anonymous' || !corsOk.has(host(el.currentSrc || el.src))) return null;
+      try {
+        var node = { src: ctx.createMediaElementSource(el), eq: ctx.createBiquadFilter(), gain: ctx.createGain() };
+        node.eq.type = 'lowshelf'; node.eq.frequency.value = 220; node.eq.gain.value = 0;
+        node.src.connect(node.eq); node.eq.connect(node.gain); node.gain.connect(ctx.destination);
+        el.__kv = node;
+        return node;
+      } catch (e) { return null; }
+    }
+    function resetNode(el) {
+      var n = el.__kv;
+      el.playbackRate = 1;
+      if (!n || !ctx) return;
+      [n.gain.gain, n.eq.gain].forEach(function (p) { p.cancelScheduledValues(0); });
+      n.gain.gain.setValueAtTime(1, ctx.currentTime); n.eq.gain.setValueAtTime(0, ctx.currentTime);
+    }
+    /** The deck at [i], ready for [url]: CORS asked when Ketmix may route it, a fresh element when it cannot be. */
+    function prepare(i, url) {
+      var el = decks[i], h = host(url);
+      var cors = ketmixWorks && ketmixOn() && !corsBad.has(h);
+      if (el.__kv && !cors) {
+        var fresh = el.cloneNode(false);
+        fresh.removeAttribute('src'); fresh.removeAttribute('crossorigin');
+        el.pause(); el.removeAttribute('src'); el.load();
+        el.replaceWith(fresh); wire(fresh); decks[i] = fresh; el = fresh;
+      }
+      if (cors) el.crossOrigin = 'anonymous'; else el.removeAttribute('crossorigin');
+      resetNode(el);
+      el.volume = s.volume / 100; el.muted = s.muted;
+      return el;
+    }
+
+    /** The tempo of a stretch of [url] (its first or last 480 kB, decoded here), or null. MP3 only (CBR). */
+    function analyse(url, fromEnd, durationMs) {
+      if (!ctx || !window.fetch) return Promise.resolve(null);
+      var ctl = window.AbortController ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctl) ctl.abort(); }, 6000);
+      return fetch(url, { headers: { Range: fromEnd ? 'bytes=-480000' : 'bytes=0-479999' }, credentials: 'omit', signal: ctl ? ctl.signal : undefined })
+        .then(function (r) { if (!r.ok) throw new Error('range'); return r.arrayBuffer(); })
+        .then(function (buf) { return new Promise(function (ok, ko) { var p = ctx.decodeAudioData(buf, ok, ko); if (p && p.catch) p.catch(ko); }); })
+        .then(function (audio) {
+          clearTimeout(timer);
+          var r = KM.estimateBpm(audio.getChannelData(0), audio.sampleRate);
+          if (!r.bpm) return null;
+          // A stretch read from the end: its beats are positions from (duration − its length).
+          if (fromEnd) { if (!(durationMs > audio.duration * 1000)) return null; r.beatAtMs += durationMs - audio.duration * 1000; }
+          return r;
+        })
+        .catch(function () { clearTimeout(timer); return null; });
+    }
+
+    function wire(el) {
       el.addEventListener('playing', function () { if (isActive(el)) { s.playing = true; s.loading = false; s.needsTap = false; changed(); } });
       el.addEventListener('pause', function () { if (isActive(el) && !fade) { s.playing = false; changed(); } });
       el.addEventListener('waiting', function () { if (isActive(el)) { s.loading = true; changed(); } });
@@ -163,6 +237,12 @@
       el.addEventListener('error', function () {
         var src = el.getAttribute('src');
         if (!src || src === SILENCE) return;
+        if (el.crossOrigin === 'anonymous' && !corsOk.has(host(src))) {
+          // Refused with CORS: this host plays without Ketmix from now on, the same address again.
+          corsBad.add(host(src));
+          if (preload && preload.el === el && !isActive(el)) { preload = null; return; }
+          if (isActive(el) && s.url === src) { playAudio({ url: src, via: s.via, quality: s.quality, format: s.format }, s.positionMs, true, token); return; }
+        }
         if (preload && preload.el === el && !isActive(el)) { if (catalog) catalog.forget(preload.track.id); preload = null; return; }
         if (!isActive(el)) return;
         // This address failed: the next source of the title's plan, as the app does.
@@ -171,11 +251,13 @@
         failed('unavailable');
       });
       el.addEventListener('loadedmetadata', function () {
+        if (el.crossOrigin === 'anonymous') corsOk.add(host(el.currentSrc || el.src));
         if (!isActive(el)) return;
         if (pendingSeek) { el.currentTime = pendingSeek / 1000; pendingSeek = 0; }
         tick();
       });
-    });
+    }
+    decks.forEach(wire);
 
     /** Stops the decks except [keep] (-1: both). */
     function stopAudio(keep) {
@@ -209,12 +291,12 @@
         else if (el.currentTime > 0.05) el.currentTime = 0;
       } else {
         stopAudio(active);
-        el = deck();
+        el = prepare(active, r.url);
         pendingSeek = startMs || 0;
         el.preload = 'auto';
         el.src = r.url;
       }
-      s.source = 'audio'; s.via = r.via; s.quality = r.quality || '';
+      s.source = 'audio'; s.via = r.via; s.quality = r.quality || ''; s.url = r.url; s.format = r.format || '';
       s.loading = autoplay !== false;
       changed('source');
       startDeck(el, autoplay, my);
@@ -250,7 +332,7 @@
       if (s.playing && dur > 0) {
         var left = dur - pos;
         if (left <= PRELOAD_BEFORE_MS) preloadNext();
-        if (left <= FADE_MS + 150 && s.source === 'audio') maybeFade();
+        if (s.source === 'audio') { if (ketmixOn() && ketmixWorks) ketmixTick(pos, dur, left); else if (left <= FADE_MS + 150) maybeFade(); }
       }
       if (s.radio && s.playing) topUpRadio();
     }
@@ -282,16 +364,25 @@
         if (!r || r.kind !== 'audio' || fade) { preload = { track: t, kind: r ? r.kind : null, videoId: r && r.videoId }; return; }
         var el = other();
         el.pause();
+        el = prepare(1 - active, r.url);
         el.preload = 'auto';
         el.src = r.url;
         el.load();
-        preload = { track: t, el: el, url: r.url, via: r.via, quality: r.quality, at: Date.now() };
+        preload = { track: t, el: el, url: r.url, via: r.via, quality: r.quality, format: r.format || '', at: Date.now() };
+        if (ketmixOn() && ctx) {
+          // Both tempos, while the next title loads: the end of this one and the start of the next.
+          var mine = preload, mp3 = function (f) { return !f || f === 'mp3'; };
+          if (!mp3(s.format) || !mp3(r.format) || !s.url) { mine.analysed = true; return; }
+          Promise.all([analyse(s.url, true, s.durationMs), analyse(r.url, false)]).then(function (beats) {
+            mine.fromBeat = beats[0]; mine.toBeat = beats[1]; mine.analysed = true;
+          });
+        }
       }, function () { if (preload && preload.track === t) preload = null; });
     }
 
     /** The last seconds: the next deck comes in while this one goes, over 2 s (« Sans fondu »: none). */
-    function maybeFade() {
-      if (fade || !volumeWorks || !fadeOn() || !preload || !preload.el || preload.el.readyState < 3) return;
+    function maybeFade(force) {
+      if (fade || !volumeWorks || !(force || fadeOn()) || !preload || !preload.el || preload.el.readyState < 3) return;
       var i = nextIndex();
       if (i < 0 || s.queue[i] !== preload.track) return;
       var from = deck(), to = preload.el;
@@ -316,11 +407,79 @@
 
     function endFade() {
       if (!fade) return;
-      clearInterval(fade.timer);
-      var from = fade.from;
+      clearInterval(fade.timer); clearTimeout(fade.startTimer); clearTimeout(fade.endTimer);
+      var from = fade.from, to = fade.to, mixed = fade.ketmix;
       fade = null;
       if (from !== deck()) { from.pause(); from.removeAttribute('src'); from.load(); }
+      if (mixed) {
+        resetNode(from); resetNode(to);
+        // Stopped before it began (a pause, a seek): the next title waits in its deck as before.
+        if (to !== deck()) { to.pause(); to.currentTime = 0; }
+        s.mixing = null; changed('mix');
+      }
       applyVolume();
+    }
+
+    // ------------------------------------------------------------ Ketmix: the blend
+
+    /** Each tick of the last 20 s with Ketmix on: plan the blend once both tempos are in (or time runs out), then start it. */
+    function ketmixTick(pos, dur, left) {
+      if (fade || !preload) return;
+      var el = deck();
+      if (!preload.el) {
+        // The next title plays from YouTube (no Web Audio there): this one fades out over its last 1.5 s.
+        if (preload.kind && left <= 1500 && !s.muted) el.volume = Math.max(0, s.volume / 100 * left / 1500);
+        return;
+      }
+      var i = nextIndex();
+      if (i < 0 || s.queue[i] !== preload.track || preload.el.readyState < 3) return;
+      if (!ctx || !(el.__kv || el.crossOrigin === 'anonymous') || preload.el.crossOrigin !== 'anonymous') {
+        // One of the two cannot go through Web Audio: the short crossfade instead.
+        if (left <= FADE_MS + 150) maybeFade(true);
+        return;
+      }
+      if (!preload.plan) {
+        if (!preload.analysed && left > KM.SMOOTH_MS + 800) return;
+        preload.plan = KM.plan({ durationMs: dur, positionMs: pos, from: preload.fromBeat, to: preload.toBeat });
+      }
+      if (pos >= preload.plan.startMs - 400) startKetmix(preload.plan, i);
+    }
+
+    function startKetmix(p, i) {
+      var from = deck(), to = preload.el;
+      var a = route(from), b = route(to);
+      if (!a || !b || !p.durationMs) { if (s.durationMs - nowMs() <= FADE_MS + 400) maybeFade(true); return; }
+      var delay = Math.max(0, p.startMs - nowMs()), dur = p.durationMs / 1000;
+      var t0 = ctx.currentTime + delay / 1000, mid = t0 + dur / 2;
+      var swap = p.mode === 'beat' ? Math.min(dur / 4, dur / p.beats * 2) : 0;
+      b.gain.gain.cancelScheduledValues(0); b.gain.gain.setValueAtTime(0, ctx.currentTime);
+      a.gain.gain.cancelScheduledValues(0); a.gain.gain.setValueAtTime(1, ctx.currentTime);
+      a.gain.gain.setValueCurveAtTime(KM.curve('from', 64), t0, dur);
+      b.gain.gain.setValueCurveAtTime(KM.curve('to', 64), t0, dur);
+      if (swap) {
+        a.eq.gain.setValueAtTime(0, mid - swap / 2); a.eq.gain.linearRampToValueAtTime(KM.BASS_CUT_DB, mid + swap / 2);
+        b.eq.gain.setValueAtTime(KM.BASS_CUT_DB, ctx.currentTime); b.eq.gain.setValueAtTime(KM.BASS_CUT_DB, mid - swap / 2);
+        b.eq.gain.linearRampToValueAtTime(0, mid + swap / 2);
+      }
+      to.currentTime = p.toStartMs / 1000; to.volume = s.volume / 100; to.muted = s.muted;
+      var next = preload;
+      fade = { ketmix: true, from: from, to: to, plan: p };
+      fade.startTimer = setTimeout(function () {
+        if (!fade || fade.to !== to) return;
+        if (p.rate !== 1) { to.preservesPitch = true; to.playbackRate = p.rate; }
+        var pr = to.play();
+        if (pr && pr.catch) pr.catch(function () { cancelFade(); });
+        // The title that comes in is the current one from now on.
+        tried = []; active = 1 - active;
+        s.index = i; s.via = next.via; s.quality = next.quality || ''; s.url = next.url; s.format = next.format || ''; s.error = null;
+        s.mixing = { mode: p.mode, beats: p.beats, rate: p.rate, durationMs: p.durationMs };
+        preload = null;
+        updateMetadata();
+        changed('track'); changed('mix');
+        fade.endTimer = setTimeout(function () {
+          if (fade && fade.to === to) { to.playbackRate = 1; endFade(); }
+        }, p.durationMs + 120);
+      }, delay);
     }
     function cancelFade() { if (fade) endFade(); }
 
@@ -451,7 +610,7 @@
 
     function applyVolume() {
       if (yt && yt.setVolume) { yt.setVolume(s.volume); if (s.muted) yt.mute(); else yt.unMute(); }
-      if (fade) return;
+      if (fade && !fade.ketmix) return;
       decks.forEach(function (el) { el.volume = s.volume / 100; el.muted = s.muted; });
     }
 
@@ -582,6 +741,10 @@
       state: s, current: current, nowMs: nowMs, playQueue: playQueue, play: play, pause: pause, toggle: toggle, next: next, prev: prev,
       playAt: playAt, seek: seek, setVolume: setVolume, toggleMute: toggleMute, toggleShuffle: toggleShuffle, cycleRepeat: cycleRepeat,
       startRadio: startRadio, playable: playable, volumeWorks: volumeWorks,
+      /** Ketmix needs Web Audio and a page that may set the volume (not iPhone, where Safari suspends Web Audio in the background). */
+      get ketmixWorks() { return ketmixWorks; },
+      /** Called from the switch's tap, so the AudioContext may start. */
+      ketmixChanged: function () { if (ketmixOn()) ensureContext(); dropPreload(); },
       preload: function () { return loadYouTubeApi().catch(function () { return null; }); },
       /** Puts a queue in place without playing (« Reprendre » waits for the listener's tap). */
       cueQueue: function (tracks, index, startMs) { s.queue = tracks.slice(); s.original = null; s.shuffle = false; s.radio = null; s.index = index; preload = null; load(startMs || 0, false); },
