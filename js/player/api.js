@@ -188,7 +188,7 @@
     function completeOAuth(params) {
       var pending = parseJson(store.getItem(PKCE_KEY) || 'null');
       try { store.removeItem(PKCE_KEY); } catch (e) { /* private mode */ }
-      if (params.get('error') || params.get('error_description')) return Promise.reject(fail('oauth_cancelled', 0, params.get('error_description') || ''));
+      if (params.get('error') || params.get('error_description')) return Promise.reject(fail(params.get('error') === 'access_denied' ? 'oauth_cancelled' : 'oauth_failed', 0, params.get('error_description') || ''));
       var code = params.get('code') || '';
       if (!/^[A-Za-z0-9_-]{8,200}$/.test(code)) return Promise.reject(fail('oauth_invalid'));
       if (!pending || !pending.verifier) return Promise.reject(fail('oauth_expired'));

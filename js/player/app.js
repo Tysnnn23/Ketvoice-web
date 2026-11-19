@@ -33,7 +33,7 @@
       'err.invalid_credentials': 'Wrong e-mail or password.', 'err.email_not_confirmed': 'This account is waiting for an e-mail confirmation.',
       'err.provider_disabled': 'This way of signing in is not available yet.', 'err.rate_limited': 'Too many attempts. Try again in a few minutes.',
       'err.invalid_email': 'Invalid e-mail address.', 'err.invalid_password': 'Enter your password.', 'err.auth_failed': 'Sign-in is not possible right now.',
-      'err.network': 'No connection to Ketvoice. Check your network.', 'err.oauth_cancelled': 'Discord sign-in was cancelled.',
+      'err.network': 'No connection to Ketvoice. Check your network.', 'err.oauth_cancelled': 'Discord sign-in was cancelled.', 'err.oauth_failed': 'Discord sign-in did not finish here. Sign in with your e-mail, or try again later.',
       'err.oauth_invalid': 'Invalid sign-in link. Try again.', 'err.oauth_expired': 'The sign-in took too long. Try again.',
       'err.signed_out': 'Your session has expired. Sign in again.',
       'hello.morning': 'Good morning', 'hello.day': 'Good afternoon', 'hello.evening': 'Good evening', 'home.origin': 'Your Ketvoice library',
@@ -98,7 +98,7 @@
       'err.invalid_credentials': 'E-mail ou mot de passe incorrect.', 'err.email_not_confirmed': 'Ce compte attend une confirmation par e-mail.',
       'err.provider_disabled': 'Cette méthode de connexion n’est pas encore disponible.', 'err.rate_limited': 'Trop de tentatives. Réessayez dans quelques minutes.',
       'err.invalid_email': 'Adresse e-mail invalide.', 'err.invalid_password': 'Saisissez votre mot de passe.', 'err.auth_failed': 'Connexion impossible pour le moment.',
-      'err.network': 'Pas de connexion à Ketvoice. Vérifiez votre réseau.', 'err.oauth_cancelled': 'Connexion Discord annulée.',
+      'err.network': 'Pas de connexion à Ketvoice. Vérifiez votre réseau.', 'err.oauth_cancelled': 'Connexion Discord annulée.', 'err.oauth_failed': 'La connexion Discord n’a pas abouti ici. Connectez-vous avec votre e-mail, ou réessayez plus tard.',
       'err.oauth_invalid': 'Lien de connexion invalide. Réessayez.', 'err.oauth_expired': 'La connexion a pris trop de temps. Réessayez.',
       'err.signed_out': 'Votre session a expiré. Reconnectez-vous.',
       'hello.morning': 'Bonjour', 'hello.day': 'Bon après-midi', 'hello.evening': 'Bonsoir', 'home.origin': 'Votre bibliothèque Ketvoice',
@@ -1487,11 +1487,11 @@
     menuReturn = o.from || document.activeElement;
     var fav = isFav(track.id), items = [];
     var add = function (id, label, icon, on) { items.push('<button class="mi' + (on ? ' on' : '') + '" data-mi="' + id + '" role="menuitem" type="button"><span>' + esc(label) + '</span>' + ic(icon) + '</button>'); };
-    if (o.point && playable(track)) add('play', t('menu.play'), 'play');
-    if (playable(track)) { add('next', t('menu.next'), 'play-next'); add('queue', t('menu.queue'), 'queue-add'); }
     if (o.playlists) {
       lib.playlists.forEach(function (p) { items.push('<button class="mi" data-mi="pl" data-pl="' + esc(p.id) + '" role="menuitem" type="button"><span>' + esc(p.name) + '</span>' + ic('playlist') + '</button>'); });
     } else {
+    if (o.point && playable(track)) add('play', t('menu.play'), 'play');
+    if (playable(track)) { add('next', t('menu.next'), 'play-next'); add('queue', t('menu.queue'), 'queue-add'); }
     if (core.syncable(track.id) && track.title) add('like', t(fav ? 'like.remove' : 'like.add'), fav ? 'heart-fill' : 'heart', fav);
     if (core.syncable(track.id) && track.title && lib.loaded) add('pls', t('menu.pl'), 'plus');
     if (catalog.catalogOn && track.title) add('radio', t('radio.start'), 'radio');

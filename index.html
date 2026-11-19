@@ -17,6 +17,7 @@
 <meta property="og:image:alt" content="Ketvoice — your music, beautifully connected on every device"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Tysnnn23/Ketvoice/main/ketvoice-banner.png"/>
+<script>/* Discord sign-in for the web player: while /player is not in Supabase's allowed redirect addresses, Supabase sends the answer to the site's home instead. It goes on to /player (only within 10 minutes of a sign-in started there). */(function(){try{var q=location.search+location.hash;if(!/[?&#](code|error_description)=/.test(q))return;var p=JSON.parse(localStorage.getItem('kv-player-pkce')||'null');if(p&&Date.now()-p.at<6e5)location.replace('/player'+location.search+location.hash)}catch(e){}})();</script>
 <script>document.documentElement.classList.add('js');(function(){var d=document.documentElement;try{if(localStorage.getItem('ketvoice-theme')==='dark')d.classList.add('dark')}catch(e){}if(!matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('motion')})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
