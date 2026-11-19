@@ -1,18 +1,18 @@
 /* Hallmark · v2.0.0 · theme: incumbent (ketvoice-web: Geist, hairline rings, pink accent, listen.html's tokens) · genre: atmospheric · shape: catalogue page, the artwork leads · signature: the cover or the artist's photo, set big beside the name · job: listen (open in the app) */
 /* critique: the picture and the name carry the first screen; one pink action; lists stay quiet with hairlines; no cards inside cards, no labels above heads. */
+/* Hallmark · waive 24b · off-scale spacing · list rows and buttons copy the share page listen.html, which uses 10, 14 and 18 px */
 /* Public pages: /artist/…, /album/…, /u/… (api/og-page.js, js/share-render.js, js/share.js). */
 :root{
   --font:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
-  --bg:#f3f4f6;--card:#ffffff;--soft:#e9eaee;--ink:#0e0820;--muted:#4c5064;
+  --bg:#f3f4f6;--card:#fdfcfe;--soft:#e9eaee;--ink:#0e0820;--muted:#4c5064;
   --line:rgba(14,8,32,.12);--ring:rgba(14,8,32,.16);
   --accent:#ffc3dc;--accent-hover:#ffadd0;--on-accent:#0e0820;--tint:#fdecf4;--focus:#c2366f;
   color-scheme:light;
+  /* the dark theme's values; html.dark (the site's theme switch) points the tokens at them */
+  --bg-dark:#0c0913;--card-dark:#17121f;--soft-dark:#1d1727;--ink-dark:#f3eff8;--muted-dark:#b9b2c7;--line-dark:rgba(255,255,255,.11);--ring-dark:rgba(255,255,255,.18);--accent-dark:#ff9cc6;--accent-hover-dark:#ffb3d3;--on-accent-dark:#0e0820;--tint-dark:#22152b;--focus-dark:#ff9cc6;
 }
 html.dark{
-  --bg:#0c0913;--card:#17121f;--soft:#1d1727;--ink:#f3eff8;--muted:#b9b2c7;
-  --line:rgba(255,255,255,.11);--ring:rgba(255,255,255,.18);
-  --accent:#ff9cc6;--accent-hover:#ffb3d3;--on-accent:#0e0820;--tint:#22152b;--focus:#ff9cc6;
-  color-scheme:dark;
+  --bg:var(--bg-dark);--card:var(--card-dark);--soft:var(--soft-dark);--ink:var(--ink-dark);--muted:var(--muted-dark);--line:var(--line-dark);--ring:var(--ring-dark);--accent:var(--accent-dark);--accent-hover:var(--accent-hover-dark);--on-accent:var(--on-accent-dark);--tint:var(--tint-dark);--focus:var(--focus-dark);color-scheme:dark;
 }
 *,*::before,*::after{box-sizing:border-box}
 html,body{overflow-x:clip}
@@ -48,7 +48,7 @@ img{display:block;max-width:100%}
 .sh-round{border-radius:50%}
 .sh-initial{display:grid;place-items:center;background:var(--tint);color:var(--muted);font-size:120px;line-height:1;font-weight:500}
 .sh-head{display:grid;gap:12px;min-width:0;padding-bottom:8px}
-.sh-head h1{font-size:72px;line-height:76px;font-weight:500;letter-spacing:-.02em;overflow-wrap:break-word;min-width:0}
+.sh-head h1{text-wrap:balance;font-size:72px;line-height:76px;font-weight:500;letter-spacing:-.02em;overflow-wrap:break-word;min-width:0}
 .sh-lead{color:var(--muted);font-size:17px;line-height:26px;max-width:52ch}
 .sh-by{font-size:22px;line-height:30px;font-weight:500}
 .sh-by a{border-bottom:1px solid var(--ring)}
@@ -87,7 +87,7 @@ img{display:block;max-width:100%}
 
 @media (max-width:1023px){
   .sh-hero{grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:36px}
-  .sh-head h1{font-size:52px;line-height:56px}
+  .sh-head h1{text-wrap:balance;font-size:52px;line-height:56px}
   .sh-grid,.sh-people{grid-template-columns:repeat(4,minmax(0,1fr))}
 }
 @media (max-width:640px){
@@ -95,7 +95,7 @@ img{display:block;max-width:100%}
   .sh-hero{grid-template-columns:minmax(0,1fr);gap:24px}
   .sh-hero .sh-art{width:min(100%,320px)}
   .sh-hero-profile .sh-art{width:min(100%,200px)}
-  .sh-head h1{font-size:40px;line-height:44px}
+  .sh-head h1{text-wrap:balance;font-size:40px;line-height:44px}
   .sh-block{margin-top:48px}
   .sh-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 14px}
   .sh-people{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px}

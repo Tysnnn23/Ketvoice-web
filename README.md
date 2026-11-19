@@ -36,8 +36,57 @@ every parameter of the original page (`track`, `title`, `artist`, `kind=album|to
 `playlist`/`collection` + `name`) and its `intent://` deep link with the `noredirect=1` fallback, character for
 character. Optional new parameters: `cover` (an https image), `t` (seconds or m:ss) and `line`. The « paroles du
 moment » are one or two lines from LRCLIB's synced lyrics (the line at `t`, else the most repeated line), never the
-whole text. Preview tags (Open Graph / Twitter) are static: link-preview robots do not run JavaScript, and per-title
-previews would need server rendering.
+whole text. On Vercel, `/listen` is answered by `api/og-page.js` (below): the same file, its body untouched, with the
+title's own preview tags (« Ocean Drive de Néon », the cover when it comes from a known cover host, otherwise the
+banner). The copy on GitHub Pages, where the app's links point today, keeps the fixed tags: GitHub Pages runs no code.
+
+## Ketmix demo (home `#ketmix-demo`, `/ketmix`)
+
+Owner, 7.0.0: « Démo Ketmix en ligne ». Two loops written in code for the demo (`js/ketmix/mix.js`: « Néon Drive »,
+124 BPM, A minor, and « Marée basse », 116 BPM, D major; drums, bass and chords as notes, no sample, no song),
+rendered once in an `OfflineAudioContext` and mixed live in Web Audio (`js/ketmix/demo.js`): per deck a looping
+buffer → low shelf at 180 Hz (the bass) → high-pass → low-pass → gain, the outgoing deck also into a dotted echo.
+Presets as the app's MixKind: Auto (picks « Calé sur le tempo » when the tempos are within 8 %, Filtres within 16 %,
+Fondu beyond), Calé sur le tempo (the incoming at ×1.07 by `playbackRate`, the bass changing hands on the middle beat,
+then back to its own tempo over two bars), Écho (cut on the bar, the last beat ringing out), Filtres (high-pass up on
+one, low-pass opening on the other, in time), Fondu (equal power, each at its tempo); « Sans mix » = the first stops,
+0.6 s of silence, the second starts. The timeline is drawn like the app's editor (`KetmixTimeline.kt`): outgoing wave
+above, incoming below (its own beat grid, stretched by the rate), the box in the accent, volume solid, bass dashed,
+filter dotted (the app's TimelineInk hues). The box is dragged by its body or edges (whole bars) or moved with the
+arrow keys (Shift + arrows: length; it is a `role="slider"`); a change while playing carries on from where the music
+is. The loops render when the section nears the screen; the sound starts only on Play. Reduced motion: the playhead
+moves four times a second, nothing animates. French on `/ketmix`, English on the home page.
+Tests: `node tests/ketmix-mix.test.cjs` (equal power, the bass swap never doubled, tempo match and its return, filter
+sweeps, echo, no-mix gap, bounds of every preset, the loops' notes).
+
+## Public pages (`/artist/:id`, `/album/:id`, `/u/:handle`) and link previews
+
+Owner, 7.0.0: « Pages artistes & partage ». Link-preview robots (Discord, WhatsApp, iMessage, X) do not run
+JavaScript, so `vercel.json` rewrites these paths (and `/listen`) to a Vercel Function, `api/og-page.js` (Node, zero
+config: the project's framework is « Other »), which returns the whole page with its `og:` and `twitter:` tags:
+- `/artist/UC…` and `/album/MPRE…` ask `ketvoice-catalog` `/catalog/artist` and `/catalog/album` with the publishable
+  key (ids checked first against the Edge Function's own patterns: a bad id is a 404 without any call), keep only what
+  a public page shows (`normalizeArtist` / `normalizeAlbum`: names, listeners, titles, durations, releases, related
+  artists, images from known cover hosts only), and render it: photo or cover, name, « Ouvrir dans Ketvoice »,
+  « Écouter sur le web » (`/player#/a/…`, `#/album/…`), popular titles, albums, singles and EP, close artists, about;
+  an album's numbered titles. Cached 10 minutes in memory and `s-maxage=3600, stale-while-revalidate=86400` at the
+  edge; when the catalogue does not answer, a short-cached page with the default preview whose script asks the
+  catalogue from the browser.
+- `/u/<handle>`: 6.3 lets only signed-in listeners read a public profile (`ketvoice_public_profile` is granted to
+  `authenticated`, the public photos bucket too). The server therefore knows only the handle from the link (« @luna.k
+  sur Ketvoice », `noindex`); in the browser, a listener signed in on `/player` (its `kv-player-session`, read as is,
+  never renewed here) sees the name, photo, « En train d'écouter » and public playlists. A preview with the name needs
+  an anon card: `tools/proposed-public-profile-card.sql`, **not deployed**; the function uses it once it exists.
+- « Ouvrir dans Ketvoice »: on Android the app's own link (`intent://listen?track=<id>&title=…&artist=…&kind=…`, back
+  to the page when the app is missing), « Télécharger Ketvoice » elsewhere. The app opens `kind=album` today; `artist`
+  and `profile` need the app to read those kinds (it now falls back to a search).
+- One renderer for both sides, `js/share-render.js` (escaping, cleaning, safe images, the preview tags, `/listen`'s
+  tag replacement); `js/share.js` and `css/share.css` for the browser.
+Tests: `node tests/share-og.test.cjs` (escaping in tags, body and the embedded JSON, private or unexpected fields never
+copied, unsafe images dropped, missing photo / titles / description, bad ids never fetched, catalogue down / unknown /
+slow, profile card absent or present, `/listen`'s body unchanged, a foreign Host header ignored, POST refused) and
+`node tools/share-check.cjs` (Playwright, everything mocked: the raw HTML's tags, then the demo and each page at
+390 and 1440 px, light and dark, no horizontal scroll, no script error, keyboard on the box).
 
 ## Web player (`/player`)
 
@@ -696,6 +745,8 @@ phone/Quest validation.
 - `js/flow.js` — the WebGL sunset band behind the showcase and the footer (the hero's darkens as the sun sets)
 - `assets/` — theme toggle, app screenshots from 6.1.2 (`app-*`, owner tools and account name blurred), song covers (`cover-*`), the Vice City logo (`ketvoice-logo-vc-*`), banner
   (`banner-vc-*`) and hero art (`hero-vi-*`)
+- `ketmix.html`, `css/ketmix.css`, `js/ketmix/` — the Ketmix demo (`/ketmix` and the home section)
+- `api/og-page.js`, `js/share-render.js`, `js/share.js`, `css/share.css` — public pages and link previews
 - `tests/release-assets.test.cjs` — release asset selection (`node tests/release-assets.test.cjs`)
 - `player.html`, `css/player.css`, `js/player/` — the web player (`/player`, see above); `tests/player-sync.test.cjs`, `tests/player-api.test.cjs` and `tests/fixtures/player-library.json`
 
@@ -723,7 +774,8 @@ The active-listeners endpoint (optional) should return `{ "activeListeners": <nu
 
 ## Deploy
 
-Designed for Netlify, Vercel, Cloudflare Pages, or any static host.
+Vercel: static files plus one function (`api/og-page.js`) for the public pages and previews. On a purely static
+host the pages under `/artist`, `/album` and `/u` are not served (`npx serve .` serves the demo, not them).
 
 
 Catalogue browsing (artists, albums, radio) is served by the Supabase Edge Function `ketvoice-catalog` (deployed 2026-11-18, source in Ketvoice `supabase/functions/ketvoice-catalog/index.ts`), kept apart from the app's `ketvoice-api` so nothing there can affect the app's search, streaming or Canvas.

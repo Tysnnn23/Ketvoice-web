@@ -1,16 +1,18 @@
 /* Hallmark · v2.0.0 · theme: incumbent (ketvoice-web css/style.css: Geist, hairline rings, pink accent) · genre: atmospheric · signature: the Ketmix timeline, played live · scope: component (home section) + page (/ketmix) */
 /* critique: the timeline is the content; the controls sit under it in one row, nothing decorates it; the box is the only thing in the accent. */
+/* Hallmark · waive 24b · off-scale spacing · the demo sits inside the home page, whose controls use 9, 14 and 18 px steps; it matches them */
 /* Ketmix demo (js/ketmix/demo.js): the timeline of the app's editor (KetmixTimeline.kt) drawn on a canvas, the
    box of the transition a focusable element above it. Data in fixed hues (bass orange, filter blue, as the app's
    TimelineInk), the box in the site's pink. Uses the site's tokens (--ink, --card, --ring…) from style.css. */
 :root{
   --kx-font:"Geist",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
   --kx-wave:#0e0820;--kx-vol:#0e0820;--kx-bass:#b25000;--kx-filter:#0a6e9e;--kx-box:#c2366f;
-  --kx-grid:#0e0820;--kx-text:#4c5064;--kx-pressed-bg:#0e0820;--kx-pressed-ink:#ffffff;--kx-focus:#c2366f;
+  --kx-grid:#0e0820;--kx-text:#4c5064;--kx-pressed-bg:#0e0820;--kx-pressed-ink:#fbf9fe;--kx-panel:#fdfcfe;--kx-focus:#c2366f;
+  /* the dark theme's values; html.dark (the site's theme switch) points the tokens at them */
+  --kx-wave-dark:#f3eff8;--kx-panel-dark:#17121f;--kx-vol-dark:#f3eff8;--kx-bass-dark:#ffb340;--kx-filter-dark:#5ac8fa;--kx-box-dark:#ff9cc6;--kx-grid-dark:#f3eff8;--kx-text-dark:#b9b2c7;--kx-pressed-bg-dark:#f3eff8;--kx-pressed-ink-dark:#0c0913;--kx-focus-dark:#ff9cc6;
 }
 html.dark{
-  --kx-wave:#f3eff8;--kx-vol:#f3eff8;--kx-bass:#ffb340;--kx-filter:#5ac8fa;--kx-box:#ff9cc6;
-  --kx-grid:#f3eff8;--kx-text:#b9b2c7;--kx-pressed-bg:#f3eff8;--kx-pressed-ink:#0c0913;--kx-focus:#ff9cc6;
+  --kx-wave:var(--kx-wave-dark);--kx-panel:var(--kx-panel-dark);--kx-vol:var(--kx-vol-dark);--kx-bass:var(--kx-bass-dark);--kx-filter:var(--kx-filter-dark);--kx-box:var(--kx-box-dark);--kx-grid:var(--kx-grid-dark);--kx-text:var(--kx-text-dark);--kx-pressed-bg:var(--kx-pressed-bg-dark);--kx-pressed-ink:var(--kx-pressed-ink-dark);--kx-focus:var(--kx-focus-dark);
 }
 
 .kx-section{padding:120px 0}
@@ -22,7 +24,7 @@ html.dark{
 .kx-nojs{color:var(--muted);font-size:14px}
 .kx-ready .kx-nojs{display:none}
 
-.kx-panel{display:grid;gap:12px;padding:20px;border-radius:20px;background:var(--card);box-shadow:inset 0 0 0 1px var(--ring);min-width:0}
+.kx-panel{display:grid;gap:12px;padding:20px;border-radius:20px;background:var(--kx-panel);box-shadow:inset 0 0 0 1px var(--ring);min-width:0}
 .kx-deck{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;font-size:15px;line-height:22px;min-width:0}
 .kx-deck strong{font-weight:500}
 .kx-role,.kx-meta{color:var(--muted);font-size:13px}
@@ -87,7 +89,7 @@ html.kx-page,html.kx-page body{overflow-x:clip}
 .kx-top a:focus-visible{outline:2px solid var(--kx-focus);outline-offset:3px;border-radius:6px}
 .kx-main{flex:1;width:min(1120px,100% - 32px);margin:0 auto;padding:40px 0 80px;display:grid;gap:32px}
 .kx-hero{display:grid;gap:14px;max-width:720px}
-.kx-hero h1{font-size:56px;line-height:60px;font-weight:500;letter-spacing:-.015em;overflow-wrap:break-word;min-width:0}
+.kx-hero h1{text-wrap:balance;font-size:56px;line-height:60px;font-weight:500;letter-spacing:-.015em;overflow-wrap:break-word;min-width:0}
 .kx-hero p{font-size:18px;line-height:28px;color:var(--muted);max-width:46ch}
 .kx-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:8px 0 0;padding:0;list-style:none}
 .kx-notes h2{font-size:17px;line-height:24px;font-weight:500;margin:0 0 6px}
@@ -95,7 +97,7 @@ html.kx-page,html.kx-page body{overflow-x:clip}
 .kx-foot{width:min(1120px,100% - 32px);margin:0 auto;padding:24px 0 40px;color:var(--muted);font-size:13px;line-height:20px;border-top:1px solid var(--line)}
 .kx-foot a{border-bottom:1px solid currentColor}
 @media (max-width:760px){
-  .kx-hero h1{font-size:38px;line-height:44px}
+  .kx-hero h1{text-wrap:balance;font-size:38px;line-height:44px}
   .kx-hero p{font-size:16px;line-height:25px}
   .kx-notes{grid-template-columns:minmax(0,1fr);gap:18px}
   .kx-main{padding-top:16px;gap:24px}
