@@ -336,6 +336,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 7.3.0 (versionCode 144) adds Downloads selection with better-quality re-download and live download rings, playlist import from Apple Music, Tidal and SoundCloud, an album header with a floating cover or Canvas, a search start page, a breathing player, song credits, a double mini player during Ketmix mixes, a share card and per-album accent colours.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.3.0.md).
+
 Ketvoice 7.2.0 (versionCode 143) brings an Apple-Music-style Home and Library, Favourites and Downloads pages, Lossless badges, recommended songs after albums, progressive quality that really switches, a faster start, compact Canvas, a working Sync button, phone↔web change checks and better search; the web player follows the phone's changes.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.2.0.md).
 
