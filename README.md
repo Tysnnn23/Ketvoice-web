@@ -336,6 +336,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 7.5.0 (versionCode 146) adds Google Cast, lyric romanization, a standby screen while charging, a new cover-colour picker with a bigger album cover, artwork and Canvas caching fixes, faster downloads and analysis, one-song quality upgrades, pause fades, a Ketmix-on-skip switch, one glass slider, glass lenses on held sliders and search and sort inside lists.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.5.0.md).
+
 Ketvoice 7.4.0 (versionCode 145) replaces the widgets with two real ones (2×2 and 4×2, live controls, cover colours, picker previews), adds an immersive artist page, smoother player colours and blur, bigger Downloads and Favourites covers without the scroll fade, fixed Downloads menus and airier song rows, and removes the weekly discoveries.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.4.0.md).
 
