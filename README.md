@@ -336,6 +336,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 7.6.0 (versionCode 147) shows every Canvas whole and keeps it for each song, lightens the player and start-up, adds voice level while streaming, volume keyframes in the mix editor, three new Ketmix transitions with cleaner mixes, and an "Improve your listening" welcome step; the GTA VI event is over and its icon is the default.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.6.0.md).
+
 Ketvoice 7.5.0 (versionCode 146) adds Google Cast, lyric romanization, a standby screen while charging, a new cover-colour picker with a bigger album cover, artwork and Canvas caching fixes, faster downloads and analysis, one-song quality upgrades, pause fades, a Ketmix-on-skip switch, one glass slider, glass lenses on held sliders and search and sort inside lists.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.5.0.md).
 
