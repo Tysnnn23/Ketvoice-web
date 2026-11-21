@@ -336,6 +336,9 @@ recreated with original code, copy and art:
 - « Ketvoice is not affiliated with Rockstar Games. » is on the showcase caption, in the Vice
   City section, in the FAQ and in the footer.
 
+Ketvoice 8.0.0 (versionCode 148) brings refractive Liquid Glass and a tab bar that melts into one capsule, menus that grow out of their button, springs and animated icons, a player that folds into the lyrics or queue, duet lyrics, Ketmix Studio (undo, beat magnet, volume points, presets, share codes) and live statistics.
+[Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v8.0.0.md).
+
 Ketvoice 7.6.0 (versionCode 147) shows every Canvas whole and keeps it for each song, lightens the player and start-up, adds voice level while streaming, volume keyframes in the mix editor, three new Ketmix transitions with cleaner mixes, and an "Improve your listening" welcome step; the GTA VI event is over and its icon is the default.
 [Release notes](https://github.com/Tysnnn23/Ketvoice/blob/main/docs/releases/v7.6.0.md).
 
