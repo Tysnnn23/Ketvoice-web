@@ -1,0 +1,27 @@
+/* /u/<handle> (Windows 2.0 social): the public profile on top of css/share.css (its tokens, buttons, grids and rows).
+   The banner leads, the photo sits over its edge, the profile's own accent tints the one action. Nothing animates. */
+.up-hero{display:grid;gap:0}
+.up-banner{position:relative;height:clamp(140px,22vw,260px);border-radius:20px;overflow:hidden;
+  background:linear-gradient(120deg,var(--profile-accent,var(--accent)) 0%,var(--tint) 70%,var(--soft) 100%)}
+.up-banner img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.up-id{display:flex;align-items:flex-start;gap:24px;padding:0 24px;margin-top:-64px;position:relative}
+.up-avatar{width:144px;height:144px;flex:none;border-radius:50%;object-fit:cover;background:var(--soft);box-shadow:0 0 0 6px var(--bg)}
+.up-initial{display:grid;place-items:center;background:var(--profile-accent,var(--tint));color:var(--on-accent);font-size:64px;font-weight:500}
+.up-head{display:grid;gap:4px;min-width:0;margin-top:76px}
+.up-head h1{font-size:56px;line-height:60px;font-weight:500;letter-spacing:-.02em;overflow-wrap:break-word;text-wrap:balance}
+.up-bio{max-width:62ch;margin:20px 24px 0;font-size:17px;line-height:26px}
+.up-hero .sh-actions{margin:20px 24px 0}
+.up-now{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:12px 0;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.up-rank{text-align:center}
+.sh-people li > div,.sh-grid li > div{display:grid;gap:4px;min-width:0}
+.sh-people .sh-sub2{text-align:center}
+.up-empty{margin-top:56px}
+.sh-card .sh-cover{margin-bottom:6px}
+@media (max-width:640px){
+  .up-id{flex-direction:column;align-items:flex-start;gap:12px;padding:0 4px;margin-top:-52px}
+  .up-head{margin-top:0}
+  .up-avatar{width:104px;height:104px}
+  .up-head h1{font-size:36px;line-height:40px}
+  .up-bio,.up-hero .sh-actions{margin-inline:4px}
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<title>Profil sur Ketvoice</title>
+<!-- A static /u/ page (local preview, or a host without the Vercel function): /u/index.html?handle=<handle>.
+     On Vercel, /u/<handle> is answered by api/og-page.js, which only has to add profile.css and profile.js (see README.md). -->
+<link rel="icon" href="/favicon-32.png" sizes="32x32">
+<script>(function(){var d=document.documentElement,t=null;d.classList.add('js');try{t=localStorage.getItem('ketvoice-theme')}catch(e){}if(t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches))d.classList.add('dark')})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;display=swap">
+<link rel="stylesheet" href="/css/share.css?v=202611191200">
+<link rel="stylesheet" href="/u/profile.css?v=202611251200">
+</head>
+<body>
+<a class="sh-skip" href="#share-main">Aller au contenu</a>
+<header class="sh-top"><a class="sh-brand" href="/"><img src="/assets/ketvoice-logo-vc-96.png" width="28" height="28" alt=""><span>Ketvoice</span></a>
+<a class="sh-btn sh-btn-line" href="/#download">Télécharger</a></header>
+<main class="sh-main" id="share-main" data-kind="profile">
+  <section class="sh-hero sh-hero-plain"><div class="sh-head"><h1>Un profil Ketvoice</h1>
+    <p class="sh-lead">Ce que son auteur a rendu public s’affiche ici. Un profil privé ne se voit qu’entre amis, dans l’app.</p></div></section>
+</main>
+<footer class="sh-foot"><p><a href="/">Ketvoice</a>, le lecteur de musique gratuit pour Android, Meta Quest et Windows.</p></footer>
+<script src="/js/share-render.js?v=202611191200"></script>
+<script src="/u/profile.js?v=202611251200"></script>
+<script src="/share/open-desktop.js?v=202611251200"></script>
+</body>
+</html>

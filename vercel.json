@@ -8,6 +8,7 @@
     { "source": "/listen", "destination": "/api/og-page?type=listen" },
     { "source": "/player", "destination": "/player.html" },
     { "source": "/ketmix", "destination": "/ketmix.html" },
+    { "source": "/link", "destination": "/link/index.html" },
     { "source": "/artist/:id", "destination": "/api/og-page?type=artist&id=:id" },
     { "source": "/album/:id", "destination": "/api/og-page?type=album&id=:id" },
     { "source": "/u/:handle", "destination": "/api/og-page?type=profile&id=:handle" }

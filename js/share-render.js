@@ -268,7 +268,8 @@
       '<script>(function(){var d=document.documentElement,t=null;d.classList.add(\'js\');try{t=localStorage.getItem(\'ketvoice-theme\')}catch(e){}if(t===\'dark\'||(t!==\'light\'&&matchMedia(\'(prefers-color-scheme: dark)\').matches))d.classList.add(\'dark\')})();</script>\n' +
       '<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n' +
       '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400..600&amp;display=swap">\n' +
-      '<link rel="stylesheet" href="/css/share.css?v=202611191200">\n</head>\n<body>\n' +
+      '<link rel="stylesheet" href="/css/share.css?v=202611191200">\n' +
+      (kind === 'profile' ? '<link rel="stylesheet" href="/u/profile.css?v=202611251200">\n' : '') + '</head>\n<body>\n' +
       '<a class="sh-skip" href="#share-main">Aller au contenu</a>\n' +
       '<header class="sh-top"><a class="sh-brand" href="/"><img src="/assets/ketvoice-logo-vc-96.png" width="28" height="28" alt=""><span>Ketvoice</span></a>' +
       '<a class="sh-btn sh-btn-line" href="/#download">Télécharger</a></header>\n' +
@@ -276,7 +277,9 @@
       '<footer class="sh-foot"><p>' + (kind === 'artist' || kind === 'album' ? 'Catalogue de YouTube Music, tel que Ketvoice le lit. ' : '') +
       '<a href="/">Ketvoice</a>, le lecteur de musique gratuit pour Android et Meta Quest.</p></footer>\n' +
       '<script type="application/json" id="kv-share-data">' + json(data) + '</script>\n' +
-      '<script src="/js/share-render.js?v=202611191200"></script>\n<script src="/js/share.js?v=202611191200"></script>\n</body>\n</html>\n';
+      '<script src="/js/share-render.js?v=202611191200"></script>\n<script src="/js/share.js?v=202611191200"></script>\n' +
+      (kind === 'profile' ? '<script src="/u/profile.js?v=202611251200"></script>\n' : '') +
+      '<script src="/share/open-desktop.js?v=202611251200"></script>\n</body>\n</html>\n';
   }
 
   /* ---------- /listen: the same page, with the title's own preview ---------- */
