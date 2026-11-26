@@ -55,6 +55,24 @@ test('edition names are matched as words, case-insensitively, including generic 
   assert.equal(apkUrl([asset('Ketvoice-6.1.0-satellite.apk')], 'mobile'), url('Ketvoice-6.1.0-satellite.apk'));
 });
 
+test('a Ketvoice TV APK is never taken for the phone, Quest or Lite APK', () => {
+  const assets = ['Ketvoice-TV-1.0.0.apk', 'SHA256SUMS.txt'].map(asset);
+  for (const edition of ['mobile', 'quest', 'lite', 'wear', false, true]) assert.equal(apkUrl(assets, edition), undefined);
+  assert.equal(apkUrl(assets, 'tv'), url('Ketvoice-TV-1.0.0.apk'));
+  // "tv" inside another word is not the TV edition.
+  assert.equal(apkUrl([asset('Ketvoice-9.1.1-tvos.apk')], 'mobile'), url('Ketvoice-9.1.1-tvos.apk'));
+});
+
+test('the Android TV entries link the tv-v release asset directly', () => {
+  const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
+  const tv = 'https://github.com/Tysnnn23/Ketvoice/releases/download/tv-v1.0.0/Ketvoice-TV-1.0.0.apk';
+  assert.match(html, /<div class="download-row" id="tv-row">/);
+  assert.ok(html.includes(`href="${tv}" id="tv-apk"`));
+  assert.ok(html.includes(`<a data-tv="tv" href="${tv}" role="menuitem">Android TV <small>and Google TV</small></a>`));
+  // Static links: the latest-release updater ([data-apk]) never rewrites them.
+  assert.doesNotMatch(html, /data-apk="tv"/);
+});
+
 test('the page has a hidden-by-default row and button for each optional edition', () => {
   const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
   for (const edition of ['lite', 'wear']) {

@@ -69,6 +69,9 @@ test('downloads: one button per edition, CI rebuilds hidden behind versioned APK
   assert.deepEqual(dl.map(d => d.label), ['Android', 'Lite', 'Quest', 'Wear OS']);
   assert.equal(dl[0].url, 'https://example.invalid/Ketvoice-4.4.0.apk');
   assert.deepEqual(K.downloads({ assets: [asset('app-mobile-release.apk')] }).map(d => d.label), ['Android']);
+  // Ketvoice TV's own release: its APK is labelled Android TV, never Android.
+  assert.deepEqual(K.downloads({ assets: ['SHA256SUMS.txt', 'Ketvoice-TV-1.0.0.apk'].map(n => asset(n)) }).map(d => d.label), ['Android TV']);
+  assert.equal(K.channel({ tag_name: 'tv-v1.0.0' }), 'other');
 });
 
 test('media: banner and screenshots, without the same file twice', () => {

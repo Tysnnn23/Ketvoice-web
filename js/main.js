@@ -36,8 +36,9 @@
   const LATEST_PAGE='https://github.com/'+CONFIG.repo+'/releases/latest';
   const store={get(k,ttl){try{const v=JSON.parse(localStorage.getItem(k)||'null');return v&&Date.now()-v.t<ttl?v.d:null}catch(e){return null}},set(k,d){try{localStorage.setItem(k,JSON.stringify({t:Date.now(),d}))}catch(e){}}};
   // Each edition is its own asset of the release: Ketvoice-<v>.apk (mobile), -Quest.apk, -Lite.apk, -Wear.apk.
+  // Ketvoice TV (Ketvoice-TV-<v>.apk) has its own tv-v<v> releases, linked directly from the page.
   // `edition` is 'mobile' | 'quest' | 'lite' | 'wear' (true/false still mean Quest/mobile).
-  const apkUrl=(assets,edition)=>{const want=edition===true?'quest':(edition===false||edition==null)?'mobile':String(edition).toLowerCase();const kind=n=>/quest/i.test(n)?'quest':/wear/i.test(n)?'wear':/(^|[^a-z])lite([^a-z]|$)/i.test(n)?'lite':'mobile';const matches=(assets||[]).filter(a=>/\.apk$/i.test(a.name||'')&&kind(a.name)===want);return(matches.find(a=>/^Ketvoice-/i.test(a.name))||matches[0]||{}).browser_download_url};
+  const apkUrl=(assets,edition)=>{const want=edition===true?'quest':(edition===false||edition==null)?'mobile':String(edition).toLowerCase();const kind=n=>/quest/i.test(n)?'quest':/wear/i.test(n)?'wear':/(^|[^a-z])tv([^a-z]|$)/i.test(n)?'tv':/(^|[^a-z])lite([^a-z]|$)/i.test(n)?'lite':'mobile';const matches=(assets||[]).filter(a=>/\.apk$/i.test(a.name||'')&&kind(a.name)===want);return(matches.find(a=>/^Ketvoice-/i.test(a.name))||matches[0]||{}).browser_download_url};
   // Mobile and Quest always show (falling back to the latest-release page); the Lite and Wear rows only
   // appear when the latest release actually carries their APK.
   function showRelease(r){const rv=$('#release-version');if(rv&&r.tag)rv.textContent='Latest release: '+r.tag;const a=$('#android-apk'),q=$('#quest-apk');if(a)a.href=r.android||LATEST_PAGE;if(q)q.href=r.quest||LATEST_PAGE;
@@ -46,7 +47,7 @@
    // follows the same assets; the Lite and Wear entries only show when their APK exists.
    const urls={android:r.android,quest:r.quest,lite:r.lite,wear:r.wear};
    $$('[data-apk]').forEach(el=>{const k=el.dataset.apk,u=urls[k];if(k==='lite'||k==='wear'){el.hidden=!u;if(u)el.href=u}else if(el.getAttribute('href')!=='#download')el.href=u||LATEST_PAGE});
-   const sub=$('#download-sub');if(sub)sub.textContent=r.wear?'Free for Android, Windows, Meta Quest and Wear OS.':'Free for Android, Windows and Meta Quest.'}
+   const sub=$('#download-sub');if(sub)sub.textContent=r.wear?'Free for Android, Android TV, Windows, Meta Quest and Wear OS.':'Free for Android, Android TV, Windows and Meta Quest.'}
   // WHAT'S NEW: the download section mirrors the body of the latest GitHub
   // release, so the site stays in sync with every published version.
   function renderWhatsNew(tag,body){

@@ -169,13 +169,14 @@
     return { banner: banner, shots: shots };
   }
 
-  // Each edition is its own asset: Ketvoice-<v>.apk, -Quest.apk, -Lite.apk, -Wear.apk (+ old -compat/-fix builds, an .ipa).
+  // Each edition is its own asset: Ketvoice-<v>.apk, -Quest.apk, -Lite.apk, -Wear.apk, Ketvoice-TV-<v>.apk (+ old -compat/-fix builds, an .ipa).
   function downloads(r) {
     var list = (r.assets || []).filter(function (a) { return /\.(apk|ipa)$/i.test(a.name || ''); }).map(function (a) {
       var n = a.name, label;
       if (/\.ipa$/i.test(n)) label = 'iPhone';
       else if (/quest/i.test(n)) label = 'Quest';
       else if (/wear/i.test(n)) label = 'Wear OS';
+      else if (/(^|[^a-z])tv([^a-z]|$)/i.test(n)) label = 'Android TV';
       else if (/(^|[^a-z])lite([^a-z]|$)/i.test(n)) label = 'Lite';
       else {
         var extra = n.replace(/\.apk$/i, '').match(/-(compat|fix\d*)$/i);
@@ -192,7 +193,7 @@
     list.forEach(function (d) { if (/^app-/i.test(d.name)) d.label = /quest/i.test(d.name) ? 'Quest' : 'Android'; });
     return list.sort(function (x, y) { return rank(x.label) - rank(y.label); });
   }
-  function rank(l) { return ['Android', 'Lite', 'Quest', 'Wear OS', 'iPhone'].indexOf(l) < 0 ? 9 : ['Android', 'Lite', 'Quest', 'Wear OS', 'iPhone'].indexOf(l); }
+  function rank(l) { var order = ['Android', 'Lite', 'Android TV', 'Quest', 'Wear OS', 'iPhone']; return order.indexOf(l) < 0 ? 9 : order.indexOf(l); }
 
   function version(r) {
     var tag = String(r.tag_name || '').replace(/^v/i, '');
