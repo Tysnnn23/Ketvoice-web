@@ -65,7 +65,7 @@ test('a Ketvoice TV APK is never taken for the phone, Quest or Lite APK', () => 
 
 test('the Android TV entries link the tv-v release asset directly', () => {
   const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
-  const tv = 'https://github.com/Tysnnn23/Ketvoice/releases/download/tv-v1.0.0/Ketvoice-TV-1.0.0.apk';
+  const tv = 'https://github.com/Tysnnn23/Ketvoice/releases/download/tv-v1.1.0/Ketvoice-TV-1.1.0.apk';
   assert.match(html, /<div class="download-row" id="tv-row">/);
   assert.ok(html.includes(`href="${tv}" id="tv-apk"`));
   assert.ok(html.includes(`<a data-tv="tv" href="${tv}" role="menuitem">Android TV <small>and Google TV</small></a>`));
